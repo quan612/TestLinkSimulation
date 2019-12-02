@@ -9,7 +9,7 @@ function ExecutionContainer({ selectedBuild, selectTestPlan, selectedTestItem })
   useEffect(() => {
     const getTestCaseDetails = async () => {
       if (selectedTestItem) {
-        const testcase = getTestCaseHelper(selectedTestItem);
+        const testcase = getTestCaseHelper(selectedTestItem.tc_id);
         setTestCaseDetails(testcase);
       }
     };

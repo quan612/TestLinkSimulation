@@ -3,6 +3,7 @@ import constant from "../../Library/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardTitle, CardBody, Button, Input } from "reactstrap";
 import { selectTestItemAction } from "../../Redux/actions";
+import { updateTestCaseWithoutStepsUpdateHelper, getTestCaseHelper } from "../../Redux/apiHelpers";
 
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;
@@ -10,15 +11,16 @@ const execution_type = constant.ExecutionType;
 const EditTestCase = ({ selectedTestItem, onSave, onCancel }) => {
   const [testCaseObject, setTestCaseObject] = useState({
     name: selectedTestItem.name,
+    tc_external_id: selectedTestItem.tc_external_id,
     summary: selectedTestItem.summary,
     preconditions: selectedTestItem.preconditions,
     status: selectedTestItem.status,
     execution_type: selectedTestItem.execution_type,
-    steps: selectedTestItem.steps
+    steps: selectedTestItem.steps,
+    version: selectedTestItem.version
   });
 
-  const { testLink, selectedProject } = useSelector(state => ({
-    testLink: state.testLink,
+  const { selectedProject } = useSelector(state => ({
     selectedProject: state.selectedProject
   }));
 
@@ -33,33 +35,45 @@ const EditTestCase = ({ selectedTestItem, onSave, onCancel }) => {
 
   // we don't update the steps here
   const handleOnSave = async () => {
-    try {
-      testLink
-        .updateTestCase({
-          testcasename: testCaseObject.name,
-          testsuiteid: selectedTestItem.id,
-          testcaseexternalid: selectedProject.prefix + "-" + selectedTestItem.tc_external_id,
-          summary: testCaseObject.summary,
-          preconditions: testCaseObject.preconditions,
-          status: testCaseObject.status,
-          executiontype: testCaseObject.execution_type,
-          version: parseInt(selectedTestItem.version)
-        })
-        .then(async message => {
-          console.log(message);
-          const testcase = await testLink.getTestCase({
-            testcaseid: selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id
-          });
-          testcase.forEach(async data => {
-            data.node = "File";
-            await dispatch(selectTestItemAction(data));
-            onSave();
-          });
-        })
-        .catch(error => console.log(error));
-    } catch (error) {
-      console.error(error);
-    }
+    // testLink
+    //   .updateTestCase({
+    //     testcasename: testCaseObject.name,
+    //     testsuiteid: selectedTestItem.id,
+    //     testcaseexternalid: selectedProject.prefix + "-" + selectedTestItem.tc_external_id,
+    //     summary: testCaseObject.summary,
+    //     preconditions: testCaseObject.preconditions,
+    //     status: testCaseObject.status,
+    //     executiontype: testCaseObject.execution_type,
+    //     version: parseInt(selectedTestItem.version)
+    //   })
+    //   .then(async message => {
+    //     console.log(message);
+    //     const testcase = await testLink.getTestCase({
+    //       testcaseid: selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id
+    //     });
+    //     testcase.forEach(async data => {
+    //       data.node = "File";
+    //       await dispatch(selectTestItemAction(data));
+    //       onSave();
+    //     });
+    //   })
+    //   .catch(error => console.log(error));
+
+    // change the return object so that we dont need to loop foreach there
+    updateTestCaseWithoutStepsUpdateHelper(selectedProject, testCaseObject)
+      .then(async message => {
+        console.log(message);
+        const testcase = await getTestCaseHelper({
+          testCaseId: selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id
+        });
+        console.log("testcase", testcase); // test this
+        testcase.forEach(async data => {
+          data.node = "File";
+          await dispatch(selectTestItemAction(data));
+          onSave();
+        });
+      })
+      .catch(error => console.log("catch error at update test case ", error));
   };
 
   return (

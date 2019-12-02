@@ -133,6 +133,31 @@ export const getTestSuiteRecursively = async testSuite => {
   return result;
 };
 
+export const updateTestSuiteHelper = (selectedProject, isTopLevel, parentSuiteId, data) => {
+  if (isTopLevel === true) {
+    testLink
+      .updateTestSuite({
+        testprojectid: selectedProject.id,
+        prefix: selectedProject.prefix,
+        testsuitename: data.suiteName,
+        details: data.suiteDetails
+      })
+      .then(message => console.log(message))
+      .catch(error => console.log("catch error at update test suite", error));
+  } else {
+    testLink
+      .updateTestSuite({
+        testprojectid: selectedProject.id,
+        prefix: selectedProject.prefix,
+        testsuitename: suiteName,
+        details: data.suiteDetails,
+        parentid: data.parentSuiteId
+      })
+      .then(message => console.log(message))
+      .catch(error => console.log("catch error at update test suite", error));
+  }
+};
+
 /********************************************************* TEST CASES API ******************************************/
 export const getTestCasesOfTestProjectHelper = async testProject => {
   const testSuites = await getTestSuitesOfTestProjectApi(testLink, testProject);
@@ -269,10 +294,10 @@ export const getTestCasesOfSelectedTestSuiteHelper = async selectedTestSuite => 
  *
  * @returns {object}  result Test Case object.
  */
-export const getTestCaseHelper = async testCaseRepository => {
+export const getTestCaseHelper = async testCaseId => {
   const testcase = await testLink
     .getTestCase({
-      testcaseid: testCaseRepository.tc_id
+      testcaseid: testCaseId
     })
     .catch(error => console.log("Catch error at get test case helper function: ", error));
   return testcase;
@@ -295,7 +320,24 @@ export const addTestCaseHelper = (selectedProject, selectedTestSuite, testCaseDa
     .catch(error => console.log("Catch error at add test case helper: ", error));
 };
 
-export const updateTestCaseWithoutStepsUpdateHelper = () => {};
+export const updateTestCaseWithoutStepsUpdateHelper = (selectedProject, testCaseData) => {
+  testLink
+    .updateTestCase({
+      testcasename: testCaseData.name,
+      testcaseexternalid: selectedProject.prefix + "-" + testCaseData.tc_external_id,
+      summary: testCaseData.summary,
+      preconditions: testCaseData.preconditions,
+      status: testCaseData.status,
+      executiontype: testCaseData.execution_type,
+      version: parseInt(testCaseData.version)
+    })
+    .then(message => {
+      return Promise.resolve(message);
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+};
 
 /* private api in use for test cases*/
 const getTestCasesForCurrentTestSuiteApi = async (testLink, testSuite) => {
