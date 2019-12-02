@@ -1727,4 +1727,5 @@ function _checkMandatoryFieldsObject(options, field) {
   }
 }
 
-module.exports = TestLink;
+//module.exports = TestLink;
+export default TestLink;

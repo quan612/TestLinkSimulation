@@ -294,6 +294,9 @@ export const addTestCaseHelper = (selectedProject, selectedTestSuite, testCaseDa
     .then(message => console.log("Successfully adding Test Case: ", message))
     .catch(error => console.log("Catch error at add test case helper: ", error));
 };
+
+export const updateTestCaseWithoutStepsUpdateHelper = () => {};
+
 /* private api in use for test cases*/
 const getTestCasesForCurrentTestSuiteApi = async (testLink, testSuite) => {
   return await testLink.getTestCasesForTestSuite({
