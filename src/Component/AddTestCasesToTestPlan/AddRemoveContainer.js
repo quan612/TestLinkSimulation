@@ -9,13 +9,12 @@ function AddRemoveContainer({ selectedTestSuite, selectTestPlan }) {
   useEffect(() => {
     const getTestCasesOfSelectedSuite = async () => {
       if (selectedTestSuite && Object.keys(selectedTestSuite).length > 0) {
-        const data = await getTestCasesOfSelectedTestSuiteHelper(selectedTestSuite);
+        const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteHelper(selectedTestSuite);
         const testCasesOfTestPlan = await getTestCasesForCurrentTestPlanApi(selectTestPlan);
 
-        // here we determine if test cases in selected test suite
-        // are linked to test plan???
+        // here we determine if test cases in selected test suite are linked to test plan?
         let getIdsOfAllTestCasesOfTestPlan = testCasesOfTestPlan.map(testcase => testcase.tcase_id);
-        data.forEach(testCaseInSuite => {
+        testCasesOfTestSuite.forEach(testCaseInSuite => {
           if (getIdsOfAllTestCasesOfTestPlan.includes(testCaseInSuite.id)) {
             testCaseInSuite.chilrenOfThisTestPlan = true;
             testCaseInSuite.checked = true;
@@ -24,7 +23,7 @@ function AddRemoveContainer({ selectedTestSuite, selectTestPlan }) {
           }
         });
         // console.log("data", data);
-        setListOfTestCases([...data]);
+        setListOfTestCases([...testCasesOfTestSuite]);
       }
     };
     getTestCasesOfSelectedSuite();

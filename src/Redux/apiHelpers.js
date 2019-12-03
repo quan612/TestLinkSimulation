@@ -1,9 +1,9 @@
 import TestLink from "../Library/testlink";
 
 const testLink = new TestLink({
-  host: "192.168.56.101", // 192.168.56.101   172.16.77.17  34.67.118.19
+  host: "172.16.77.17", // 192.168.56.101   172.16.77.17  34.67.118.19
   secure: false,
-  apiKey: "86fd2b13976b8ba4a35d6829a17b592b"
+  apiKey: "b87127af250124be10f6f245a03d0473"
   // global b87127af250124be10f6f245a03d0473
   // home   86fd2b13976b8ba4a35d6829a17b592b
   // cloud  2a64c27adb81157b9a5ed576a58c032e

@@ -19,8 +19,8 @@ const EditTestSuite = ({ selectedProject, selectedTestSuite, onSave, onCancel })
     });
   };
 
-  const handleOnSave = async () => {
-    await updateTestSuiteHelper(selectedProject, selectedTestSuite.parent_id, data)
+  const handleOnSave = () => {
+    updateTestSuiteHelper(selectedProject, selectedTestSuite.parent_id, data)
       .then(message => {
         console.log(message);
         onSave();
