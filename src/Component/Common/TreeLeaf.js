@@ -55,9 +55,9 @@ const TreeLeaf = ({ child, node, onClick }) => {
         <div>
           <FontAwesomeIcon icon={toggle ? "angle-double-down" : "angle-right"} onClick={() => onToggle()} />
           {toggle ? (
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder-open" style={{ color: "white" }} />
+            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder-open" style={{ color: "#d1e018" }} />
           ) : (
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder" style={{ color: "white" }} />
+            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder" style={{ color: "#d1e018" }} />
           )}
           <span onClick={() => onClick(child.data)}>{child.data.name}</span>
         </div>

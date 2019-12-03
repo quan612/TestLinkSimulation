@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import AddTestSuite from "./AddTestSuite";
 import EditTestSuite from "./EditTestSuite";
 import DeleteTestSuite from "./DeleteTestSuite";
@@ -38,12 +38,10 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
     if (isAddTestSuite) {
       return (
         <AddTestSuite
-          testLink={testLink}
           selectedProject={selectedProject}
           selectedTestItem={selectedTestItem}
           onSave={() => setAddTestSuite(false)}
           onCancel={() => setAddTestSuite(false)}
-          isTopLevel={false}
         />
       );
     }
@@ -51,9 +49,8 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
     if (isEditTestSuite) {
       return (
         <EditTestSuite
-          testLink={testLink}
           selectedProject={selectedProject}
-          selectedTestItem={selectedTestItem}
+          selectedTestSuite={selectedTestItem}
           onSave={() => setEditTestSuite(false)}
           onCancel={() => setEditTestSuite(false)}
         />
@@ -66,9 +63,8 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
     if (isCreateCase) {
       return (
         <AddTestCase
-          testLink={testLink}
           selectedProject={selectedProject}
-          selectedTestItem={selectedTestItem}
+          selectedTestSuite={selectedTestItem}
           onSave={() => setCreateCase(false)}
           onCancel={() => setCreateCase(false)}
         />
@@ -89,7 +85,7 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
   return (
     <Container className="h_100 mw-99">
       <Row className="h-100">
-        <Col className="offset-lg-0 offset-md-3">{handleRenderComponents}</Col>
+        <Col className="offset-lg-0 offset-md-3">{handleRenderComponents()}</Col>
       </Row>
     </Container>
   );

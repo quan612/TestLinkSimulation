@@ -46,7 +46,7 @@ function TestDetailsContainer() {
 
   if (testItem && testItem.node === "File") {
     console.log("goig in test2");
-    return <TestCaseDetails testItemDetails={testItem} />;
+    return <TestCaseDetails selectedTestCase={testItem} />;
   }
 
   if (testItem && testItem.node === "Folder") {
@@ -61,7 +61,6 @@ function TestDetailsContainer() {
         selectedTestItem={selectedTestItem}
         onSave={() => setAddSuite(false)}
         onCancel={() => setAddSuite(false)}
-        isTopLevel={true}
       />
     );
   }

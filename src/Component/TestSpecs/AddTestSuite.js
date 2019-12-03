@@ -6,7 +6,7 @@ import { postNumberOfTestSuitesAction } from "../../Redux/testProject.action";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 
-const AddTestSuite = ({ testLink, selectedProject, selectedTestItem, onSave, onCancel, isTopLevel }) => {
+const AddTestSuite = ({ selectedProject, selectedTestItem, onSave, onCancel }) => {
   const [testSuiteObject, setTestSuiteObject] = useState({
     name: "",
     details: ""
@@ -23,7 +23,7 @@ const AddTestSuite = ({ testLink, selectedProject, selectedTestItem, onSave, onC
 
   const handleOnSave = async () => {
     try {
-      await addTestSuiteHelper(selectedProject, isTopLevel, selectedTestItem.id, testSuiteObject);
+      await addTestSuiteHelper(selectedProject, selectedTestItem.id, testSuiteObject);
       const testSuites = await getTestSuitesOfTestProjectApi(selectedProject);
       dispatch(postNumberOfTestSuitesAction(testSuites.length));
       onSave();

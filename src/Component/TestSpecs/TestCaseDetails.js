@@ -33,7 +33,7 @@ const tableColumns = {
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;
 
-export default function TestCaseDetails({ testItemDetails }) {
+export default function TestCaseDetails({ selectedTestCase }) {
   const [isCreateStep, setIsCreateStep] = useState(false);
   const [isEditTestCase, setEditTestCase] = useState(false);
 
@@ -43,12 +43,12 @@ export default function TestCaseDetails({ testItemDetails }) {
   }));
 
   const handleOnSaveSteps = async data => {
-    let newSteps = [...testItemDetails.steps, data];
-    createTestCaseStepsApi(testLink, testItemDetails, newSteps)
+    let newSteps = [...selectedTestCase.steps, data];
+    createTestCaseStepsApi(testLink, selectedTestCase, newSteps)
       .then(async message => {
         console.log("message", message);
-        testItemDetails.node = "File";
-        await dispatch(selectTestItemAction(testItemDetails));
+        selectedTestCase.node = "File";
+        await dispatch(selectTestItemAction(selectedTestCase));
         await setIsCreateStep(false);
       })
       .catch(error => console.log(error));
@@ -57,7 +57,7 @@ export default function TestCaseDetails({ testItemDetails }) {
   if (isEditTestCase) {
     return (
       <EditTestCase
-        selectedTestItem={testItemDetails}
+        selectedTestItem={selectedTestCase}
         onSave={() => setEditTestCase(false)}
         onCancel={() => setEditTestCase(false)}
       />
@@ -70,7 +70,7 @@ export default function TestCaseDetails({ testItemDetails }) {
             <h1>{"Test Case Details"}</h1>
             <Card>
               <CardBody>
-                <div className="test-detail-case-title">{`Test Case: ${testItemDetails.name}`}</div>
+                <div className="test-detail-case-title">{`Test Case: ${selectedTestCase.name}`}</div>
               </CardBody>
             </Card>
             <Card>
@@ -107,13 +107,13 @@ export default function TestCaseDetails({ testItemDetails }) {
                 <FontAwesomeIcon icon="info-circle" color={"white"}></FontAwesomeIcon>
                 <div className="panel-content">
                   <CardText>
-                    Created on {testItemDetails.creation_ts} by{" "}
-                    {testItemDetails.author_first_name + " " + testItemDetails.author_last_name}
+                    Created on {selectedTestCase.creation_ts} by{" "}
+                    {selectedTestCase.author_first_name + " " + selectedTestCase.author_last_name}
                   </CardText>
-                  {testItemDetails.updater_first_name && (
+                  {selectedTestCase.updater_first_name && (
                     <CardText>
-                      Last Modified on {testItemDetails.modification_ts} by{" "}
-                      {testItemDetails.updater_first_name + " " + testItemDetails.updater_last_name}
+                      Last Modified on {selectedTestCase.modification_ts} by{" "}
+                      {selectedTestCase.updater_first_name + " " + selectedTestCase.updater_last_name}
                     </CardText>
                   )}
                 </div>
@@ -123,14 +123,14 @@ export default function TestCaseDetails({ testItemDetails }) {
             <Card>
               <CardBody>
                 <div className="panel-header">Summary</div>
-                {testItemDetails.Summary && <div className="panel-content">{testItemDetails.Summary}</div>}
+                {selectedTestCase.Summary && <div className="panel-content">{selectedTestCase.Summary}</div>}
               </CardBody>
             </Card>
 
             <Card>
               <CardBody>
                 <div className="panel-header">Addtional Information</div>
-                {testItemDetails.precondition && <div className="panel-content">{testItemDetails.precondition}</div>}
+                {selectedTestCase.precondition && <div className="panel-content">{selectedTestCase.precondition}</div>}
               </CardBody>
             </Card>
 
@@ -141,14 +141,14 @@ export default function TestCaseDetails({ testItemDetails }) {
                     <div>
                       <label className="ml-2">Test Case Status: </label>
                       <label className="ml-2">
-                        {Object.keys(status).find(key => status[key] === parseInt(testItemDetails.status))}
+                        {Object.keys(status).find(key => status[key] === parseInt(selectedTestCase.status))}
                       </label>
                     </div>
                     <div>
                       <label className="ml-2">Execution Type: </label>
                       <label className="ml-2">
                         {Object.keys(execution_type).find(
-                          key => execution_type[key] === parseInt(testItemDetails.execution_type)
+                          key => execution_type[key] === parseInt(selectedTestCase.execution_type)
                         )}
                       </label>
                     </div>
@@ -164,13 +164,13 @@ export default function TestCaseDetails({ testItemDetails }) {
                 <div className="table-container">
                   {isCreateStep ? (
                     <TableWithCreateItem
-                      tableItems={testItemDetails.steps}
+                      tableItems={selectedTestCase.steps}
                       columns={tableColumns}
                       onSave={handleOnSaveSteps}
                       onCancel={() => setIsCreateStep(false)}
                     />
                   ) : (
-                    <TableSimple tableItems={testItemDetails.steps} columns={tableColumns} />
+                    <TableSimple tableItems={selectedTestCase.steps} columns={tableColumns} />
                   )}
                 </div>
               </CardBody>

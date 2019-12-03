@@ -1,52 +1,53 @@
-import { Card, CardHeader, CardBody, Button, Input, Container, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody } from "reactstrap";
 import React, { useState } from "react";
+import { updateTestSuiteHelper } from "../../Redux/apiHelpers";
 
-const EditTestSuite = ({ testLink, selectedProject, selectedTestItem, onSave, onCancel }) => {
-  const [suiteName, setSuiteName] = useState(selectedTestItem.name);
-  const [suiteDetails, setSuiteDetails] = useState(selectedTestItem.details);
+const EditTestSuite = ({ selectedProject, selectedTestSuite, onSave, onCancel }) => {
+  const [data, setData] = useState({
+    name: selectedTestSuite.name,
+    details: selectedTestSuite.details,
+    parent_id: selectedTestSuite.parent_id
+  });
 
-  const handleOnNameChange = e => {
-    setSuiteName(e.target.value);
-  };
-
-  const handleOnDetailsChange = e => {
-    setSuiteDetails(e.target.value);
+  const handleOnChange = e => {
+    const { name, value } = e.target;
+    setData(prevState => {
+      return {
+        ...prevState,
+        [name]: value
+      };
+    });
   };
 
   const handleOnSave = async () => {
-    try {
-      // console.log(selectedProject.id);
-      // console.log(selectedProject.prefix);
-      // console.log(suiteName);
-      // console.log(suiteDetails);
-      // console.log(selectedTestItem.parent_id);
-      testLink
-        .updateTestSuite({
-          testprojectid: selectedProject.id,
-          prefix: selectedProject.prefix,
-          testsuitename: suiteName,
-          details: suiteDetails,
-          parentid: selectedTestItem.parent_id
-        })
-        .then(message => console.log(message))
-        .catch(error => console.log("catch error at update test suite", error));
-    } catch (error) {
-      console.error(error);
-    }
+    await updateTestSuiteHelper(selectedProject, selectedTestSuite.parent_id, data)
+      .then(message => {
+        console.log(message);
+        onSave();
+      })
+      .catch(error => {
+        console.log("catch error at update test suite helper", error);
+      });
   };
 
   return (
-    <Card>
+    <Card className="h-100">
       <CardHeader>
         <b style={{ color: "red" }}>The API provided by Test Link does not work</b>
       </CardHeader>
       <CardBody>
         <form>
           <div className="panel-header">Test Suite Name</div>
-          <input type="text" className="form-control" value={suiteName} onChange={e => handleOnNameChange(e)}></input>
+          <input type="text" name="name" className="form-control" value={data.name} onChange={handleOnChange}></input>
 
           <div className="panel-header">Test Suite Details</div>
-          <div dangerouslySetInnerHTML={{ __html: suiteDetails }} onChange={e => handleOnDetailsChange(e)} />
+          <input
+            type="text"
+            name="details"
+            className="form-control"
+            value={data.details}
+            onChange={handleOnChange}
+          ></input>
 
           <div className=" btn-toolbar">
             <button type="button" className="btn btn-outline-success mr-2" onClick={() => handleOnSave()}>

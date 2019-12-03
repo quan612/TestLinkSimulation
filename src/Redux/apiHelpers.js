@@ -1,9 +1,9 @@
 import TestLink from "../Library/testlink";
 
 const testLink = new TestLink({
-  host: "172.16.77.17", // 192.168.56.101   172.16.77.17  34.67.118.19
+  host: "192.168.56.101", // 192.168.56.101   172.16.77.17  34.67.118.19
   secure: false,
-  apiKey: "b87127af250124be10f6f245a03d0473"
+  apiKey: "86fd2b13976b8ba4a35d6829a17b592b"
   // global b87127af250124be10f6f245a03d0473
   // home   86fd2b13976b8ba4a35d6829a17b592b
   // cloud  2a64c27adb81157b9a5ed576a58c032e
@@ -48,8 +48,8 @@ export const reportResultApi = async result => {
  *
  * @returns {object}  result Test Case object.
  */
-export const addTestSuiteHelper = async (selectedProject, isTopLevel, parentSuiteId, data) => {
-  if (isTopLevel) {
+export const addTestSuiteHelper = async (selectedProject, parentSuiteId, data) => {
+  if (parentSuiteId === selectedProject.id) {
     // no need parent id for top level suite
     await testLink.createTestSuite({
       testprojectid: selectedProject.id,
@@ -84,7 +84,7 @@ export const getTestSuitesOfTestProjectApi = async selectedProject => {
 
   await Promise.all(
     firstLevelSuites.map(async suite => {
-      let suites = await getTestSuiteRecursively(testLink, suite);
+      let suites = await getTestSuiteRecursively(suite);
       if (suites.length > 0) {
         suites.forEach(suite => {
           suite.node = "Folder";
@@ -113,12 +113,12 @@ export const getTestSuiteRecursively = async testSuite => {
     // this means that the parent has only 1 child, there is no nested object
     if (childSuites.hasOwnProperty("id")) {
       result = [...result, childSuites];
-      temp = await getTestSuiteRecursively(testLink, childSuites);
+      temp = await getTestSuiteRecursively(childSuites);
     } else {
       await Promise.all(
         Object.values(childSuites).map(async suite => {
           result = [...result, suite]; //append to result to return, then recursively continue
-          temp = await getTestSuiteRecursively(testLink, suite);
+          temp = await getTestSuiteRecursively(suite);
         })
       );
     }
@@ -133,35 +133,44 @@ export const getTestSuiteRecursively = async testSuite => {
   return result;
 };
 
-export const updateTestSuiteHelper = (selectedProject, isTopLevel, parentSuiteId, data) => {
-  if (isTopLevel === true) {
-    testLink
+export const updateTestSuiteHelper = (selectedProject, parentSuiteId, data) => {
+  if (data.parent_id === selectedProject.id) {
+    // this is the top level top suite, no need to pass in parent id
+    return testLink
       .updateTestSuite({
         testprojectid: selectedProject.id,
         prefix: selectedProject.prefix,
-        testsuitename: data.suiteName,
-        details: data.suiteDetails
+        testsuitename: data.name,
+        details: data.details
       })
-      .then(message => console.log(message))
-      .catch(error => console.log("catch error at update test suite", error));
+      .then(message => {
+        return Promise.resolve(message);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   } else {
-    testLink
+    return testLink
       .updateTestSuite({
         testprojectid: selectedProject.id,
         prefix: selectedProject.prefix,
-        testsuitename: suiteName,
-        details: data.suiteDetails,
-        parentid: data.parentSuiteId
+        testsuitename: data.name,
+        details: data.details,
+        parentid: parentSuiteId
       })
-      .then(message => console.log(message))
-      .catch(error => console.log("catch error at update test suite", error));
+      .then(message => {
+        return Promise.resolve(message);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   }
 };
 
 /********************************************************* TEST CASES API ******************************************/
 export const getTestCasesOfTestProjectHelper = async testProject => {
-  const testSuites = await getTestSuitesOfTestProjectApi(testLink, testProject);
-  const testCasesFromTestSuites = await getTestCasesOfTestSuitesHelper(testLink, testSuites);
+  const testSuites = await getTestSuitesOfTestProjectApi(testProject);
+  const testCasesFromTestSuites = await getTestCasesOfTestSuitesHelper(testSuites);
   return testCasesFromTestSuites;
 };
 
@@ -304,7 +313,7 @@ export const getTestCaseHelper = async testCaseId => {
 };
 
 export const addTestCaseHelper = (selectedProject, selectedTestSuite, testCaseData) => {
-  testLink
+  return testLink
     .createTestCase({
       testcasename: testCaseData.name,
       testsuiteid: selectedTestSuite.id,
@@ -316,12 +325,18 @@ export const addTestCaseHelper = (selectedProject, selectedTestSuite, testCaseDa
       status: testCaseData.status,
       executiontype: testCaseData.execution_type
     })
-    .then(message => console.log("Successfully adding Test Case: ", message))
-    .catch(error => console.log("Catch error at add test case helper: ", error));
+    .then(message => {
+      console.log("Successfully adding Test Case: ", message);
+      return Promise.resolve(message);
+    })
+    .catch(error => {
+      console.log("Catch error at add test case helper: ", error);
+      return Promise.reject(error);
+    });
 };
 
 export const updateTestCaseWithoutStepsUpdateHelper = (selectedProject, testCaseData) => {
-  testLink
+  return testLink
     .updateTestCase({
       testcasename: testCaseData.name,
       testcaseexternalid: selectedProject.prefix + "-" + testCaseData.tc_external_id,

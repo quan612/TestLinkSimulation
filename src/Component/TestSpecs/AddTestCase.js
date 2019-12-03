@@ -8,7 +8,7 @@ import { postNumberOfTestCasesAction } from "../../Redux/testProject.action";
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;
 
-const AddTestCase = ({ selectedProject, selectedTestItem, onSave, onCancel }) => {
+const AddTestCase = ({ selectedProject, selectedTestSuite, onSave, onCancel }) => {
   const [testCaseObject, setTestCaseObject] = useState({
     name: "",
     summary: "",
@@ -16,6 +16,8 @@ const AddTestCase = ({ selectedProject, selectedTestItem, onSave, onCancel }) =>
     status: Object.values(status).find(key => key === status.DRAFT),
     execution_type: Object.values(execution_type).find(key => key === execution_type.MANUAL)
   });
+
+  const [validationError, setValidationError] = useState("");
 
   const dispatch = useDispatch();
 
@@ -26,26 +28,32 @@ const AddTestCase = ({ selectedProject, selectedTestItem, onSave, onCancel }) =>
     });
   };
 
-  const handleOnSave = async () => {
-    addTestCaseHelper(selectedProject, selectedTestItem, testCaseObject);
-    const testCasesOfProject = await getTestCasesOfTestProjectHelper(selectedProject);
-    dispatch(postNumberOfTestCasesAction(testCasesOfProject.length));
-    onSave();
+  const handleOnSave = () => {
+    addTestCaseHelper(selectedProject, selectedTestSuite, testCaseObject)
+      .then(async success => {
+        console.log(success);
+        const testCasesOfProject = await getTestCasesOfTestProjectHelper(selectedProject);
+        dispatch(postNumberOfTestCasesAction(testCasesOfProject.length));
+        onSave();
+      })
+      .catch(error => {
+        setValidationError(error);
+      });
   };
 
   return (
     <>
-      {selectedTestItem && <CardTitle>{`Test Suite: ${selectedTestItem.name}`}</CardTitle>}
+      {selectedTestSuite && <CardTitle>{`Test Suite: ${selectedTestSuite.name}`}</CardTitle>}
       <Card>
         <CardBody>
           <div className="panel-header">Title</div>
-          <Input type="text" name="name" id="example1" onChange={handleOnChange} />
-
+          <Input type="text" name="name" onChange={handleOnChange} />
+          {validationError && <span style={{ color: "red" }}>{validationError}</span>}
           <div className="panel-header">Summary</div>
-          <Input type="textarea" name="summary" id="example2" onChange={handleOnChange} />
+          <Input type="textarea" name="summary" onChange={handleOnChange} />
 
           <div className="panel-header">Additional Information</div>
-          <Input type="textarea" name="preconditions" id="example3" onChange={handleOnChange} />
+          <Input type="textarea" name="preconditions" onChange={handleOnChange} />
 
           <fieldset className="border mt-2">
             <div className="form-row mt-1">
