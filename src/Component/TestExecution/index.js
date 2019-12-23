@@ -3,23 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import ExecutionContainer from "./ExecutionContainer";
 import ListExecutionItems from "./ListExecutionItems";
 import ListFilterSetting from "./ListFilterSetting";
-import { NavLink } from "react-router-dom";
 import useBuildsFetching from "../CustomHooks/useBuildsFetching";
 import { selectBuildAction, clearCurrentBuildsAction } from "../../Redux/build.action";
 import { selectTestItemAction } from "../../Redux/actions";
+import CreateNewBuildContainer from "../Containers/CreateNewBuildLinkPage";
+import LoadingContainer from "../Containers/LoadingContainer";
 
 const TestExecution = () => {
-  let styles = {
-    maincontent: {
-      textalign: "left",
-      margin: "3px",
-      background: "#CDE",
-      padding: "3px 3px 50px 3px",
-      borderstyle: "groove",
-      borderwidth: "thin"
-    }
-  };
-
   const { selectedProject, selectTestPlan, selectedBuild, selectTestItem } = useSelector(state => ({
     selectedProject: state.selectedProject,
     selectTestPlan: state.selectTestPlan,
@@ -33,7 +23,6 @@ const TestExecution = () => {
 
   useEffect(() => {
     if (buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length > 0) {
-      console.log("Build of test plan found here");
       dispatch(selectBuildAction(buildsOfCurrentTestPlan[0]));
     }
 
@@ -41,41 +30,25 @@ const TestExecution = () => {
     return () => {
       dispatch(selectTestItemAction({}));
       dispatch(selectBuildAction({}));
-
-      if (buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length > 0) {
+      if (buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length > 1)
         dispatch(clearCurrentBuildsAction());
-      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject, selectTestPlan, buildsOfCurrentTestPlan]);
 
   if (isLoading) {
-    return <div>isLoading........</div>;
+    return <LoadingContainer label={"Fetching Builds"} />;
+  }
+  if (
+    (!isLoading && buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length < 1) ||
+    buildsOfCurrentTestPlan === ""
+  ) {
+    return <CreateNewBuildContainer selectTestPlan={selectTestPlan} />;
   }
 
-  // if (buildsOfCurrentTestPlan && (Object.keys(buildsOfCurrentTestPlan).length < 1 || buildsOfCurrentTestPlan == "")) {
-  if ((buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length < 1) || buildsOfCurrentTestPlan === "") {
+  if (!isLoading && selectedBuild && Object.keys(selectedBuild).length > 0) {
     return (
-      <div style={{ ...styles.maincontent }}>
-        <p>Execute Tests</p>
-        <p>
-          {selectTestPlan && (
-            <b> {`At least one Build (Active &amp; Open) is needed for this Test Plan<b> ${selectTestPlan.name}`}</b>
-          )}
-        </p>
-        <p>
-          <NavLink className="nav-inine-text px-1" to="/Builds">
-            Create A New Build
-          </NavLink>
-        </p>
-      </div>
-    );
-  }
-
-  if (selectedBuild && Object.keys(selectedBuild).length > 0) {
-    console.log(" there is a build");
-    return (
-      <div className="TestSpecsContainer workBody">
+      <div className="TestSpecsContainer">
         {/* 30% */}
         <div className="ListContainer h_100 d-flex flex-column">
           <h1>{"Test cases"}</h1>
@@ -93,7 +66,6 @@ const TestExecution = () => {
       </div>
     );
   } else {
-    console.log("should not go here");
     return null;
   }
 };

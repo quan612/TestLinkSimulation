@@ -50,7 +50,6 @@ const TreeLeaf = ({ child, node, onClick }) => {
         </div>
       );
     } else {
-      // or folder
       return (
         <div>
           <FontAwesomeIcon icon={toggle ? "angle-double-down" : "angle-right"} onClick={() => onToggle()} />

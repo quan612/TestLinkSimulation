@@ -39,14 +39,12 @@ const Nav = props => (
           </NavLink>
         </li>
 
-        {props.testPlans && (
-          <li className="nav-item">
-            <NavLink className="nav-text px-1" to="/Builds" activeClassName="active-link" exact>
-              <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-              <span>Builds</span>
-            </NavLink>
-          </li>
-        )}
+        <li className="nav-item">
+          <NavLink className="nav-text px-1" to="/Builds" activeClassName="active-link" exact>
+            <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
+            <span>Builds</span>
+          </NavLink>
+        </li>
 
         <li className="nav-item">
           <NavLink className="nav-text px-1" to="/AddCaseToPlan" activeClassName="active-link" exact>
@@ -55,14 +53,12 @@ const Nav = props => (
           </NavLink>
         </li>
 
-        {props.testPlans && (
-          <li className="nav-item">
-            <NavLink className="nav-text" to="/TestExecution" activeClassName="active-link" exact>
-              <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} />
-              <span>Executions</span>
-            </NavLink>
-          </li>
-        )}
+        <li className="nav-item">
+          <NavLink className="nav-text" to="/TestExecution" activeClassName="active-link" exact>
+            <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} />
+            <span>Executions</span>
+          </NavLink>
+        </li>
       </ul>
     </div>
   </div>
@@ -70,7 +66,6 @@ const Nav = props => (
 
 const mapStateToProps = state => {
   return {
-    testPlans: state.testPlans,
     selectedProject: state.selectedProject
   };
 };

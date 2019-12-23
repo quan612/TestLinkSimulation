@@ -1,36 +1,32 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadTestProjectsAction, deleteTestProjectAction } from "../../Redux/testProject.action";
-import AddTestProject from "./AddTestProject";
+import AddTestProjectContainer from "./AddTestProjectContainer";
 import TestProjectsManagement from "./TestProjectsManagement";
 
 const TestProjectContainer = () => {
-  const { isLoading, testProjects } = useSelector(state => ({
-    isLoading: state.isProjectLoading,
+  const { isProjectLoading, testProjects } = useSelector(state => ({
+    isProjectLoading: state.isProjectLoading,
     testProjects: state.testProjects
   }));
 
   const dispatch = useDispatch();
-  const [isCreateProject, setCreateProject] = useState(false);
+  const [isAddProject, setAddProject] = useState(false);
 
   const handleDeleteSubmit = async project => {
     await dispatch(deleteTestProjectAction(project));
     await dispatch(loadTestProjectsAction());
   };
 
-  return isCreateProject ? (
-    <div className="workBody">
-      <AddTestProject onCancel={() => setCreateProject(false)} />
-    </div>
+  return isAddProject ? (
+    <AddTestProjectContainer onClose={() => setAddProject(false)} />
   ) : (
-    <div className="workBody">
-      <TestProjectsManagement
-        isLoading={isLoading}
-        testProjects={testProjects}
-        handleOnAdd={() => setCreateProject(true)}
-        handleOnDelete={project => handleDeleteSubmit(project)}
-      />
-    </div>
+    <TestProjectsManagement
+      isProjectLoading={isProjectLoading}
+      testProjects={testProjects}
+      handleOnAdd={() => setAddProject(true)}
+      handleOnDelete={project => handleDeleteSubmit(project)}
+    />
   );
 };
 

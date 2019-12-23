@@ -5,34 +5,16 @@ import EditTestSuite from "./EditTestSuite";
 import DeleteTestSuite from "./DeleteTestSuite";
 import TestSuiteDetails from "./TestSuiteDetails";
 import AddTestCase from "./AddTestCase";
-import { Container, Row, Col } from "reactstrap";
 
 const TestSuiteContainer = ({ selectedTestItem }) => {
   const [isEditTestSuite, setEditTestSuite] = useState(false);
   const [isAddTestSuite, setAddTestSuite] = useState(false);
   const [isDeleteTestSuite, setDeleteTestSuite] = useState(false);
-  const [isCreateCase, setCreateCase] = useState(false);
+  const [isAddTestCase, setAddTestCase] = useState(false);
 
-  const { testLink, selectedProject } = useSelector(state => ({
-    testLink: state.testLink,
+  const { selectedProject } = useSelector(state => ({
     selectedProject: state.selectedProject
   }));
-
-  const handleOnAddTestSuite = () => {
-    setAddTestSuite(true);
-  };
-
-  const handleOnEditTestSuite = () => {
-    setEditTestSuite(true);
-  };
-
-  const handleOnDeleteTestSuite = () => {
-    setDeleteTestSuite(true);
-  };
-
-  const handleOnAddTestCase = () => {
-    setCreateCase(true);
-  };
 
   const handleRenderComponents = () => {
     if (isAddTestSuite) {
@@ -40,8 +22,7 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
         <AddTestSuite
           selectedProject={selectedProject}
           selectedTestItem={selectedTestItem}
-          onSave={() => setAddTestSuite(false)}
-          onCancel={() => setAddTestSuite(false)}
+          onClose={() => setAddTestSuite(false)}
         />
       );
     }
@@ -51,22 +32,20 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
         <EditTestSuite
           selectedProject={selectedProject}
           selectedTestSuite={selectedTestItem}
-          onSave={() => setEditTestSuite(false)}
-          onCancel={() => setEditTestSuite(false)}
+          onClose={() => setEditTestSuite(false)}
         />
       );
     }
 
     if (isDeleteTestSuite)
-      return <DeleteTestSuite selectedTestItem={selectedTestItem} onCancel={() => setDeleteTestSuite(false)} />;
+      return <DeleteTestSuite selectedTestItem={selectedTestItem} onClose={() => setDeleteTestSuite(false)} />;
 
-    if (isCreateCase) {
+    if (isAddTestCase) {
       return (
         <AddTestCase
           selectedProject={selectedProject}
           selectedTestSuite={selectedTestItem}
-          onSave={() => setCreateCase(false)}
-          onCancel={() => setCreateCase(false)}
+          onClose={() => setAddTestCase(false)}
         />
       );
     }
@@ -74,21 +53,15 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
     return (
       <TestSuiteDetails
         selectedSuite={selectedTestItem}
-        onCreateTestSuite={() => handleOnAddTestSuite()}
-        onEditTestSuite={() => handleOnEditTestSuite()}
-        onDeleteTestSuite={() => handleOnDeleteTestSuite()}
-        OnCreateTestCase={() => handleOnAddTestCase()}
+        onAddTestSuite={() => setAddTestSuite(true)}
+        onEditTestSuite={() => setEditTestSuite(true)}
+        onDeleteTestSuite={() => setDeleteTestSuite(true)}
+        OnAddTestCase={() => setAddTestCase(true)}
       />
     );
   };
 
-  return (
-    <Container className="h_100 mw-99">
-      <Row className="h-100">
-        <Col className="offset-lg-0 offset-md-3">{handleRenderComponents()}</Col>
-      </Row>
-    </Container>
-  );
+  return { handleRenderComponents };
 };
 
 export default TestSuiteContainer;

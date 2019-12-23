@@ -8,7 +8,7 @@ import { postNumberOfTestCasesAction } from "../../Redux/testProject.action";
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;
 
-const AddTestCase = ({ selectedProject, selectedTestSuite, onSave, onCancel }) => {
+const AddTestCase = ({ selectedProject, selectedTestSuite, onClose }) => {
   const [testCaseObject, setTestCaseObject] = useState({
     name: "",
     summary: "",
@@ -34,7 +34,7 @@ const AddTestCase = ({ selectedProject, selectedTestSuite, onSave, onCancel }) =
         console.log(success);
         const testCasesOfProject = await getTestCasesOfTestProjectHelper(selectedProject);
         dispatch(postNumberOfTestCasesAction(testCasesOfProject.length));
-        onSave();
+        onClose();
       })
       .catch(error => {
         setValidationError(error);
@@ -101,7 +101,7 @@ const AddTestCase = ({ selectedProject, selectedTestSuite, onSave, onCancel }) =
             <Button color="success" className="mr-2" onClick={() => handleOnSave()}>
               Save
             </Button>
-            <Button color="secondary" onClick={onCancel}>
+            <Button color="secondary" onClick={() => onClose()}>
               Cancel
             </Button>
           </div>

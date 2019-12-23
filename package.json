@@ -14,6 +14,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "formik": "^2.0.3",
+    "he": "^1.2.0",
     "logrocket": "^1.0.3",
     "moment": "^2.24.0",
     "react": "^16.8.6",
@@ -29,7 +30,6 @@
     "reactstrap": "^8.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "sanitize-html": "^1.20.1",
     "styled-components": "^4.3.2",
     "testlink-xmlrpc": "^1.9.18-5",
     "yup": "^0.27.0"

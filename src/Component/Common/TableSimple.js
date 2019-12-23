@@ -1,35 +1,17 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalYesNo from "../ModalYesNo";
-import { BeatLoader } from "react-spinners";
-
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardImg,
-  CardTitle,
-  Label,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-  CustomInput,
-  Table
-} from "reactstrap";
+import React from "react";
+import { Table } from "reactstrap";
+var he = require("he");
 
 const TableSimple = ({ tableItems, columns }) => {
   const handleRenderTableItems = (item, key) => {
-    // console.log(key, item[key]);
     if (key === "actions" || key === "expected_results") {
-      return <td key={key} style={{ width: columns[key].width }} dangerouslySetInnerHTML={{ __html: item[key] }}></td>;
+      return (
+        <td
+          key={key}
+          style={{ width: columns[key].width }}
+          dangerouslySetInnerHTML={{ __html: he.decode(item[key]) }}
+        ></td>
+      );
     } else {
       return (
         <td key={key} style={{ width: columns[key].width }}>
@@ -51,15 +33,14 @@ const TableSimple = ({ tableItems, columns }) => {
         </tr>
       </thead>
       <tbody>
-        {tableItems
-          ? tableItems.map(item => {
-              return (
-                <tr className="d-flex" key={item.id}>
-                  {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-                </tr>
-              );
-            })
-          : null}
+        {tableItems &&
+          tableItems.map(item => {
+            return (
+              <tr className="d-flex" key={item.id}>
+                {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
+              </tr>
+            );
+          })}
       </tbody>
     </Table>
   );

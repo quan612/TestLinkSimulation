@@ -1,7 +1,6 @@
 //todo: add validation to date that is not before today
 import React from "react";
 import { addBuildAction, loadBuildsAsyncAction } from "../../Redux/build.action";
-import TableButtonHeader from "../TableButtonHeader";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -25,10 +24,11 @@ import {
   Container,
   Row,
   Col,
-  CustomInput
+  CustomInput,
+  Button
 } from "reactstrap";
 
-const AddBuildContainer = ({ onCancel }) => {
+const AddBuildContainer = ({ onClose }) => {
   const { selectTestPlan } = useSelector(state => ({
     selectTestPlan: state.selectTestPlan
   }));
@@ -48,9 +48,9 @@ const AddBuildContainer = ({ onCancel }) => {
           if (data.status === false) {
             setErrors({ name: data.message });
           } else {
-            console.log("Create build success ", data.message);
+            console.log("Add build success ", data.message);
             dispatch(loadBuildsAsyncAction(selectTestPlan));
-            onCancel();
+            onClose();
           }
         });
       })
@@ -76,7 +76,7 @@ const AddBuildContainer = ({ onCancel }) => {
         validateOnChange={false}
         validateOnBlur={false}
       >
-        {formikProps => <BuildForm formikProps={formikProps} onCancel={onCancel} />}
+        {formikProps => <BuildForm formikProps={formikProps} onClose={onClose} />}
       </Formik>
     </div>
   );
@@ -84,7 +84,7 @@ const AddBuildContainer = ({ onCancel }) => {
 
 export default AddBuildContainer;
 
-const BuildForm = ({ formikProps, onCancel }) => {
+const BuildForm = ({ formikProps, onClose }) => {
   const styles = {
     errorText: {
       color: "red",
@@ -183,8 +183,12 @@ const BuildForm = ({ formikProps, onCancel }) => {
                     </InputGroup>
                   </CardBody>
                   <CardFooter>
-                    <TableButtonHeader type="submit" label="Submit" />
-                    <TableButtonHeader onClick={onCancel} label="Cancel" />
+                    <Button className="mr-2" color="success" type="submit" label="Submit">
+                      Submit
+                    </Button>
+                    <Button color="secondary" onClick={onClose} label="Cancel">
+                      Cancel
+                    </Button>
                   </CardFooter>
                 </Card>
               </Col>

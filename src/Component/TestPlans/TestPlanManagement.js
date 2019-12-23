@@ -33,11 +33,11 @@ const COLUMNS = {
   }
 };
 
-const TestPlanManagement = ({ isLoading, testPlans, handleOnAdd, handleOnDelete }) => {
+const TestPlanManagement = ({ selectedProject, isTestPlanLoading, testPlans, handleOnAdd, handleOnDelete }) => {
   return (
     <TableWithSearchContainer
-      isLoading={isLoading}
-      title="Test Plan Management"
+      isLoading={isTestPlanLoading}
+      title={selectedProject && `Test Plans Management - Test Project: ${selectedProject.name}`}
       tableItems={testPlans}
       handleOnAdd={handleOnAdd}
       handleOnDelete={handleOnDelete}

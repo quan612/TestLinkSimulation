@@ -1,7 +1,7 @@
-import { Card, CardBody, Container, Row, Col } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import React from "react";
 
-const DeleteTestSuite = ({ selectedTestItem, onCancel }) => {
+const DeleteTestSuite = ({ selectedTestItem, onClose }) => {
   return (
     <Card>
       <h4>{selectedTestItem && <b>{`Delete Test Suite: ${selectedTestItem.name}`}</b>}</h4>
@@ -15,7 +15,7 @@ const DeleteTestSuite = ({ selectedTestItem, onCancel }) => {
             <button type="button" className="btn btn-outline-danger mr-2" disabled>
               Delete This Suite
             </button>
-            <button type="button" className="btn btn-outline-info" onClick={onCancel}>
+            <button type="button" className="btn btn-outline-info" onClick={() => onClose()}>
               Cancel
             </button>
           </div>

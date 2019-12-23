@@ -6,7 +6,7 @@ import Home from "./Component/Home";
 import TestSpecsContainer from "./Component/TestSpecs/index";
 import TestProjectContainer from "./Component/TestProjects/TestProjectContainer";
 import TestPlansContainer from "./Component/TestPlans/TestPlansContainer";
-import BuildsContainer from "./Component/TestPlans/BuildsContainer";
+import BuildsContainer from "./Component/Builds/BuildsContainer";
 import TestExecution from "./Component/TestExecution/";
 import AddTestCaseToTestPlanContainer from "./Component/AddTestCasesToTestPlan/AddTestCaseToTestPlanContainer";
 
@@ -17,7 +17,7 @@ const App = () => {
     <div className="app">
       <BrowserRouter>
         <Nav />
-        <div className="body-container">
+        <div className="body-container workBody">
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/TestProjects" render={() => <TestProjectContainer />} />

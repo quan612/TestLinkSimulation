@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { selectTestPlanAction } from "../../Redux/testPlan.action";
-import DropDown from "../DropDown";
+import DropDown from "../Common/DropDown";
 import withTestPlansFetching from "../HOC/withTestPlansFetching";
 
-const TestPlanDropDown = ({ isLoading, testPlans }) => {
+const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
   const [selectedItem, setSelectedItem] = useState({ name: "" });
   let dispatch = useDispatch();
 
@@ -15,6 +15,8 @@ const TestPlanDropDown = ({ isLoading, testPlans }) => {
     } else {
       setSelectedItem({ name: "There is no test plan" });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testPlans]);
 
   const handleOnChangeTestPlan = eventKey => {
@@ -27,7 +29,7 @@ const TestPlanDropDown = ({ isLoading, testPlans }) => {
       <label className="mr-1 text-light">Test Plan: </label>
       {
         <DropDown
-          title={isLoading ? "Fetching Test Plan..." : selectedItem.name}
+          title={isTestPlanLoading ? "Fetching Test Plan..." : selectedItem.name}
           items={testPlans}
           onSelect={handleOnChangeTestPlan}
         />

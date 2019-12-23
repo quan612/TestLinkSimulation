@@ -11,7 +11,8 @@ import {
 
 const initialState = {
   authorLogin: "Quan.Huynh",
-  error: null
+  error: null,
+  isTestPlanLoading: false
 };
 
 const asyncReducer = (state = initialState, action) => {
@@ -53,7 +54,6 @@ const asyncReducer = (state = initialState, action) => {
         error: action.payload
       };
 
-    // good below
     case SELECT_TEST_PLAN:
       return {
         ...state,
@@ -61,23 +61,22 @@ const asyncReducer = (state = initialState, action) => {
       };
 
     case LOAD_TEST_PLANS:
-      return { ...state, isLoading: true };
+      return { ...state, isTestPlanLoading: true };
 
     case LOAD_TEST_PLANS_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isTestPlanLoading: false,
         testPlans: action.payload
       };
 
     case LOAD_TEST_PLANS_ERROR:
       return {
         ...state,
-        isLoading: false,
+        isTestPlanLoading: false,
         error: action.payload
       };
 
-    ///good below
     case SELECT_BUILD:
       return {
         ...state,

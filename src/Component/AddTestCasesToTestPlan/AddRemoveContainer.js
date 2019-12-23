@@ -2,35 +2,52 @@ import React, { useState, useEffect } from "react";
 import { getTestCasesOfSelectedTestSuiteHelper, getTestCasesForCurrentTestPlanApi } from "../../Redux/apiHelpers";
 import { Card, CardBody, Container, Row, Col } from "reactstrap";
 import AddRemoveDetails from "./AddRemoveDetails";
+var he = require("he");
 
-function AddRemoveContainer({ selectedTestSuite, selectTestPlan }) {
+const getTestCasesOfSelectedTestSuiteTestPlan = async (selectedTestSuite, selectTestPlan) => {
+  const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteHelper(selectedTestSuite);
+  const testCasesOfTestPlan = await getTestCasesForCurrentTestPlanApi(selectTestPlan);
+
+  // here we determine if test cases in selected test suite are linked to test plan?
+  let getIdsOfAllTestCasesOfTestPlan = testCasesOfTestPlan.map(testcase => testcase.tcase_id);
+  testCasesOfTestSuite.forEach(testCaseInSuite => {
+    if (getIdsOfAllTestCasesOfTestPlan.includes(testCaseInSuite.id)) {
+      testCaseInSuite.chilrenOfThisTestPlan = true;
+      testCaseInSuite.checked = true;
+    } else {
+      testCaseInSuite.chilrenOfThisTestPlan = false;
+    }
+  });
+  return testCasesOfTestSuite;
+};
+
+function AddRemoveContainer({ selectedProject, selectedTestSuite, selectTestPlan }) {
   const [listOfTestCases, setListOfTestCases] = useState([]);
 
   useEffect(() => {
-    const getTestCasesOfSelectedSuite = async () => {
-      if (selectedTestSuite && Object.keys(selectedTestSuite).length > 0) {
-        const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteHelper(selectedTestSuite);
-        const testCasesOfTestPlan = await getTestCasesForCurrentTestPlanApi(selectTestPlan);
-
-        // here we determine if test cases in selected test suite are linked to test plan?
-        let getIdsOfAllTestCasesOfTestPlan = testCasesOfTestPlan.map(testcase => testcase.tcase_id);
-        testCasesOfTestSuite.forEach(testCaseInSuite => {
-          if (getIdsOfAllTestCasesOfTestPlan.includes(testCaseInSuite.id)) {
-            testCaseInSuite.chilrenOfThisTestPlan = true;
-            testCaseInSuite.checked = true;
-          } else {
-            testCaseInSuite.chilrenOfThisTestPlan = false;
-          }
-        });
-        // console.log("data", data);
+    const getData = async () => {
+      if (
+        selectedTestSuite &&
+        Object.keys(selectedTestSuite).length > 0 &&
+        selectedProject.id !== selectedTestSuite.id
+      ) {
+        const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteTestPlan(selectedTestSuite, selectTestPlan);
         setListOfTestCases([...testCasesOfTestSuite]);
       }
     };
-    getTestCasesOfSelectedSuite();
-  }, [selectedTestSuite]);
+    setListOfTestCases([]);
+    getData();
+  }, [selectedProject, selectedTestSuite, selectTestPlan]);
 
-  if (selectedTestSuite && listOfTestCases) {
-    return <AddRemoveDetails listItems={listOfTestCases} selectedTestItem={selectedTestSuite} />;
+  if (listOfTestCases && Object.keys(listOfTestCases).length > 0) {
+    return (
+      <AddRemoveDetails
+        selectedProject={selectedProject}
+        selectTestPlan={selectTestPlan}
+        listItems={listOfTestCases}
+        selectedTestSuite={selectedTestSuite}
+      />
+    );
   }
   //default page to load current test plan details - mostly done
   else
@@ -43,7 +60,10 @@ function AddRemoveContainer({ selectedTestSuite, selectTestPlan }) {
               <CardBody>
                 {selectTestPlan && <div className="panel-header">{`Test plan: ${selectTestPlan.name} `}</div>}
                 {selectTestPlan && (
-                  <div className="panel-content" dangerouslySetInnerHTML={{ __html: selectTestPlan.notes }}></div>
+                  <div
+                    className="panel-content"
+                    dangerouslySetInnerHTML={{ __html: he.decode(selectTestPlan.notes) }}
+                  ></div>
                 )}
               </CardBody>
             </Card>

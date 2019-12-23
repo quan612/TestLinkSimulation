@@ -5,8 +5,8 @@ import AddTestPlanContainer from "./AddTestPlanContainer";
 import TestPlanManagement from "./TestPlanManagement";
 
 const TestPlansContainer = () => {
-  const { isLoading, selectedProject, testPlans } = useSelector(state => ({
-    isLoading: state.isLoading,
+  const { isTestPlanLoading, selectedProject, testPlans } = useSelector(state => ({
+    isTestPlanLoading: state.isTestPlanLoading,
     selectedProject: state.selectedProject,
     testPlans: state.testPlans
   }));
@@ -20,21 +20,15 @@ const TestPlansContainer = () => {
   };
 
   return isCreateTestPlan ? (
-    <div className="workBody">
-      <AddTestPlanContainer onCancel={() => setCreateTestPlan(false)} />
-    </div>
+    <AddTestPlanContainer onCancel={() => setCreateTestPlan(false)} />
   ) : (
-    <div className="workBody">
-      <h1 className="mt-10 title">
-        Test Plan Management - Test Project: {selectedProject ? selectedProject.name : null}
-      </h1>
-      <TestPlanManagement
-        isLoading={isLoading}
-        testPlans={testPlans}
-        handleOnAdd={() => setCreateTestPlan(true)}
-        handleOnDelete={testPlan => handleDeleteSubmit(testPlan)}
-      />
-    </div>
+    <TestPlanManagement
+      selectedProject={selectedProject}
+      isTestPlanLoading={isTestPlanLoading}
+      testPlans={testPlans}
+      handleOnAdd={() => setCreateTestPlan(true)}
+      handleOnDelete={testPlan => handleDeleteSubmit(testPlan)}
+    />
   );
 };
 

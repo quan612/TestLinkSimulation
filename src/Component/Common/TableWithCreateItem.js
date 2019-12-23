@@ -1,29 +1,6 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalYesNo from "../ModalYesNo";
-import { BeatLoader } from "react-spinners";
-
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardImg,
-  CardTitle,
-  Label,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-  CustomInput,
-  Table
-} from "reactstrap";
+import { Button, Input, Table } from "reactstrap";
+var he = require("he");
 
 const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
   const [stepData, setStepData] = useState({
@@ -42,7 +19,6 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
   const index = tableItems.length;
 
   const handleRenderTableItems = (item, key) => {
-    //console.log(key, item[key]);
     if (key === "step_number") {
       return (
         <td key={key} style={{ width: columns[key].width }}>
@@ -51,7 +27,13 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
       );
     }
     if (key === "actions" || key === "expected_results") {
-      return <td key={key} style={{ width: columns[key].width }} dangerouslySetInnerHTML={{ __html: item[key] }}></td>;
+      return (
+        <td
+          key={key}
+          style={{ width: columns[key].width }}
+          dangerouslySetInnerHTML={{ __html: he.decode(item[key]) }}
+        ></td>
+      );
     } else {
       return (
         <td key={key} style={{ width: columns[key].width }}>
@@ -73,15 +55,14 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
           </tr>
         </thead>
         <tbody>
-          {tableItems
-            ? tableItems.map(item => {
-                return (
-                  <tr className="d-flex" key={item.id}>
-                    {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-                  </tr>
-                );
-              })
-            : null}
+          {tableItems &&
+            tableItems.map(item => {
+              return (
+                <tr className="d-flex" key={item.id}>
+                  {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
+                </tr>
+              );
+            })}
           <tr className="d-flex">
             <td style={{ width: "3%" }}>{index + 1}</td>
             <td style={{ width: "44%" }}>

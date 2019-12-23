@@ -2,9 +2,9 @@ import React from "react";
 import useTestPlanFetching from "../CustomHooks/useTestPlansFetching";
 
 const withTestPlanFetching = BaseComponent => ({ selectedProject }) => {
-  const { isLoading, testPlans } = useTestPlanFetching(selectedProject);
+  const { isTestPlanLoading, testPlans } = useTestPlanFetching(selectedProject);
 
-  return <BaseComponent isLoading={isLoading} testPlans={testPlans} />;
+  return <BaseComponent isTestPlanLoading={isTestPlanLoading} testPlans={testPlans} />;
 };
 
 export default withTestPlanFetching;

@@ -8,8 +8,6 @@ const ListFilter = () => {
     setToggle(!toggle);
   };
 
-  // useEffect(() => {}, []);
-
   return (
     <div>
       <div className="panel-header">

@@ -2,7 +2,7 @@ import { Card, CardHeader, CardBody } from "reactstrap";
 import React, { useState } from "react";
 import { updateTestSuiteHelper } from "../../Redux/apiHelpers";
 
-const EditTestSuite = ({ selectedProject, selectedTestSuite, onSave, onCancel }) => {
+const EditTestSuite = ({ selectedProject, selectedTestSuite, onClose }) => {
   const [data, setData] = useState({
     name: selectedTestSuite.name,
     details: selectedTestSuite.details,
@@ -23,7 +23,7 @@ const EditTestSuite = ({ selectedProject, selectedTestSuite, onSave, onCancel })
     updateTestSuiteHelper(selectedProject, selectedTestSuite.parent_id, data)
       .then(message => {
         console.log(message);
-        onSave();
+        onClose();
       })
       .catch(error => {
         console.log("catch error at update test suite helper", error);
@@ -53,7 +53,7 @@ const EditTestSuite = ({ selectedProject, selectedTestSuite, onSave, onCancel })
             <button type="button" className="btn btn-outline-success mr-2" onClick={() => handleOnSave()}>
               Save
             </button>
-            <button type="button" className="btn btn-outline-info" onClick={onCancel}>
+            <button type="button" className="btn btn-outline-info" onClick={() => onClose()}>
               Cancel
             </button>
           </div>

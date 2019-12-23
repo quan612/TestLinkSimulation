@@ -1,6 +1,5 @@
 import React from "react";
 import TableWithSearchContainer from "../Containers/TableWithSearchContainer";
-import WithLoading from "../HOC/withLoading";
 
 const COLUMNS = {
   name: {
@@ -29,11 +28,11 @@ const COLUMNS = {
   }
 };
 
-const BuildsManagement = ({ isLoading, builds, handleOnAdd, handleOnDelete }) => {
+const BuildsManagement = ({ isLoading, selectTestPlan, builds, handleOnAdd, handleOnDelete }) => {
   return (
     <TableWithSearchContainer
       isLoading={isLoading}
-      title="Builds Management"
+      title={selectTestPlan && `Builds Management - Test Plan ${selectTestPlan.name}`}
       tableItems={builds}
       handleOnAdd={handleOnAdd}
       handleOnDelete={handleOnDelete}
@@ -41,5 +40,5 @@ const BuildsManagement = ({ isLoading, builds, handleOnAdd, handleOnDelete }) =>
     />
   );
 };
-const BuildsManagementWithLoading = WithLoading(BuildsManagement);
-export default BuildsManagementWithLoading;
+
+export default BuildsManagement;

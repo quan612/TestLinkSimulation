@@ -18,7 +18,7 @@ const COLUMNS = {
     label: "Issue Tracker",
     width: "9%"
   },
-  reqmgr_integration_enabled: {
+  requirementsEnabled: {
     label: "Requirement",
     width: "8%"
   },
@@ -36,10 +36,11 @@ const COLUMNS = {
   }
 };
 
-const TestProjectsManagement = ({ isLoading, testProjects, handleOnAdd, handleOnDelete }) => {
+const TestProjectsManagement = ({ isProjectLoading, testProjects, handleOnAdd, handleOnDelete }) => {
   return (
     <TableWithSearchContainer
-      isLoading={isLoading}
+      isLoading={isProjectLoading}
+      title="Test Projects Management"
       tableItems={testProjects}
       handleOnAdd={handleOnAdd}
       handleOnDelete={handleOnDelete}

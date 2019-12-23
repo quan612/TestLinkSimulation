@@ -3,9 +3,9 @@ import { loadTestPlansAction } from "../../Redux/testPlan.action";
 import { useSelector, useDispatch } from "react-redux";
 
 const useTestPlanFetching = selectedProject => {
-  const { isLoading, testPlans } = useSelector(state => ({
+  const { isTestPlanLoading, testPlans } = useSelector(state => ({
     testPlans: state.testPlans,
-    isLoading: state.isLoading
+    isTestPlanLoading: state.isTestPlanLoading
   }));
 
   const dispatch = useDispatch();
@@ -13,13 +13,15 @@ const useTestPlanFetching = selectedProject => {
   useEffect(() => {
     if (selectedProject) {
       const fetchTestPlans = async () => {
+        // console.log("Loading test plans ");
         await dispatch(loadTestPlansAction(selectedProject));
       };
       fetchTestPlans();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
 
-  return { isLoading, testPlans };
+  return { isTestPlanLoading, testPlans };
 };
 
 export default useTestPlanFetching;

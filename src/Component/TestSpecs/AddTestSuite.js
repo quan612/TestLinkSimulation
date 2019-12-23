@@ -6,7 +6,7 @@ import { postNumberOfTestSuitesAction } from "../../Redux/testProject.action";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 
-const AddTestSuite = ({ selectedProject, selectedTestItem, onSave, onCancel }) => {
+const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
   const [testSuiteObject, setTestSuiteObject] = useState({
     name: "",
     details: ""
@@ -26,7 +26,7 @@ const AddTestSuite = ({ selectedProject, selectedTestItem, onSave, onCancel }) =
       await addTestSuiteHelper(selectedProject, selectedTestItem.id, testSuiteObject);
       const testSuites = await getTestSuitesOfTestProjectApi(selectedProject);
       dispatch(postNumberOfTestSuitesAction(testSuites.length));
-      onSave();
+      onClose();
     } catch (error) {
       console.error("Catch error at handle on Save test suite function ", error);
     }
@@ -57,7 +57,7 @@ const AddTestSuite = ({ selectedProject, selectedTestItem, onSave, onCancel }) =
             <Button className="btn btn-success" onClick={() => handleOnSave()}>
               Create
             </Button>
-            <Button className="btn btn-secondary ml-2" onClick={() => onCancel()}>
+            <Button className="btn btn-secondary ml-2" onClick={() => onClose()}>
               Cancel
             </Button>
           </div>

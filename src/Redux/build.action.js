@@ -28,7 +28,7 @@ export const loadBuildsAsyncAction = testPlan => {
   return async dispatch => {
     dispatch(loadingBuilds());
     return loadBuildsApi(testPlan)
-      .then(builds => dispatch(loadBuildsSuccess(builds)))
+      .then(builds => setTimeout(() => dispatch(loadBuildsSuccess(builds)), 1000))
       .catch(error => console.log("Catch error at loadBuildsAsyncAction ", error));
   };
 };

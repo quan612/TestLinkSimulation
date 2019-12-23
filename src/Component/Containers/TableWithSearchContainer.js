@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalYesNo from "../ModalYesNo";
-import { BeatLoader } from "react-spinners";
+import ModalYesNo from "../Common/ModalYesNo";
 import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col, Table } from "reactstrap";
-
-const styles = {
-  spinner: {
-    display: "block",
-    margin: "0 auto",
-    horizontalAlign: "center"
-  }
-};
+import LoadingContainer from "./LoadingContainer";
+var he = require("he");
 
 const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handleOnAdd, handleOnDelete }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -35,20 +28,48 @@ const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handl
   };
 
   const handleRenderTableItems = (item, key) => {
-    if (key === "Utils") {
-      return (
-        <td key={key} style={{ width: columns[key].width }}>
-          <FontAwesomeIcon icon="trash-alt" style={{ color: "red" }} onClick={() => handleDeleteItem(item)} />
-        </td>
-      );
-    } else if (key === "notes") {
-      return <td key={key} style={{ width: columns[key].width }} dangerouslySetInnerHTML={{ __html: item.notes }}></td>;
-    } else {
-      return (
-        <td key={key} style={{ width: columns[key].width }}>
-          {item[key]}
-        </td>
-      );
+    switch (key) {
+      case "Utils":
+        return (
+          <td key={key} style={{ width: columns[key].width }}>
+            <FontAwesomeIcon icon="trash-alt" style={{ color: "red" }} onClick={() => handleDeleteItem(item)} />
+          </td>
+        );
+
+      case "notes":
+        return (
+          <td
+            key={key}
+            style={{ width: columns[key].width }}
+            dangerouslySetInnerHTML={{ __html: he.decode(item.notes) }}
+          ></td>
+        );
+
+      case "active":
+      case "is_public":
+      case "is_open":
+        return (
+          <td key={key} style={{ width: columns[key].width }}>
+            {item[key] === "1" ? (
+              <FontAwesomeIcon icon="check-circle" style={{ color: "#5cd55c" }} size={"lg"} />
+            ) : null}
+          </td>
+        );
+
+      case "requirementsEnabled":
+        return (
+          <td key={key} style={{ width: columns[key].width }}>
+            {item.opt[key] === 1 ? (
+              <FontAwesomeIcon icon="check-circle" style={{ color: "#5cd55c" }} size={"lg"} />
+            ) : null}
+          </td>
+        );
+      default:
+        return (
+          <td key={key} style={{ width: columns[key].width }}>
+            {item[key]}
+          </td>
+        );
     }
   };
 
@@ -74,42 +95,34 @@ const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handl
             <CardBody>
               <Row>
                 <Col className="mt-5 col-12">
-                  <Table>
-                    <thead className="bg-default">
-                      <tr className="d-flex">
-                        {Object.keys(columns).map(key => (
-                          <th key={key} style={{ width: columns[key].width }}>
-                            {columns[key].label}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {isLoading ? (
-                        <tr>
-                          <td>
-                            <BeatLoader
-                              css={{ ...styles.spinner }}
-                              sizeUnit={"px"}
-                              size={25}
-                              color={"#9B9B9B"}
-                              loading={isLoading}
-                            />
-                          </td>
+                  {isLoading ? (
+                    <LoadingContainer label={"Fetching Table Data"} />
+                  ) : (
+                    <Table>
+                      <thead className="bg-default">
+                        <tr className="d-flex">
+                          {Object.keys(columns).map(key => (
+                            <th key={key} style={{ width: columns[key].width }}>
+                              {columns[key].label}
+                            </th>
+                          ))}
                         </tr>
-                      ) : tableItems && Object.keys(tableItems).length > 0 ? (
-                        tableItems
-                          .filter(value => value.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
-                          .map(item => {
-                            return (
-                              <tr className="d-flex" key={item.id}>
-                                {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-                              </tr>
-                            );
-                          })
-                      ) : null}
-                    </tbody>
-                  </Table>
+                      </thead>
+                      <tbody>
+                        {tableItems && Object.keys(tableItems).length > 0
+                          ? tableItems
+                              .filter(value => value.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
+                              .map(item => {
+                                return (
+                                  <tr className="d-flex" key={item.id}>
+                                    {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
+                                  </tr>
+                                );
+                              })
+                          : null}
+                      </tbody>
+                    </Table>
+                  )}
                 </Col>
               </Row>
             </CardBody>

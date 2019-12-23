@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import withTestProjectsFetching from "../HOC/withTestProjectsFetching";
 import { useDispatch } from "react-redux";
 import { selectTestProjectAction } from "../../Redux/testProject.action";
-import DropDown from "../DropDown";
+import DropDown from "../Common/DropDown";
 
 const TestProjectDropDown = ({ isLoading, testProjects }) => {
   const [selectedItem, setSelectedItem] = useState({ name: "" });
