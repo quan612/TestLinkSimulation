@@ -63,125 +63,121 @@ export default function TestCaseDetails({ selectedTestCase }) {
     );
   } else {
     return (
-      <Container className="mw-99">
-        <Row>
-          <Col className="offset-lg-0 offset-md-3">
-            <h1>{"Test Case Details"}</h1>
-            <Card>
-              <CardBody>
-                <div className="test-detail-case-title">{`Test Case: ${selectedTestCase.name}`}</div>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardBody>
+      <>
+        <h1>{"Test Case Details"}</h1>
+        <Card>
+          <CardBody>
+            <div className="test-detail-case-title">{`Test Case: ${selectedTestCase.name}`}</div>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            <FontAwesomeIcon
+              icon="tools"
+              size={"2x"}
+              color={"white"}
+              style={{ animation: `spin720 1s ease`, animationDelay: `0.3s` }}
+              data-toggle="collapse"
+              href="#testSuiteUtilities"
+            />
+            <div className="collapse" id="testSuiteUtilities">
+              <form>
+                {/* <div> */}
+                <label>Test Case Operations:</label>
                 <FontAwesomeIcon
-                  icon="tools"
-                  size={"2x"}
-                  color={"white"}
-                  style={{ animation: `spin720 1s ease`, animationDelay: `0.3s` }}
-                  data-toggle="collapse"
-                  href="#testSuiteUtilities"
+                  className="ml-1"
+                  icon="pencil-alt"
+                  size={"lg"}
+                  style={{ color: "#ffab00" }}
+                  title="Edit Test Case"
+                  onClick={() => setEditTestCase(true)}
                 />
-                <div className="collapse" id="testSuiteUtilities">
-                  <form>
-                    {/* <div> */}
-                    <label>Test Case Operations:</label>
-                    <FontAwesomeIcon
-                      className="ml-1"
-                      icon="pencil-alt"
-                      size={"lg"}
-                      style={{ color: "#ffab00" }}
-                      title="Edit Test Case"
-                      onClick={() => setEditTestCase(true)}
-                    />
-                    {/* </div> */}
-                  </form>
+                {/* </div> */}
+              </form>
+            </div>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardBody>
+            <div className="panel-header">Version</div>{" "}
+            <FontAwesomeIcon icon="info-circle" color={"white"}></FontAwesomeIcon>
+            <div className="panel-content">
+              <CardText>
+                Created on {selectedTestCase.creation_ts} by{" "}
+                {selectedTestCase.author_first_name + " " + selectedTestCase.author_last_name}
+              </CardText>
+              {selectedTestCase.updater_first_name && (
+                <CardText>
+                  Last Modified on {selectedTestCase.modification_ts} by{" "}
+                  {selectedTestCase.updater_first_name + " " + selectedTestCase.updater_last_name}
+                </CardText>
+              )}
+            </div>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardBody>
+            <div className="panel-header">Summary</div>
+            {selectedTestCase.Summary && <div className="panel-content">{selectedTestCase.Summary}</div>}
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardBody>
+            <div className="panel-header">Addtional Information</div>
+            {selectedTestCase.precondition && <div className="panel-content">{selectedTestCase.precondition}</div>}
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardBody>
+            <fieldset className="border mt-2">
+              <div className="form-row mt-1 d-flex flex-column">
+                <div>
+                  <label className="ml-2">Test Case Status: </label>
+                  <label className="ml-2">
+                    {Object.keys(status).find(key => status[key] === parseInt(selectedTestCase.status))}
+                  </label>
                 </div>
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody>
-                <div className="panel-header">Version</div>{" "}
-                <FontAwesomeIcon icon="info-circle" color={"white"}></FontAwesomeIcon>
-                <div className="panel-content">
-                  <CardText>
-                    Created on {selectedTestCase.creation_ts} by{" "}
-                    {selectedTestCase.author_first_name + " " + selectedTestCase.author_last_name}
-                  </CardText>
-                  {selectedTestCase.updater_first_name && (
-                    <CardText>
-                      Last Modified on {selectedTestCase.modification_ts} by{" "}
-                      {selectedTestCase.updater_first_name + " " + selectedTestCase.updater_last_name}
-                    </CardText>
-                  )}
+                <div>
+                  <label className="ml-2">Execution Type: </label>
+                  <label className="ml-2">
+                    {Object.keys(execution_type).find(
+                      key => execution_type[key] === parseInt(selectedTestCase.execution_type)
+                    )}
+                  </label>
                 </div>
-              </CardBody>
-            </Card>
+              </div>
+            </fieldset>
+          </CardBody>
+        </Card>
 
-            <Card>
-              <CardBody>
-                <div className="panel-header">Summary</div>
-                {selectedTestCase.Summary && <div className="panel-content">{selectedTestCase.Summary}</div>}
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody>
-                <div className="panel-header">Addtional Information</div>
-                {selectedTestCase.precondition && <div className="panel-content">{selectedTestCase.precondition}</div>}
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody>
-                <fieldset className="border mt-2">
-                  <div className="form-row mt-1 d-flex flex-column">
-                    <div>
-                      <label className="ml-2">Test Case Status: </label>
-                      <label className="ml-2">
-                        {Object.keys(status).find(key => status[key] === parseInt(selectedTestCase.status))}
-                      </label>
-                    </div>
-                    <div>
-                      <label className="ml-2">Execution Type: </label>
-                      <label className="ml-2">
-                        {Object.keys(execution_type).find(
-                          key => execution_type[key] === parseInt(selectedTestCase.execution_type)
-                        )}
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
-              </CardBody>
-            </Card>
-
-            {/* test case steps details */}
-            <Card>
-              <CardBody>
-                <div className="panel-header">Test Steps</div>
-                <div className="table-container">
-                  {isCreateStep ? (
-                    <TableWithCreateItem
-                      tableItems={selectedTestCase.steps}
-                      columns={tableColumns}
-                      onSave={handleOnSaveSteps}
-                      onCancel={() => setIsCreateStep(false)}
-                    />
-                  ) : (
-                    <TableSimple tableItems={selectedTestCase.steps} columns={tableColumns} />
-                  )}
-                </div>
-              </CardBody>
-            </Card>
-            {!isCreateStep && (
-              <Button className="btn btn-info  mt-3" color="primary" size="sm" onClick={() => setIsCreateStep(true)}>
-                Create Step
-              </Button>
-            )}
-          </Col>
-        </Row>
-      </Container>
+        {/* test case steps details */}
+        <Card>
+          <CardBody>
+            <div className="panel-header">Test Steps</div>
+            <div className="table-container">
+              {isCreateStep ? (
+                <TableWithCreateItem
+                  tableItems={selectedTestCase.steps}
+                  columns={tableColumns}
+                  onSave={handleOnSaveSteps}
+                  onCancel={() => setIsCreateStep(false)}
+                />
+              ) : (
+                <TableSimple tableItems={selectedTestCase.steps} columns={tableColumns} />
+              )}
+            </div>
+          </CardBody>
+        </Card>
+        {!isCreateStep && (
+          <Button className="btn btn-info  mt-3" color="primary" size="sm" onClick={() => setIsCreateStep(true)}>
+            Create Step
+          </Button>
+        )}
+      </>
     );
   }
 }

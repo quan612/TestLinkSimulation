@@ -41,46 +41,44 @@ function AddRemoveDetails({ selectedProject, selectTestPlan, listItems, selected
   };
 
   return (
-    <Container className="h_100 mw-99 d-flex">
-      <Col className="offset-lg-0 offset-md-3 d-flex flex-column">
-        <h1>{"Add or Remove Panel"}</h1>
-        <Card className="execution-details-submit">
-          <div className="result-box ">
-            <span className="mr-3">Add selected test case to selected test plan: </span>
-            <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnSubmit()}>
-              Submit
-            </Button>
+    <>
+      <h1>{"Add or Remove Panel"}</h1>
+      <Card className="execution-details-submit">
+        <div className="result-box ">
+          <span className="mr-3">Add selected test case to selected test plan: </span>
+          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnSubmit()}>
+            Submit
+          </Button>
+        </div>
+      </Card>
+      <Card className="h_100">
+        <CardBody>
+          {selectedTestSuite && (
+            <div className="panel-header">{`Test Cases belong to Test Suite ${selectedTestSuite.name}`}</div>
+          )}
+
+          <Button className="btn btn-info my-2" color="secondary" size="sm" onClick={handleCheckAll}>
+            Check All
+          </Button>
+
+          <div className="list-tree-items">
+            {listItems &&
+              listItems.map((item, index) => (
+                <CustomInput
+                  key={index}
+                  id={item.id}
+                  type="checkbox"
+                  disabled={item.chilrenOfThisTestPlan === true ? true : false}
+                  name="testcases"
+                  checked={item.checked || item.hasOwnProperty("checked") ? item.checked : false}
+                  onChange={e => handleOnCheckBoxChange(e, index)}
+                  label={item.name}
+                />
+              ))}
           </div>
-        </Card>
-        <Card className="h_100">
-          <CardBody>
-            {selectedTestSuite && (
-              <div className="panel-header">{`Test Cases belong to Test Suite ${selectedTestSuite.name}`}</div>
-            )}
-
-            <Button className="btn btn-info my-2" color="secondary" size="sm" onClick={handleCheckAll}>
-              Check All
-            </Button>
-
-            <div className="list-tree-items">
-              {listItems &&
-                listItems.map((item, index) => (
-                  <CustomInput
-                    key={index}
-                    id={item.id}
-                    type="checkbox"
-                    disabled={item.chilrenOfThisTestPlan === true ? true : false}
-                    name="testcases"
-                    checked={item.checked || item.hasOwnProperty("checked") ? item.checked : false}
-                    onChange={e => handleOnCheckBoxChange(e, index)}
-                    label={item.name}
-                  />
-                ))}
-            </div>
-          </CardBody>
-        </Card>
-      </Col>
-    </Container>
+        </CardBody>
+      </Card>
+    </>
   );
 }
 

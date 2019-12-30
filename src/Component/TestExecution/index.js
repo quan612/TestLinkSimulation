@@ -8,13 +8,15 @@ import { selectBuildAction, clearCurrentBuildsAction } from "../../Redux/build.a
 import { selectTestItemAction } from "../../Redux/actions";
 import CreateNewBuildContainer from "../Containers/CreateNewBuildLinkPage";
 import LoadingContainer from "../Containers/LoadingContainer";
+import { SplitPane } from "../Containers/SplitPane";
+import { Container, Row, Col } from "reactstrap";
 
 const TestExecution = () => {
-  const { selectedProject, selectTestPlan, selectedBuild, selectTestItem } = useSelector(state => ({
+  const { selectedProject, selectTestPlan, selectedBuild, selectedTestItem } = useSelector(state => ({
     selectedProject: state.selectedProject,
     selectTestPlan: state.selectTestPlan,
     selectedBuild: state.selectedBuild,
-    selectTestItem: state.selectTestItem
+    selectedTestItem: state.selectedTestItem
   }));
 
   const dispatch = useDispatch();
@@ -26,8 +28,7 @@ const TestExecution = () => {
       dispatch(selectBuildAction(buildsOfCurrentTestPlan[0]));
     }
 
-    //In clean up execution, should clear selected build and builds of current test plans
-    return () => {
+    return function cleanup() {
       dispatch(selectTestItemAction({}));
       dispatch(selectBuildAction({}));
       if (buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length > 1)
@@ -48,25 +49,31 @@ const TestExecution = () => {
 
   if (!isLoading && selectedBuild && Object.keys(selectedBuild).length > 0) {
     return (
-      <div className="TestSpecsContainer">
-        {/* 30% */}
-        <div className="ListContainer h_100 d-flex flex-column">
-          <h1>{"Test cases"}</h1>
-          <ListFilterSetting selectedBuild={selectedBuild} builds={buildsOfCurrentTestPlan} />
-          <ListExecutionItems selectedBuild={selectedBuild} />
-        </div>
-        {/* 70% */}
-        <div className="testItemWrapper">
-          <ExecutionContainer
-            selectedBuild={selectedBuild}
-            selectTestPlan={selectTestPlan}
-            selectTestItem={selectTestItem}
-          />
-        </div>
-      </div>
+      <SplitPane
+        left={
+          <>
+            <h1>{"Test cases list"}</h1>
+            <ListFilterSetting selectedBuild={selectedBuild} builds={buildsOfCurrentTestPlan} />
+            <ListExecutionItems selectedBuild={selectedBuild} />
+          </>
+        }
+        right={
+          <Container className="h_100 mw-99">
+            <Row className="h-100">
+              <Col className="offset-lg-0 offset-md-3">
+                <ExecutionContainer
+                  selectedBuild={selectedBuild}
+                  selectTestPlan={selectTestPlan}
+                  selectedTestItem={selectedTestItem}
+                />
+              </Col>
+            </Row>
+          </Container>
+        }
+      />
     );
   } else {
-    return null;
+    return <h1>TEST</h1>;
   }
 };
 

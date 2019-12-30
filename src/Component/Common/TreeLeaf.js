@@ -12,7 +12,7 @@ const styles = {
   folder: {}
 };
 
-const TreeLeaf = ({ child, node, onClick }) => {
+export const TreeLeaf = ({ child, node, onClick }) => {
   const [toggle, setToggle] = useState(false);
 
   const onToggle = () => {
@@ -58,6 +58,7 @@ const TreeLeaf = ({ child, node, onClick }) => {
           ) : (
             <FontAwesomeIcon className="d-inline-block mx-1" icon="folder" style={{ color: "#d1e018" }} />
           )}
+          {/* {child.data && <span onClick={() => onClick(child.data)}>{child.data.name}</span>} */}
           <span onClick={() => onClick(child.data)}>{child.data.name}</span>
         </div>
       );
@@ -72,10 +73,6 @@ const TreeLeaf = ({ child, node, onClick }) => {
       <ul className="containerList">
         {children.map((child, key) => (
           <li className={`cursor-pointer list-group-submenu`} key={key}>
-            {/* {child.data.hasOwnProperty("node_table" && child.data.node === "File") ? ( */}
-            {/* {child.data.hasOwnProperty("node" && child.data.node === "File") ? (
-              <TreeLeaf child={child} key={child.data.id} node={child.data.node} onClick={item => onClick(item)} />
-            ) : ( */}
             <TreeLeaf child={child} key={child.data.id} node={child.data.node} onClick={item => onClick(item)} />
             {/* )} */}
           </li>
@@ -91,5 +88,3 @@ const TreeLeaf = ({ child, node, onClick }) => {
     </React.Fragment>
   );
 };
-
-export default TreeLeaf;

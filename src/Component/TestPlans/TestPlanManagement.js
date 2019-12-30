@@ -1,5 +1,5 @@
 import React from "react";
-import TableWithSearchContainer from "../Containers/TableWithSearchContainer";
+import { TableWithSearchWithLoading } from "../Containers/TableWithSearchContainer";
 
 const COLUMNS = {
   name: {
@@ -35,7 +35,7 @@ const COLUMNS = {
 
 const TestPlanManagement = ({ selectedProject, isTestPlanLoading, testPlans, handleOnAdd, handleOnDelete }) => {
   return (
-    <TableWithSearchContainer
+    <TableWithSearchWithLoading
       isLoading={isTestPlanLoading}
       title={selectedProject && `Test Plans Management - Test Project: ${selectedProject.name}`}
       tableItems={testPlans}

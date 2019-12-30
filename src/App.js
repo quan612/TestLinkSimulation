@@ -2,7 +2,7 @@ import React from "react";
 import Nav from "./Component/navbar/Nav";
 import LogRocket from "logrocket";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import Home from "./Component/Home";
+import Home from "./Component/Home/Home";
 import TestSpecsContainer from "./Component/TestSpecs/index";
 import TestProjectContainer from "./Component/TestProjects/TestProjectContainer";
 import TestPlansContainer from "./Component/TestPlans/TestPlansContainer";

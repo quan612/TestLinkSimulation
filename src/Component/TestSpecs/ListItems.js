@@ -1,5 +1,5 @@
 import React from "react";
-import TreeLeaf from "../Common/TreeLeaf";
+import { TreeLeaf } from "../Common/TreeLeaf";
 import { selectTestItemAction } from "../../Redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import useTestSpecItemsFetching from "../CustomHooks/useTestSpecItemsFetching";

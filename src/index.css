@@ -43,9 +43,11 @@ h1 {
 /* Navigation style  */
 
 .bg-info {
-  /* background-color: #344675 !important; */
-  background-color: #171941 !important;
+  background-color: #344675 !important;
+  /* background-color: #171941 !important; */
 }
+
+
 
 .center {
   /* margin: auto; */
@@ -63,6 +65,10 @@ h1 {
 .navbar {
   height: 6% !important;
   padding: 0 !important;
+}
+
+dl, dt {
+  color:white
 }
 /* drop down*/
 .dd_container {

@@ -15,14 +15,16 @@ const useTestPlanItemsFetching = selectedBuild => {
     selectTestPlan: state.selectTestPlan
   }));
 
-  const [data, setData] = useState(null);
+  const [dataItems, setDataItems] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchTestPlanItems = async () => {
       console.log("current selected build", selectedBuild.name);
-      const abortController = new AbortController();
+
       if (selectedProject && selectedProject && selectedBuild) {
         try {
+          setIsLoading(true);
           const testSuites = await getTestSuitesForCurrentTestPlanApi(selectTestPlan);
           const testCasesFromSuites = await getTestCasesOfTestSuitesHelper(testSuites);
           const testCasesForTestPlan = await getTestCasesForCurrentTestPlanApi(selectTestPlan);
@@ -67,20 +69,18 @@ const useTestPlanItemsFetching = selectedBuild => {
 
           const itemInTreeStructure = handleItemsInTestPlansInTreeStructure(listOfItems, selectedProject);
           console.log("itemInTreeStructure", itemInTreeStructure);
-          setData(itemInTreeStructure);
+          setDataItems(itemInTreeStructure);
+          setIsLoading(false);
         } catch (error) {
           console.log("error", error);
         }
-        return () => {
-          console.log("Controller abort");
-          abortController.abort();
-        };
       }
     };
     fetchTestPlanItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBuild]);
-  return data;
+  return { isLoading, dataItems };
+  //return data;
 };
 
 export default useTestPlanItemsFetching;

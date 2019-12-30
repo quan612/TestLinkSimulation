@@ -1,15 +1,25 @@
 import TestLink from "../Library/testlink";
 
 const testLink = new TestLink({
-  host: "192.168.56.101", // 192.168.56.101   172.16.77.17  34.67.118.19
+  host: "172.16.77.17", // 192.168.56.101   172.16.77.17  34.67.118.19
   secure: false,
-  apiKey: "86fd2b13976b8ba4a35d6829a17b592b"
+  apiKey: "b87127af250124be10f6f245a03d0473"
   // global b87127af250124be10f6f245a03d0473
   // home   86fd2b13976b8ba4a35d6829a17b592b
   // cloud  2a64c27adb81157b9a5ed576a58c032e
 });
 
 const authorLogin = "Quan.Huynh";
+
+export const getTestLinkVersion = async () => {
+  return await testLink.testLinkVersion();
+  // .then(version => {
+  //   return version;
+  // })
+  // .catch(error => {
+  //   console.log(error);
+  // });
+};
 
 export const getTestSuiteByIdAsync = async item => {
   return await testLink.getTestSuiteByID({ testsuiteid: item.id });
@@ -22,17 +32,17 @@ export const reportResultApi = async result => {
   // console.log("buildId", result.build.id);
   // console.log("buildName", result.build.name);
   // console.log("steps", result.testcase.steps);
-
-  result.testcase.steps.forEach(step => {
-    step.result = result.status;
-    step.notes = "";
-  });
+  if (result.testcase.steps && result.testcase.steps.length > 0)
+    result.testcase.steps.forEach(step => {
+      step.result = result.status;
+      step.notes = "";
+    });
   //console.log("stepResult", stepResult);
   return await testLink.reportTCResult({
-    testcaseid: result.testcase.id,
+    testcaseid: result.testcase.testcase_id,
     testplanid: result.testPlan.id,
     status: result.status,
-    steps: result.testcase.steps,
+    steps: result.testcase.steps.length > 0 ? result.testcase.steps : [],
     buildid: result.build.id,
     buildname: result.build.name
   });
@@ -40,14 +50,6 @@ export const reportResultApi = async result => {
 
 /********************************************************* TEST SUITE HELPER and API ******************************************/
 
-/**
- * Gets Test Case object based on its id
- *
- * @param {object}  options Options
- * @param {string}  [options.testcaseid] Test Case id. If not present, testcaseexternalid must be present.
- *
- * @returns {object}  result Test Case object.
- */
 export const addTestSuiteHelper = async (selectedProject, parentSuiteId, data) => {
   if (parentSuiteId === selectedProject.id) {
     // no need parent id for top level suite
@@ -219,7 +221,7 @@ export const getTestSuitesForCurrentTestPlanApi = async testPlan => {
   return await testLink.getTestSuitesForTestPlan({ testplanid: testPlan.id });
 };
 
-export const getLastExecutionResultApi = async (testLink, testPlan, testCase, build) => {
+export const getLastExecutionResultApi = async (testPlan, testCase, build) => {
   return await testLink.getLastExecutionResult({
     tplanid: testPlan.id,
     testplanid: testPlan.id,
@@ -298,12 +300,11 @@ export const getTestCasesOfSelectedTestSuiteHelper = async selectedTestSuite => 
  * @returns {object}  result Test Case object.
  */
 export const getTestCaseHelper = async testCaseId => {
-  const testcase = await testLink
+  return await testLink
     .getTestCase({
       testcaseid: testCaseId
     })
     .catch(error => console.log("Catch error at get test case helper function: ", error));
-  return testcase;
 };
 
 export const addTestCaseHelper = (selectedProject, selectedTestSuite, testCaseData) => {

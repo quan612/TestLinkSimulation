@@ -10,40 +10,38 @@ function ExecutionContainer({ selectedBuild, selectTestPlan, selectedTestItem })
   useEffect(() => {
     const getTestCaseDetails = async () => {
       if (selectedTestItem) {
-        const testcase = getTestCaseHelper(selectedTestItem.tc_id);
-        setTestCaseDetails(testcase);
+        getTestCaseHelper(selectedTestItem.tc_id).then(data => {
+          data.forEach(tcase => {
+            console.log("Test", tcase);
+            setTestCaseDetails(tcase);
+          });
+        });
+
+        // const data = await getTestCaseHelper(selectedTestItem.tc_id);
+        // console.log("Test", await data);
       }
     };
+
     getTestCaseDetails();
   }, [selectedTestItem]);
 
   if (selectedTestItem && selectedTestItem.node === "File" && testCaseDetails) {
     return <ExecutionDetails testItemResult={selectedTestItem} testItemDetails={testCaseDetails} />;
   }
-  //default page to load current test plan details - mostly done
+  //default page to load current test plan details
   else
     return (
-      <Container className="h-100 mw-99">
-        <Row className="h-100">
-          <Col className="offset-lg-0 offset-md-3">
-            <h1>{"Execute Test"}</h1>
-            <Card className="section h-100">
-              <CardBody>
-                <div className="panel-header">{`Test plan: ${selectTestPlan.name} `}</div>
-                <div
-                  className="panel-content"
-                  dangerouslySetInnerHTML={{ __html: he.decode(selectTestPlan.notes) }}
-                ></div>
-                <div className="panel-header">{`Build info: ${selectedBuild.name} `}</div>
-                <div
-                  className="panel-content"
-                  dangerouslySetInnerHTML={{ __html: he.decode(selectedBuild.notes) }}
-                ></div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <>
+        <h1>{"Execute Test"}</h1>
+        <Card className="section h-100">
+          <CardBody>
+            <div className="panel-header">{`Test plan: ${selectTestPlan.name} `}</div>
+            <div className="panel-content" dangerouslySetInnerHTML={{ __html: he.decode(selectTestPlan.notes) }}></div>
+            <div className="panel-header">{`Build info: ${selectedBuild.name} `}</div>
+            <div className="panel-content" dangerouslySetInnerHTML={{ __html: he.decode(selectedBuild.notes) }}></div>
+          </CardBody>
+        </Card>
+      </>
     );
 }
 

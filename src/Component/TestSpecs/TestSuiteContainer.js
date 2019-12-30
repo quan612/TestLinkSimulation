@@ -16,52 +16,48 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
     selectedProject: state.selectedProject
   }));
 
-  const handleRenderComponents = () => {
-    if (isAddTestSuite) {
-      return (
-        <AddTestSuite
-          selectedProject={selectedProject}
-          selectedTestItem={selectedTestItem}
-          onClose={() => setAddTestSuite(false)}
-        />
-      );
-    }
-
-    if (isEditTestSuite) {
-      return (
-        <EditTestSuite
-          selectedProject={selectedProject}
-          selectedTestSuite={selectedTestItem}
-          onClose={() => setEditTestSuite(false)}
-        />
-      );
-    }
-
-    if (isDeleteTestSuite)
-      return <DeleteTestSuite selectedTestItem={selectedTestItem} onClose={() => setDeleteTestSuite(false)} />;
-
-    if (isAddTestCase) {
-      return (
-        <AddTestCase
-          selectedProject={selectedProject}
-          selectedTestSuite={selectedTestItem}
-          onClose={() => setAddTestCase(false)}
-        />
-      );
-    }
-
+  if (isAddTestSuite) {
     return (
-      <TestSuiteDetails
-        selectedSuite={selectedTestItem}
-        onAddTestSuite={() => setAddTestSuite(true)}
-        onEditTestSuite={() => setEditTestSuite(true)}
-        onDeleteTestSuite={() => setDeleteTestSuite(true)}
-        OnAddTestCase={() => setAddTestCase(true)}
+      <AddTestSuite
+        selectedProject={selectedProject}
+        selectedTestItem={selectedTestItem}
+        onClose={() => setAddTestSuite(false)}
       />
     );
-  };
+  }
 
-  return { handleRenderComponents };
+  if (isEditTestSuite) {
+    return (
+      <EditTestSuite
+        selectedProject={selectedProject}
+        selectedTestSuite={selectedTestItem}
+        onClose={() => setEditTestSuite(false)}
+      />
+    );
+  }
+
+  if (isDeleteTestSuite)
+    return <DeleteTestSuite selectedTestItem={selectedTestItem} onClose={() => setDeleteTestSuite(false)} />;
+
+  if (isAddTestCase) {
+    return (
+      <AddTestCase
+        selectedProject={selectedProject}
+        selectedTestSuite={selectedTestItem}
+        onClose={() => setAddTestCase(false)}
+      />
+    );
+  }
+
+  return (
+    <TestSuiteDetails
+      selectedSuite={selectedTestItem}
+      onAddTestSuite={() => setAddTestSuite(true)}
+      onEditTestSuite={() => setEditTestSuite(true)}
+      onDeleteTestSuite={() => setDeleteTestSuite(true)}
+      OnAddTestCase={() => setAddTestCase(true)}
+    />
+  );
 };
 
 export default TestSuiteContainer;

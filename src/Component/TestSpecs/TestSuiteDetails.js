@@ -9,9 +9,6 @@ const TestSuiteDetails = ({ selectedSuite, onAddTestSuite, onEditTestSuite, onDe
       <h1>{"Test Suite Details"}</h1>
       <Card>
         <CardBody>
-          <div className="test-detail-case-title">{`${selectedSuite.name}`}</div>
-        </CardBody>
-        <CardBody>
           <FontAwesomeIcon
             icon="tools"
             size={"2x"}
@@ -64,13 +61,11 @@ const TestSuiteDetails = ({ selectedSuite, onAddTestSuite, onEditTestSuite, onDe
               />
             </form>
           </div>
-
-          <div className="panel-header">Test Suite Details</div>
-          {selectedSuite.details && (
-            <div className="panel-content">
-              <div dangerouslySetInnerHTML={{ __html: he.decode(selectedSuite.details) }} />
-            </div>
-          )}
+          <div className="panel-header">Test Suite: {`${selectedSuite.name}`}</div>
+          <div className="panel-content">
+            {selectedSuite.details && <div dangerouslySetInnerHTML={{ __html: he.decode(selectedSuite.details) }} />}
+          </div>
+          )
         </CardBody>
       </Card>
     </>

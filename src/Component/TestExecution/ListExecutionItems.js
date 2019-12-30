@@ -1,13 +1,14 @@
 import React from "react";
-import TreeLeaf from "../Common/TreeLeaf";
+import { TreeLeaf } from "../Common/TreeLeaf";
 import { selectTestItemAction } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
 import useTestPlanItemsFetching from "../CustomHooks/useTestPlanItemsFetching";
 import { Card } from "react-bootstrap";
+import LoadingContainer from "../Containers/LoadingContainer";
 
 const ListExecutionItems = ({ selectedBuild }) => {
   const dispatch = useDispatch();
-  const dataItems = useTestPlanItemsFetching(selectedBuild);
+  const { isLoading, dataItems } = useTestPlanItemsFetching(selectedBuild);
 
   const handleOnClick = async item => {
     dispatch(selectTestItemAction(item));
@@ -18,16 +19,18 @@ const ListExecutionItems = ({ selectedBuild }) => {
       <div className="panel-header">
         <span>Navigation</span>
       </div>
-      {dataItems && (
-        <Card className="list-tree-items">
+      <Card className="list-tree-items">
+        {dataItems && (
           <TreeLeaf
             child={dataItems}
             key={dataItems.data.id}
             node={dataItems.data.node}
             onClick={item => handleOnClick(item)}
           />
-        </Card>
-      )}
+        )}
+        {isLoading === true ? <LoadingContainer /> : null}
+      </Card>
+      }
     </div>
   );
 };

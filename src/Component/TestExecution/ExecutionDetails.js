@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import DropDown from "../Common/DropDown";
 import { connect } from "react-redux";
 import { reportResultApi } from "../../Redux/apiHelpers";
 
-import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
+import { Button, Card, CardBody } from "reactstrap";
 import TableSimple from "../Common/TableSimple";
 
-function ExecutionDetails(props) {
-  let executeStatus = "";
+//TODO update list tree after submit test result
 
+function ExecutionDetails(props) {
+  const [executeStatus, setExecutionStatus] = useState({});
+  console.log(props.testItemDetails);
   const tableColumns = {
     steps: {
       label: "#",
@@ -37,93 +39,74 @@ function ExecutionDetails(props) {
 
   const handleOnChangeStatus = eventKey => {
     const temp = executionStatus[eventKey];
-    executeStatus = temp.value;
+    console.log(temp);
+    setExecutionStatus(temp);
   };
 
   const handleOnResultSubmit = () => {
     const result = {
-      testcase: props.selectedTestItem,
+      testcase: props.testItemDetails,
       testPlan: props.selectTestPlan,
-      status: executeStatus,
+      status: executeStatus.value,
       build: props.selectedBuild,
       notes: ""
     };
+    console.log(result);
     reportResultApi(result)
       .then(message => console.log(message))
       .catch(error => console.log(error));
   };
 
   return (
-    <Container className=" mw-99">
-      <Row>
-        <Col className="offset-lg-0 offset-md-3">
-          <h1>{"Execute Test"}</h1>
-          <Card>
-            <CardBody>
-              <div className="test-detail-case-title">
-                {`Test Case ${props.testItemResult.full_external_id} :: Version : ${props.testItemResult.version} :: ${props.testItemResult.tcase_name}`}
-                <br />
-                {"Assign to"}
-              </div>
-            </CardBody>
-          </Card>
+    <>
+      <h1>{"Execute Test"}</h1>
+      <Card>
+        <CardBody>
+          <div className="test-detail-case-title">
+            {`Test Case ${props.testItemDetails.full_tc_external_id} :: Version : ${props.testItemDetails.version} :: ${props.testItemDetails.name}`}
+            <br />
+            {"Assign to"}
+          </div>
+        </CardBody>
+      </Card>
 
-          <Card>
-            <CardBody>
-              <div className="panel-header">Execution History</div>
+      <Card>
+        <CardBody>
+          <div className="panel-header">Summary</div>
+          {props.summary && <div className="panel-content">{props.testItemDetails.summary}</div>}
+        </CardBody>
+      </Card>
 
-              <div className="panel-content">
-                {props.buildsOfCurrentTestPlan.map((build, index) => (
-                  <div key={index}> {build.name}</div>
-                ))}
-              </div>
-            </CardBody>
-          </Card>
+      <Card>
+        <CardBody>
+          <div className="panel-header">Precondition</div>
+          {props.precondition && <div className="panel-content"> {props.testItemDetails.precondition}</div>}
+        </CardBody>
+      </Card>
 
-          <Card>
-            <CardBody>
-              <div className="panel-header">Summary</div>
-              {props.summary && <div className="panel-content">{props.summary}</div>}
-            </CardBody>
-          </Card>
+      <Card>
+        <CardBody>
+          <div className="panel-header">Test Steps</div>
+          <div className="table-container">
+            <TableSimple tableItems={props.testItemDetails.steps} columns={tableColumns} />
+          </div>
+        </CardBody>
+      </Card>
 
-          <Card>
-            <CardBody>
-              <div className="panel-header">Precondition</div>
-              {props.precondition && <div className="panel-content"> {props.precondition}</div>}
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody>
-              <div className="panel-header">Test Steps</div>
-              <div className="table-container">
-                <TableSimple tableItems={props.testItemResult.steps} columns={tableColumns} />
-              </div>
-            </CardBody>
-          </Card>
-
-          <Card className="execution-details-submit">
-            <div className="result-box ">
-              <span className="mr-3">Execution status:</span>
-              <DropDown title={"Execution status"} items={executionStatus} onSelect={handleOnChangeStatus} />
-              <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnResultSubmit()}>
-                Submit
-              </Button>
-            </div>
-          </Card>
-          {/* <Card className="message">
-            <div className="messages">
-              {
-                "Important Notice: Once a Result is updated from 'Not Run' to another value, you cannot set it back to 'Not Run'."
-              }
-              <br />
-              {"You can still set the Result to any other value."}
-            </div>
-          </Card> */}
-        </Col>
-      </Row>
-    </Container>
+      <Card className="execution-details-submit">
+        <div className="result-box ">
+          <span className="mr-3">Execution status:</span>
+          <DropDown
+            title={executeStatus === {} ? "Execution status" : executeStatus.name}
+            items={executionStatus}
+            onSelect={handleOnChangeStatus}
+          />
+          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnResultSubmit()}>
+            Submit
+          </Button>
+        </div>
+      </Card>
+    </>
   );
 }
 

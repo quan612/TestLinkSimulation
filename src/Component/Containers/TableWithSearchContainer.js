@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalYesNo from "../Common/ModalYesNo";
-import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col, Table } from "reactstrap";
-import LoadingContainer from "./LoadingContainer";
-var he = require("he");
+import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col } from "reactstrap";
 
-const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handleOnAdd, handleOnDelete }) => {
+import { TableContainerWithLoading } from "../Common/TableContainers";
+
+export const TableWithSearchWithLoading = ({ isLoading, title, tableItems, columns, handleOnAdd, handleOnDelete }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState({});
   const [searchValue, setSearchValue] = useState("");
@@ -25,52 +24,6 @@ const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handl
   const handleDeleteItem = item => {
     setItemToDelete(item);
     setModalOpen(true);
-  };
-
-  const handleRenderTableItems = (item, key) => {
-    switch (key) {
-      case "Utils":
-        return (
-          <td key={key} style={{ width: columns[key].width }}>
-            <FontAwesomeIcon icon="trash-alt" style={{ color: "red" }} onClick={() => handleDeleteItem(item)} />
-          </td>
-        );
-
-      case "notes":
-        return (
-          <td
-            key={key}
-            style={{ width: columns[key].width }}
-            dangerouslySetInnerHTML={{ __html: he.decode(item.notes) }}
-          ></td>
-        );
-
-      case "active":
-      case "is_public":
-      case "is_open":
-        return (
-          <td key={key} style={{ width: columns[key].width }}>
-            {item[key] === "1" ? (
-              <FontAwesomeIcon icon="check-circle" style={{ color: "#5cd55c" }} size={"lg"} />
-            ) : null}
-          </td>
-        );
-
-      case "requirementsEnabled":
-        return (
-          <td key={key} style={{ width: columns[key].width }}>
-            {item.opt[key] === 1 ? (
-              <FontAwesomeIcon icon="check-circle" style={{ color: "#5cd55c" }} size={"lg"} />
-            ) : null}
-          </td>
-        );
-      default:
-        return (
-          <td key={key} style={{ width: columns[key].width }}>
-            {item[key]}
-          </td>
-        );
-    }
   };
 
   return (
@@ -94,35 +47,15 @@ const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handl
             </CardHeader>
             <CardBody>
               <Row>
-                <Col className="mt-5 col-12">
-                  {isLoading ? (
-                    <LoadingContainer label={"Fetching Table Data"} />
-                  ) : (
-                    <Table>
-                      <thead className="bg-default">
-                        <tr className="d-flex">
-                          {Object.keys(columns).map(key => (
-                            <th key={key} style={{ width: columns[key].width }}>
-                              {columns[key].label}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {tableItems && Object.keys(tableItems).length > 0
-                          ? tableItems
-                              .filter(value => value.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
-                              .map(item => {
-                                return (
-                                  <tr className="d-flex" key={item.id}>
-                                    {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-                                  </tr>
-                                );
-                              })
-                          : null}
-                      </tbody>
-                    </Table>
-                  )}
+                <Col className="mt-3 col-12">
+                  <TableContainerWithLoading
+                    isLoading={isLoading}
+                    loadingLabel={"Fetching table data"}
+                    searchValue={searchValue}
+                    tableItems={tableItems}
+                    columns={columns}
+                    handleDeleteItem={handleDeleteItem}
+                  />
                 </Col>
               </Row>
             </CardBody>
@@ -139,5 +72,3 @@ const TableWithSearchContainer = ({ isLoading, title, tableItems, columns, handl
     </Container>
   );
 };
-
-export default TableWithSearchContainer;

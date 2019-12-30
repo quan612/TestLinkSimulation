@@ -1,31 +1,38 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { selectTestItemAction } from "../../Redux/actions";
-import ListSpecItems from "./ListItems";
+import ListItems from "./ListItems";
 import TestDetailsContainer from "./TestDetailsContainer";
 import ListItemsFilter from "./ListItemsFilter";
+import { SplitPane } from "../Containers/SplitPane";
+import { Container, Row, Col } from "reactstrap";
 
 const TestSpecsContainer = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    //on clean up, clear selected item
-    return () => {
+    return function cleanup() {
       dispatch(selectTestItemAction({}));
     };
   });
   return (
-    <div className="TestSpecsContainer workBody">
-      {/* 30% */}
-      <div className="ListContainer h_100 d-flex flex-column">
-        <h1>{"Test Specifications"}</h1>
-        <ListItemsFilter />
-        <ListSpecItems />
-      </div>
-      {/* 70% */}
-      <div className="testItemWrapper h_100">
-        <TestDetailsContainer />
-      </div>
-    </div>
+    <SplitPane
+      left={
+        <>
+          <h1>{"Test Specifications"}</h1>
+          <ListItemsFilter />
+          <ListItems />
+        </>
+      }
+      right={
+        <Container className="h_100 mw-99">
+          <Row className="h-100">
+            <Col className="offset-lg-0 offset-md-3">
+              <TestDetailsContainer />{" "}
+            </Col>
+          </Row>
+        </Container>
+      }
+    />
   );
 };
 
