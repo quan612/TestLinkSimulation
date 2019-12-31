@@ -21,9 +21,9 @@ const ListItems = () => {
 
   return (
     <div className="h_100 d-flex flex-column">
-      <div className="panel-header">
+      {/* <div className="panel-header">
         <span>Navigation</span>
-      </div>
+      </div> */}
       {dataItems && (
         <Card className="list-tree-items">
           <TreeLeaf

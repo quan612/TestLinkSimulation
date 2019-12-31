@@ -14,22 +14,18 @@ LogRocket.init("wivqby/test-link");
 
 const App = () => {
   return (
-    <div className="app">
-      <BrowserRouter>
-        <Nav />
-        <div className="body-container workBody">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/TestProjects" render={() => <TestProjectContainer />} />
-            <Route exact path="/TestPlans" render={() => <TestPlansContainer />} />
-            <Route exact path="/TestSpecs" render={() => <TestSpecsContainer />} />
-            <Route exact path="/Builds" render={() => <BuildsContainer />} />
-            <Route exact path="/AddCaseToPlan" render={() => <AddTestCaseToTestPlanContainer />} />
-            <Route exact path="/TestExecution" render={() => <TestExecution />} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Nav />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/TestProjects" render={() => <TestProjectContainer />} />
+        <Route exact path="/TestPlans" render={() => <TestPlansContainer />} />
+        <Route exact path="/TestSpecs" render={() => <TestSpecsContainer />} />
+        <Route exact path="/Builds" render={() => <BuildsContainer />} />
+        <Route exact path="/AddCaseToPlan" render={() => <AddTestCaseToTestPlanContainer />} />
+        <Route exact path="/TestExecution" render={() => <TestExecution />} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 export default App;

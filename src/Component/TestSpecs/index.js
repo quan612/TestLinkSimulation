@@ -18,7 +18,7 @@ const TestSpecsContainer = () => {
     <SplitPane
       left={
         <>
-          <h1>{"Test Specifications"}</h1>
+          <h1>Test Specifications</h1>
           <ListItemsFilter />
           <ListItems />
         </>
