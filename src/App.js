@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "./Component/navbar/Nav";
+import Navigation from "./Component/navbar/Navigation";
 import LogRocket from "logrocket";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Home from "./Component/Home/Home";
@@ -10,20 +10,22 @@ import BuildsContainer from "./Component/Builds/BuildsContainer";
 import TestExecution from "./Component/TestExecution/";
 import AddTestCaseToTestPlanContainer from "./Component/AddTestCasesToTestPlan/AddTestCaseToTestPlanContainer";
 
+import * as ROUTES from "./routes";
 LogRocket.init("wivqby/test-link");
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Nav />
+      <Navigation />
+      <hr />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/TestProjects" render={() => <TestProjectContainer />} />
-        <Route exact path="/TestPlans" render={() => <TestPlansContainer />} />
-        <Route exact path="/TestSpecs" render={() => <TestSpecsContainer />} />
-        <Route exact path="/Builds" render={() => <BuildsContainer />} />
-        <Route exact path="/AddCaseToPlan" render={() => <AddTestCaseToTestPlanContainer />} />
-        <Route exact path="/TestExecution" render={() => <TestExecution />} />
+        <Route exact path={ROUTES.HOME} component={Home} />
+        <Route exact path={ROUTES.PROJECTS} render={() => <TestProjectContainer />} />
+        <Route exact path={ROUTES.PLANS} render={() => <TestPlansContainer />} />
+        <Route exact path={ROUTES.SPECIFICATIONS} render={() => <TestSpecsContainer />} />
+        <Route exact path={ROUTES.BUILDS} render={() => <BuildsContainer />} />
+        <Route exact path={ROUTES.ADD_TESTCASES_TO_TESTPLAN} render={() => <AddTestCaseToTestPlanContainer />} />
+        <Route exact path={ROUTES.TEST_EXECUTION} render={() => <TestExecution />} />
       </Switch>
     </BrowserRouter>
   );
