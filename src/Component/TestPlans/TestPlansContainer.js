@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteTestPlanAction, loadTestPlansAction } from "../../Redux/testPlan.action";
 import AddTestPlanContainer from "./AddTestPlanContainer";
 import TestPlanManagement from "./TestPlanManagement";
+import useTestPlansFetching from "../CustomHooks/useTestPlansFetching";
 
 const TestPlansContainer = () => {
-  const { isTestPlanLoading, selectedProject, testPlans } = useSelector(state => ({
-    isTestPlanLoading: state.isTestPlanLoading,
-    selectedProject: state.selectedProject,
-    testPlans: state.testPlans
+  const { selectedProject } = useSelector(state => ({
+    selectedProject: state.selectedProject
   }));
 
   const dispatch = useDispatch();
+  const { isTestPlanLoading, testPlans } = useTestPlansFetching(selectedProject);
   const [isCreateTestPlan, setCreateTestPlan] = useState(false);
 
   const handleDeleteSubmit = async testPlan => {

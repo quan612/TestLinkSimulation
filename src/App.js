@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "./Component/navbar/Navigation";
+import Header from "./Component/navbar/Navigation";
 import LogRocket from "logrocket";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Home from "./Component/Home/Home";
@@ -16,7 +16,7 @@ LogRocket.init("wivqby/test-link");
 const App = () => {
   return (
     <BrowserRouter>
-      <Navigation />
+      <Header />
       <hr />
       <Switch>
         <Route exact path={ROUTES.HOME} component={Home} />

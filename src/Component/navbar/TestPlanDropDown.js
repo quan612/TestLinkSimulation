@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { selectTestPlanAction } from "../../Redux/testPlan.action";
 import DropDown from "../Common/DropDown";
+import DropdownStyles from "../styles/DropdownStyles";
 import withTestPlansFetching from "../HOC/withTestPlansFetching";
 
 const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
@@ -28,11 +29,13 @@ const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
     <React.Fragment>
       <label className="mr-1 text-light">Test Plan: </label>
       {
-        <DropDown
-          title={isTestPlanLoading ? "Fetching Test Plan..." : selectedItem.name}
-          items={testPlans}
-          onSelect={handleOnChangeTestPlan}
-        />
+        <DropdownStyles>
+          <DropDown
+            title={isTestPlanLoading ? "Fetching Test Plan..." : selectedItem.name}
+            items={testPlans}
+            onSelect={handleOnChangeTestPlan}
+          />
+        </DropdownStyles>
       }
     </React.Fragment>
   );

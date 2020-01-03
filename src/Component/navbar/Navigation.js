@@ -5,67 +5,101 @@ import TestProjectDropDownWithFetching from "./TestProjectDropDown";
 import TestPlanDropDownWithFetching from "./TestPlanDropDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as ROUTES from "../../routes";
-import NavStyles from "../styles";
+import NavStyles from "../styles/NavStyles";
+import styled from "styled-components";
 
-const Nav = () => {};
+const StyledHeader = styled.header`
+  .head {
+    border-bottom: 10px solid ${props => props.theme.black};
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+    align-items: stretch;
+    @media (max-width: 1300px) {
+      grid-template-columns: 1fr;
+      justify-content: center;
+    }
+  }
+`;
 
-const Header = props => (
-  <div className="navbar bg-info sticky-top">
-    <div className="h-100 w-100 d-flex">
-      <div className="dd_container">
+const DropDownContainer = styled.div`
+display:flex;
+justify-content: space-evenly;
+align-items: center;
+  font-size: 2rem;
+  margin-left: 2rem;
+  position: relative;
+  z-index: 2;
+  /* transform: skew(-7deg); */
+  /* a {
+    padding: 0.5rem 1rem;
+    background: ${props => props.theme.red};
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+  } */
+  @media (max-width: 1300px) {
+    margin: 0;
+    text-align: center;
+  }
+`;
+
+const Nav = () => {
+  return (
+    <NavStyles>
+      <NavLink to={ROUTES.HOME} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="home" style={{ color: "white" }} />
+        Home
+      </NavLink>
+
+      <NavLink to={ROUTES.PROJECTS} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="archive" style={{ color: "white" }} />
+        Projects
+      </NavLink>
+
+      <NavLink to={ROUTES.SPECIFICATIONS} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="paperclip" style={{ color: "white" }} />
+        <span>Specifications</span>
+      </NavLink>
+
+      <NavLink to={ROUTES.PLANS} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="tasks" style={{ color: "white" }} />
+        <span>Plans</span>
+      </NavLink>
+
+      <NavLink to={ROUTES.BUILDS} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
+        <span>Builds</span>
+      </NavLink>
+
+      <NavLink to={ROUTES.ADD_TESTCASES_TO_TESTPLAN} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
+        <span>Add Cases to Plan</span>
+      </NavLink>
+
+      <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
+        <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} />
+        <span>Executions</span>
+      </NavLink>
+    </NavStyles>
+  );
+};
+
+const Header = ({ selectedProject }) => (
+  <StyledHeader>
+    <div className="head">
+      {/* <div className="dd_container">
+      <TestProjectDropDownWithFetching />
+      <TestPlanDropDownWithFetching selectedProject={props.selectedProject} />
+    </div> */}
+
+      <DropDownContainer>
         <TestProjectDropDownWithFetching />
-        <TestPlanDropDownWithFetching selectedProject={props.selectedProject} />
-      </div>
-      <ul className="navbar-nav col flex-row navlink">
-        <li className="nav-item">
-          <NavLink className="nav-text px-1" to={ROUTES.HOME} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="home" style={{ color: "white" }} />
-            <span>Home</span>
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-text px-1" to={ROUTES.PROJECTS} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="archive" style={{ color: "white" }} />
-            <span>Projects</span>
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-text px-1" to={ROUTES.PROJECTS} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="paperclip" style={{ color: "white" }} />
-            <span>Specifications</span>
-          </NavLink>
-        </li>
-
-        <li className="nav-item">
-          <NavLink className="nav-text px-1" to={ROUTES.PROJECTS} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="tasks" style={{ color: "white" }} />
-            <span>Plans</span>
-          </NavLink>
-        </li>
-
-        <li className="nav-item">
-          <NavLink className="nav-text px-1" to={ROUTES.PROJECTS} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-            <span>Builds</span>
-          </NavLink>
-        </li>
-
-        <li className="nav-item">
-          <NavLink className="nav-text px-1" to={ROUTES.PROJECTS} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-            <span>Add Cases to Plan</span>
-          </NavLink>
-        </li>
-
-        <li className="nav-item">
-          <NavLink className="nav-text" to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} />
-            <span>Executions</span>
-          </NavLink>
-        </li>
-      </ul>
+        <TestPlanDropDownWithFetching selectedProject={selectedProject} />
+      </DropDownContainer>
+      <Nav />
     </div>
-  </div>
+  </StyledHeader>
 );
 
 const mapStateToProps = state => {

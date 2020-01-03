@@ -41,26 +41,26 @@ const Home = () => {
             <CardBody>
               <Row>
                 <Col className="mt-2 col-12">
-                  <dl class="row">
-                    <dt class="col-sm-3">Projects:</dt>
-                    <dd class="col-sm-9">List current projects. User can add / remove project.</dd>
-                    <dt class="col-sm-3 text-truncate">Plans:</dt>
-                    <dd class="col-sm-9">
+                  <dl className="row">
+                    <dt className="col-sm-3">Projects:</dt>
+                    <dd className="col-sm-9">List current projects. User can add / remove project.</dd>
+                    <dt className="col-sm-3 text-truncate">Plans:</dt>
+                    <dd className="col-sm-9">
                       List of current test plans belong to selected project. User can add a new test plan.
                     </dd>
-                    <dt class="col-sm-3">Specifications:</dt>
-                    <dd class="col-sm-9">
+                    <dt className="col-sm-3">Specifications:</dt>
+                    <dd className="col-sm-9">
                       List of test suites and test cases of selected project. User can add new test suites and new test
                       cases.
                     </dd>
-                    <dt class="col-sm-3">Builds:</dt>
-                    <dd class="col-sm-9">List of current builds of selected test plan.</dd>
-                    <dt class="col-sm-3">Add Case to Plan:</dt>
-                    <dd class="col-sm-9">
+                    <dt className="col-sm-3">Builds:</dt>
+                    <dd className="col-sm-9">List of current builds of selected test plan.</dd>
+                    <dt className="col-sm-3">Add Case to Plan:</dt>
+                    <dd className="col-sm-9">
                       Add test cases to selected test plan. Test cases belong to test plan can be executed with a build.
                     </dd>
-                    <dt class="col-sm-3">Executions:</dt>
-                    <dd class="col-sm-9">Execute test case of selected test plan and selected build release.</dd>
+                    <dt className="col-sm-3">Executions:</dt>
+                    <dd className="col-sm-9">Execute test case of selected test plan and selected build release.</dd>
                   </dl>
                 </Col>
               </Row>

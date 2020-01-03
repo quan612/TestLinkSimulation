@@ -3,6 +3,7 @@ import withTestProjectsFetching from "../HOC/withTestProjectsFetching";
 import { useDispatch } from "react-redux";
 import { selectTestProjectAction } from "../../Redux/testProject.action";
 import DropDown from "../Common/DropDown";
+import DropdownStyles from "../styles/DropdownStyles";
 
 const TestProjectDropDown = ({ isLoading, testProjects }) => {
   const [selectedItem, setSelectedItem] = useState({ name: "" });
@@ -13,6 +14,7 @@ const TestProjectDropDown = ({ isLoading, testProjects }) => {
       setSelectedItem(testProjects[0]);
       dispatch(selectTestProjectAction(testProjects[0]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testProjects]);
 
   const handleChangeProject = eventKey => {
@@ -22,13 +24,15 @@ const TestProjectDropDown = ({ isLoading, testProjects }) => {
 
   return (
     <React.Fragment>
-      <label className="mr-1 text-light">Test Project: </label>
+      <label className="mr-1 text-light">Test Project: </label>{" "}
       {
-        <DropDown
-          title={isLoading ? "Fetching projects..." : selectedItem.name}
-          items={testProjects}
-          onSelect={handleChangeProject}
-        />
+        <DropdownStyles>
+          <DropDown
+            title={isLoading ? "Fetching projects..." : selectedItem.name}
+            items={testProjects}
+            onSelect={handleChangeProject}
+          />
+        </DropdownStyles>
       }
     </React.Fragment>
   );
