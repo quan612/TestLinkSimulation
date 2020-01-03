@@ -34,7 +34,7 @@ const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
 
   return (
     <Card>
-      <CardHeader>Create a new project</CardHeader>
+      <CardHeader>Create a new test suite</CardHeader>
       <CardBody>
         <form>
           <div className="panel-header">Test Suite Name</div>

@@ -59,27 +59,27 @@ const Nav = () => {
 
       <NavLink to={ROUTES.SPECIFICATIONS} activeClassName="active-link" exact>
         <FontAwesomeIcon className="d-inline-block mx-1" icon="paperclip" style={{ color: "white" }} />
-        <span>Specifications</span>
+        Specifications
       </NavLink>
 
       <NavLink to={ROUTES.PLANS} activeClassName="active-link" exact>
         <FontAwesomeIcon className="d-inline-block mx-1" icon="tasks" style={{ color: "white" }} />
-        <span>Plans</span>
+        Plans
       </NavLink>
 
       <NavLink to={ROUTES.BUILDS} activeClassName="active-link" exact>
         <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-        <span>Builds</span>
+        Builds
       </NavLink>
 
       <NavLink to={ROUTES.ADD_TESTCASES_TO_TESTPLAN} activeClassName="active-link" exact>
         <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-        <span>Add Cases to Plan</span>
+        Add Cases to Plan
       </NavLink>
 
       <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
         <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} />
-        <span>Executions</span>
+        Executions
       </NavLink>
     </NavStyles>
   );
@@ -88,11 +88,6 @@ const Nav = () => {
 const Header = ({ selectedProject }) => (
   <StyledHeader>
     <div className="head">
-      {/* <div className="dd_container">
-      <TestProjectDropDownWithFetching />
-      <TestPlanDropDownWithFetching selectedProject={props.selectedProject} />
-    </div> */}
-
       <DropDownContainer>
         <TestProjectDropDownWithFetching />
         <TestPlanDropDownWithFetching selectedProject={selectedProject} />

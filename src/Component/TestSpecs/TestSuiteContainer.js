@@ -51,11 +51,12 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
 
   return (
     <TestSuiteDetails
+      selectedProject={selectedProject}
       selectedSuite={selectedTestItem}
       onAddTestSuite={() => setAddTestSuite(true)}
       onEditTestSuite={() => setEditTestSuite(true)}
       onDeleteTestSuite={() => setDeleteTestSuite(true)}
-      OnAddTestCase={() => setAddTestCase(true)}
+      onAddTestCase={() => setAddTestCase(true)}
     />
   );
 };

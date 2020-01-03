@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./Component/navbar/Navigation";
+import Header from "./Component/navbar/Header";
 import LogRocket from "logrocket";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Home from "./Component/Home/Home";
@@ -17,7 +17,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <hr />
+      {/* <hr /> */}
       <Switch>
         <Route exact path={ROUTES.HOME} component={Home} />
         <Route exact path={ROUTES.PROJECTS} render={() => <TestProjectContainer />} />
