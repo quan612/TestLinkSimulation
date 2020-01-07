@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import constant from "../../Library/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardTitle, CardBody, Button, Input } from "reactstrap";
+import { Input } from "reactstrap";
 import { selectTestItemAction } from "../../Redux/actions";
 import { updateTestCaseWithoutStepsUpdateHelper, getTestCaseHelper } from "../../Redux/apiHelpers";
+import { StyledTestDetails } from "../styles/StyledTestDetails";
+import FormStyles from "../styles/FormStyles";
 
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;
 
-const EditTestCase = ({ selectedTestItem, onSave, onCancel }) => {
+const EditTestCase = ({ selectedTestItem, onClose }) => {
   const [testCaseObject, setTestCaseObject] = useState({
     name: selectedTestItem.name,
     tc_external_id: selectedTestItem.tc_external_id,
@@ -34,71 +36,52 @@ const EditTestCase = ({ selectedTestItem, onSave, onCancel }) => {
   };
 
   // we don't update the steps here
-  const handleOnSave = async () => {
-    // testLink
-    //   .updateTestCase({
-    //     testcasename: testCaseObject.name,
-    //     testsuiteid: selectedTestItem.id,
-    //     testcaseexternalid: selectedProject.prefix + "-" + selectedTestItem.tc_external_id,
-    //     summary: testCaseObject.summary,
-    //     preconditions: testCaseObject.preconditions,
-    //     status: testCaseObject.status,
-    //     executiontype: testCaseObject.execution_type,
-    //     version: parseInt(selectedTestItem.version)
-    //   })
-    //   .then(async message => {
-    //     console.log(message);
-    //     const testcase = await testLink.getTestCase({
-    //       testcaseid: selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id
-    //     });
-    //     testcase.forEach(async data => {
-    //       data.node = "File";
-    //       await dispatch(selectTestItemAction(data));
-    //       onSave();
-    //     });
-    //   })
-    //   .catch(error => console.log(error));
-
+  const handleOnSave = e => {
+    e.preventDefault();
+    console.log("selectedTestItem", selectedTestItem);
     // change the return object so that we dont need to loop foreach there
     updateTestCaseWithoutStepsUpdateHelper(selectedProject, testCaseObject)
       .then(async message => {
-        console.log(message);
-        const testcase = await getTestCaseHelper({
-          testCaseId: selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id
-        });
-        console.log("testcase", testcase); // test this
+        const testcase = await getTestCaseHelper(selectedTestItem.testcase_id);
+        console.log("testcase testing", testcase); // test this
         testcase.forEach(async data => {
           data.node = "File";
           await dispatch(selectTestItemAction(data));
-          onSave();
+          onClose();
         });
       })
       .catch(error => console.log("catch error at update test case ", error));
   };
 
   return (
-    <>
-      {selectedTestItem && <CardTitle>{`Test Suite: ${selectedTestItem.name}`}</CardTitle>}
-      <Card>
-        <CardBody>
-          <div className="panel-header">Title</div>
-          <Input type="text" name="name" id="example1" onChange={handleOnChange} value={testCaseObject.name} />
+    <StyledTestDetails>
+      {selectedTestItem && <h1>{`Edit Test Case: ${selectedTestItem.name}`}</h1>}
+      <div className="details">
+        <FormStyles>
+          <form onSubmit={e => handleOnSave(e)}>
+            <div className="panel-header">Title</div>
+            <Input type="text" name="name" id="example1" onChange={handleOnChange} value={testCaseObject.name} />
 
-          <div className="panel-header">Summary</div>
-          <Input type="textarea" name="summary" id="example2" onChange={handleOnChange} value={testCaseObject.sumary} />
+            <div className="panel-header">Summary</div>
+            <Input
+              type="textarea"
+              name="summary"
+              id="summary"
+              onChange={handleOnChange}
+              value={testCaseObject.sumary}
+            />
 
-          <div className="panel-header">Additional Information</div>
-          <Input
-            type="textarea"
-            name="preconditions"
-            id="example3"
-            onChange={handleOnChange}
-            value={testCaseObject.preconditions}
-          />
+            <div className="panel-header">Additional Information</div>
+            <Input
+              type="textarea"
+              name="preconditions"
+              id="preconditions"
+              onChange={handleOnChange}
+              value={testCaseObject.preconditions}
+            />
 
-          <fieldset className="border mt-2">
-            <div className="form-row mt-1">
-              <form className="form-group w-50 d-flex dd_container flex-start">
+            <fieldset className="border mt-2">
+              <div className="form-row mt-1">
                 <label className="mx-1">Test Case Status:</label>
                 <Input
                   type="select"
@@ -115,9 +98,7 @@ const EditTestCase = ({ selectedTestItem, onSave, onCancel }) => {
                     );
                   })}
                 </Input>
-              </form>
 
-              <form className="form-group w-50 d-flex dd_container flex-start">
                 <label className="mx-2">Execution Type:</label>
                 <Input
                   type="select"
@@ -134,21 +115,21 @@ const EditTestCase = ({ selectedTestItem, onSave, onCancel }) => {
                     );
                   })}
                 </Input>
-              </form>
-            </div>
-          </fieldset>
+              </div>
+            </fieldset>
 
-          <div className="btn-toolbar mt-2">
-            <Button color="success" className="mr-2" onClick={() => handleOnSave()}>
-              Save
-            </Button>
-            <Button color="secondary" onClick={onCancel}>
-              Cancel
-            </Button>
-          </div>
-        </CardBody>
-      </Card>{" "}
-    </>
+            <div className="buttonBar">
+              <button className="btn btn-success" type="submit">
+                Update Test Case
+              </button>
+              <button className="btn btn-secondary ml-2" onClick={() => onClose()}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </FormStyles>
+      </div>
+    </StyledTestDetails>
   );
 };
 

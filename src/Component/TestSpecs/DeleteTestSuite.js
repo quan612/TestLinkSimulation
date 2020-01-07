@@ -1,27 +1,33 @@
-import { Card, CardBody } from "reactstrap";
 import React from "react";
+import { StyledTestDetails } from "../styles/StyledTestDetails";
+import FormStyles from "../styles/FormStyles";
 
 const DeleteTestSuite = ({ selectedTestItem, onClose }) => {
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
   return (
-    <Card>
-      <h4>{selectedTestItem && <b>{`Delete Test Suite: ${selectedTestItem.name}`}</b>}</h4>
-      <CardBody>
-        <form>
-          <h5>
-            This feature is not supported by the API right now, due to test execution being recorded into Test Plan
-          </h5>
-
-          <div className=" btn-toolbar">
-            <button type="button" className="btn btn-outline-danger mr-2" disabled>
-              Delete This Suite
-            </button>
-            <button type="button" className="btn btn-outline-info" onClick={() => onClose()}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </CardBody>
-    </Card>
+    <StyledTestDetails>
+      {selectedTestItem && <h1>{`Delete Test Suite: ${selectedTestItem.name}`}</h1>}
+      <div className="details">
+        <FormStyles>
+          <form onSubmit={e => handleSubmit(e)}>
+            <label className="error">
+              This feature is not supported by the API right now, due to test execution being recorded into Test Plan
+            </label>
+            <hr />
+            <div className="buttonBar">
+              <button className="btn btn-success" type="submit">
+                Delete
+              </button>
+              <button className="btn btn-secondary ml-2" onClick={() => onClose()}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </FormStyles>
+      </div>
+    </StyledTestDetails>
   );
 };
 

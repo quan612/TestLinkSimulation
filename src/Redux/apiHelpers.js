@@ -53,13 +53,13 @@ export const reportResultApi = async result => {
 export const addTestSuiteHelper = async (selectedProject, parentSuiteId, data) => {
   if (parentSuiteId === selectedProject.id) {
     // no need parent id for top level suite
-    await testLink.createTestSuite({
+    return await testLink.createTestSuite({
       testprojectid: selectedProject.id,
       testsuitename: data.name,
       details: data.details
     });
   } else {
-    await testLink.createTestSuite({
+    return await testLink.createTestSuite({
       testprojectid: selectedProject.id,
       testsuitename: data.name,
       details: data.details,
@@ -300,6 +300,7 @@ export const getTestCasesOfSelectedTestSuiteHelper = async selectedTestSuite => 
  * @returns {object}  result Test Case object.
  */
 export const getTestCaseHelper = async testCaseId => {
+  console.log("testCaseId", testCaseId);
   return await testLink
     .getTestCase({
       testcaseid: testCaseId

@@ -44,14 +44,15 @@ const ListItemsFilter = () => {
 };
 
 const ListItems = () => {
-  const { selectedProject, testSuitesCount, testCasesCount } = useSelector(state => ({
+  const { selectedProject, testSuitesCount, testCasesCount, selectedTestItem } = useSelector(state => ({
     selectedProject: state.selectedProject,
     testSuitesCount: state.testSuitesCount,
-    testCasesCount: state.testCasesCount
+    testCasesCount: state.testCasesCount,
+    selectedTestItem: state.selectedTestItem
   }));
 
   const dispatch = useDispatch();
-  const dataItems = useTestSpecItemsFetching(selectedProject, testSuitesCount, testCasesCount);
+  const dataItems = useTestSpecItemsFetching(selectedProject, testSuitesCount, testCasesCount, selectedTestItem);
 
   const handleOnClick = async item => {
     dispatch(selectTestItemAction(item));

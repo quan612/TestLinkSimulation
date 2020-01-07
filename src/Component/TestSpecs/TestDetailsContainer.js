@@ -16,27 +16,26 @@ function TestDetailsContainer() {
   }));
 
   const [testItem, setTestItem] = useState({});
-  // const [isAddSuite, setAddSuite] = useState(false);
 
   useEffect(() => {
-    console.log("use effect in details container is updated again");
-    if (selectedTestItem && (selectedTestItem.node === "File" || selectedTestItem.hasOwnProperty("testcase_id"))) {
-      console.log("use effect to run force update???");
+    const fetchSelectedItem = async () => {
+      console.log("use effect in details container is updated again");
+      if (selectedTestItem && (selectedTestItem.node === "File" || selectedTestItem.hasOwnProperty("testcase_id"))) {
+        const testCase = await getTestCaseHelper(
+          selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id
+        ).catch(error => console.log("catch error at getTestCase", error));
 
-      getTestCaseHelper(selectedTestItem.testcase_id ? selectedTestItem.testcase_id : selectedTestItem.id)
-        .then(testcase => {
-          testcase.forEach(caseObj => {
+        if (testCase) {
+          testCase.forEach(caseObj => {
             caseObj.node = "File";
             setTestItem(caseObj);
-            console.log("new test case item", testItem);
           });
-        })
-        .catch(error => console.log("catch error at getTestCase", error));
-    } else {
-      setTestItem(selectedTestItem);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        }
+      } else {
+        setTestItem(selectedTestItem);
+      }
+    };
+    fetchSelectedItem();
   }, [selectedTestItem]);
 
   if (isLoading) {

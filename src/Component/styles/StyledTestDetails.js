@@ -1,9 +1,7 @@
 import styled from "styled-components";
-const StyledTestDetails = styled.div`
+export const StyledTestDetailContainer = styled.div`
   min-width: 99%;
   height: 100%;
-  // padding-right: 15px;
-  // padding-left: 15px;
   margin-right: 15px;
   margin-left: 15px;
   background: #1f2251;
@@ -22,4 +20,9 @@ const StyledTestDetails = styled.div`
   }
 `;
 
-export default StyledTestDetails;
+export const StyledTestDetails = styled.div`
+  .details {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+`;

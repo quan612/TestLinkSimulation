@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import constant from "../../Library/constants";
 import { useDispatch } from "react-redux";
-import { Card, CardTitle, CardBody, Button, Input } from "reactstrap";
+import { Input } from "reactstrap";
 import { getTestCasesOfTestProjectHelper, addTestCaseHelper } from "../../Redux/apiHelpers";
 import { postNumberOfTestCasesAction } from "../../Redux/testProject.action";
+import { StyledTestDetails } from "../styles/StyledTestDetails";
+import FormStyles from "../styles/FormStyles";
 
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;
@@ -28,7 +30,8 @@ const AddTestCase = ({ selectedProject, selectedTestSuite, onClose }) => {
     });
   };
 
-  const handleOnSave = () => {
+  const handleOnSave = e => {
+    e.preventDefault();
     addTestCaseHelper(selectedProject, selectedTestSuite, testCaseObject)
       .then(async success => {
         console.log(success);
@@ -42,22 +45,24 @@ const AddTestCase = ({ selectedProject, selectedTestSuite, onClose }) => {
   };
 
   return (
-    <>
-      {selectedTestSuite && <CardTitle>{`Test Suite: ${selectedTestSuite.name}`}</CardTitle>}
-      <Card>
-        <CardBody>
-          <div className="panel-header">Title</div>
-          <Input type="text" name="name" onChange={handleOnChange} />
-          {validationError && <span style={{ color: "red" }}>{validationError}</span>}
-          <div className="panel-header">Summary</div>
-          <Input type="textarea" name="summary" onChange={handleOnChange} />
+    <StyledTestDetails>
+      {selectedTestSuite && <h1>{`Creating test case under test suite: ${selectedTestSuite.name}`}</h1>}
+      <div className="details">
+        <FormStyles>
+          <form onSubmit={e => handleOnSave(e)}>
+            <div className="panel-header">Test Case Title</div>
 
-          <div className="panel-header">Additional Information</div>
-          <Input type="textarea" name="preconditions" onChange={handleOnChange} />
+            <Input type="text" name="name" onChange={handleOnChange} invalid={validationError ? true : false} />
+            {validationError && <span style={{ color: "red" }}>{validationError}</span>}
 
-          <fieldset className="border mt-2">
-            <div className="form-row mt-1">
-              <form className="form-group w-50 d-flex dd_container flex-start">
+            <div className="panel-header">Summary</div>
+            <Input type="textarea" name="summary" onChange={handleOnChange} />
+
+            <div className="panel-header">Additional Information</div>
+            <Input type="textarea" name="preconditions" onChange={handleOnChange} />
+
+            <fieldset className="border mt-2">
+              <div className="form-row mt-1">
                 <label className="mx-1">Test Case Status:</label>
                 <Input
                   type="select"
@@ -74,9 +79,7 @@ const AddTestCase = ({ selectedProject, selectedTestSuite, onClose }) => {
                     );
                   })}
                 </Input>
-              </form>
 
-              <form className="form-group w-50 d-flex dd_container flex-start">
                 <label className="mx-2">Execution Type:</label>
                 <Input
                   type="select"
@@ -93,21 +96,21 @@ const AddTestCase = ({ selectedProject, selectedTestSuite, onClose }) => {
                     );
                   })}
                 </Input>
-              </form>
-            </div>
-          </fieldset>
+              </div>
+            </fieldset>
 
-          <div className="btn-toolbar mt-2">
-            <Button color="success" className="mr-2" onClick={() => handleOnSave()}>
-              Save
-            </Button>
-            <Button color="secondary" onClick={() => onClose()}>
-              Cancel
-            </Button>
-          </div>
-        </CardBody>
-      </Card>{" "}
-    </>
+            <div className="buttonBar">
+              <button className="btn btn-success" type="submit">
+                Create
+              </button>
+              <button className="btn btn-secondary ml-2" onClick={() => onClose()}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </FormStyles>
+      </div>
+    </StyledTestDetails>
   );
 };
 

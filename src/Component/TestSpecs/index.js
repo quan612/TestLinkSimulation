@@ -4,7 +4,7 @@ import { selectTestItemAction } from "../../Redux/actions";
 import { SplitPane } from "../Containers/SplitPane";
 import TestSpecsNavigator from "./TestSpecsNavigator";
 import TestDetailsContainer from "./TestDetailsContainer";
-import StyledTestDetails from "../styles/StyledTestDetails";
+import { StyledTestDetailContainer } from "../styles/StyledTestDetails";
 
 const TestSpecsContainer = () => {
   const dispatch = useDispatch();
@@ -21,9 +21,9 @@ const TestSpecsContainer = () => {
         </>
       }
       right={
-        <StyledTestDetails>
+        <StyledTestDetailContainer>
           <TestDetailsContainer />
-        </StyledTestDetails>
+        </StyledTestDetailContainer>
       }
     />
   );

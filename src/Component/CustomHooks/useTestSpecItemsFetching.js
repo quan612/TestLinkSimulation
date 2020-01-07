@@ -3,7 +3,16 @@ import { useEffect, useState } from "react";
 import Tree from "../../Utils/Tree";
 import { getTestCasesOfTestSuitesHelper, getTestSuitesOfTestProjectApi } from "../../Redux/apiHelpers";
 
-const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCount) => {
+/*
+this hook is used mostly for the left navigator in Test Specifications
+the useEffect is run again in case:
++ the project is changed
++ the number of test suite is changed - when a new test suite is added
++ the number of test case is changed - when a new test case is added
++ a test case is updated - when user changes the name of the test case
+*/
+
+const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCount, selectedTestItem) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -33,7 +42,7 @@ const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCou
       }
     };
     fetchTestSpecItems();
-  }, [selectedProject, testSuitesCount, testCasesCount]);
+  }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem]);
 
   return data;
 };

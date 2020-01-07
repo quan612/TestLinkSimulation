@@ -54,13 +54,7 @@ export default function TestCaseDetails({ selectedTestCase }) {
   };
 
   if (isEditTestCase) {
-    return (
-      <EditTestCase
-        selectedTestItem={selectedTestCase}
-        onSave={() => setEditTestCase(false)}
-        onCancel={() => setEditTestCase(false)}
-      />
-    );
+    return <EditTestCase selectedTestItem={selectedTestCase} onClose={() => setEditTestCase(false)} />;
   } else {
     return (
       <>

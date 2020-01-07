@@ -34,13 +34,11 @@ const TableSimple = ({ tableItems, columns }) => {
       </thead>
       <tbody>
         {tableItems &&
-          tableItems.map(item => {
-            return (
-              <tr className="d-flex" key={item.id}>
-                {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-              </tr>
-            );
-          })}
+          tableItems.map(item => (
+            <tr className="d-flex" key={item.id}>
+              {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
+            </tr>
+          ))}
       </tbody>
     </Table>
   );
