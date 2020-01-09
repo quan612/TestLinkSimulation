@@ -21,12 +21,14 @@ const TestProjectContainer = () => {
   return isAddProject ? (
     <AddTestProjectContainer onClose={() => setAddProject(false)} />
   ) : (
-    <TestProjectsManagement
-      isProjectLoading={isProjectLoading}
-      testProjects={testProjects}
-      handleOnAdd={() => setAddProject(true)}
-      handleOnDelete={project => handleDeleteSubmit(project)}
-    />
+    <>
+      <TestProjectsManagement
+        isProjectLoading={isProjectLoading}
+        testProjects={testProjects}
+        handleOnAdd={() => setAddProject(true)}
+        handleOnDelete={project => handleDeleteSubmit(project)}
+      />
+    </>
   );
 };
 

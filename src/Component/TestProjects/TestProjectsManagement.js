@@ -1,5 +1,6 @@
 import React from "react";
 import { TableWithSearchWithLoading } from "../Containers/TableWithSearchContainer";
+import Pagination from "../Common/Pagination";
 
 const COLUMNS = {
   name: {
@@ -38,14 +39,16 @@ const COLUMNS = {
 
 const TestProjectsManagement = ({ isProjectLoading, testProjects, handleOnAdd, handleOnDelete }) => {
   return (
-    <TableWithSearchWithLoading
-      isLoading={isProjectLoading}
-      title="Test Projects Management"
-      tableItems={testProjects}
-      handleOnAdd={handleOnAdd}
-      handleOnDelete={handleOnDelete}
-      columns={COLUMNS}
-    />
+    <Pagination totalRecords={testProjects ? testProjects.length : null}>
+      <TableWithSearchWithLoading
+        isLoading={isProjectLoading}
+        title="Test Projects Management"
+        tableItems={testProjects}
+        handleOnAdd={handleOnAdd}
+        handleOnDelete={handleOnDelete}
+        columns={COLUMNS}
+      />
+    </Pagination>
   );
 };
 
