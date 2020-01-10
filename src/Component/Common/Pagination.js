@@ -21,7 +21,7 @@ const range = (from, to, step = 1) => {
   return range;
 };
 
-const Pagination = ({ totalRecords = null, pageLimit = 3, pageNeighbours = 0, ...rest }) => {
+const Pagination = ({ items, totalRecords = null, pageLimit = 3, pageNeighbours = 0, render }) => {
   //   const { totalRecords = null, pageLimit = 30, pageNeighbours = 0 } = props;
   const [currentPage, setCurrentPage] = useState(1);
   //   this.pageLimit = typeof pageLimit === "number" ? pageLimit : 30;
@@ -34,6 +34,7 @@ const Pagination = ({ totalRecords = null, pageLimit = 3, pageNeighbours = 0, ..
   const handlePageChange = number => {
     setCurrentPage(prevState => prevState + number);
   };
+  let numOfItem = items ? items.slice(0, 4) : 1;
   return (
     <>
       <Button disabled={currentPage === 1} onClick={() => handlePageChange(-1)}>
@@ -45,16 +46,16 @@ const Pagination = ({ totalRecords = null, pageLimit = 3, pageNeighbours = 0, ..
       <Button disabled={currentPage === totalPages} onClick={() => handlePageChange(1)}>
         Next
       </Button>
-      {rest}
+      {render(numOfItem)}
     </>
   );
 };
 
-Pagination.propTypes = {
-  totalRecords: PropTypes.number.isRequired,
-  pageLimit: PropTypes.number,
-  pageNeighbours: PropTypes.number,
-  onPageChanged: PropTypes.func
-};
+// Pagination.propTypes = {
+//   totalRecords: PropTypes.number.isRequired,
+//   pageLimit: PropTypes.number,
+//   pageNeighbours: PropTypes.number,
+//   onPageChanged: PropTypes.func
+// };
 
 export default Pagination;

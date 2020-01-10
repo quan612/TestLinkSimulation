@@ -39,15 +39,28 @@ const COLUMNS = {
 
 const TestProjectsManagement = ({ isProjectLoading, testProjects, handleOnAdd, handleOnDelete }) => {
   return (
-    <Pagination totalRecords={testProjects ? testProjects.length : null}>
-      <TableWithSearchWithLoading
+    <Pagination
+      items={testProjects}
+      totalRecords={testProjects ? testProjects.length : 1}
+      render={numOfItem => (
+        <TableWithSearchWithLoading
+          isLoading={isProjectLoading}
+          title="Test Projects Management"
+          tableItems={numOfItem}
+          handleOnAdd={handleOnAdd}
+          handleOnDelete={handleOnDelete}
+          columns={COLUMNS}
+        />
+      )}
+    >
+      {/* <TableWithSearchWithLoading
         isLoading={isProjectLoading}
         title="Test Projects Management"
         tableItems={testProjects}
         handleOnAdd={handleOnAdd}
         handleOnDelete={handleOnDelete}
         columns={COLUMNS}
-      />
+      /> */}
     </Pagination>
   );
 };
