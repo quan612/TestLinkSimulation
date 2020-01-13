@@ -8,13 +8,16 @@ body {
   height: 100vh;
   background-color: #171941;
   overflow: hidden;
+  color: white;
 }
-/* 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-} */
+
+*
+/* *:before, */
+/* *:after  */
+ {
+  /* box-sizing: inherit; */
+  box-sizing: border-box;
+}
 
 #root,
 .app {

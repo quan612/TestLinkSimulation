@@ -27,6 +27,7 @@ export const loadTestPlansAction = selectedProject => {
     dispatch(loadingTestPlans());
     return loadTestPlanApi(selectedProject)
       .then(testPlans => {
+        // if (testPlans === null) testPlans = [];
         setTimeout(() => {
           dispatch(loadTestPlansSuccess(testPlans));
         }, 2000);

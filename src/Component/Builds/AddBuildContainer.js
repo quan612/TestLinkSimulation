@@ -29,8 +29,8 @@ import {
 } from "reactstrap";
 
 const AddBuildContainer = ({ onClose }) => {
-  const { selectTestPlan } = useSelector(state => ({
-    selectTestPlan: state.selectTestPlan
+  const { selectedTestPlan } = useSelector(state => ({
+    selectedTestPlan: state.selectedTestPlan
   }));
 
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const AddBuildContainer = ({ onClose }) => {
             setErrors({ name: data.message });
           } else {
             console.log("Add build success ", data.message);
-            dispatch(loadBuildsAsyncAction(selectTestPlan));
+            dispatch(loadBuildsAsyncAction(selectedTestPlan));
             onClose();
           }
         });
@@ -69,7 +69,7 @@ const AddBuildContainer = ({ onClose }) => {
           isActive: true,
           isOpen: true,
           releaseDate: "",
-          testPlanId: selectTestPlan.id
+          testPlanId: selectedTestPlan.id
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}

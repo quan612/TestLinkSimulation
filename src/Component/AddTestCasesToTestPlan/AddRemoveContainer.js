@@ -4,9 +4,9 @@ import { Card, CardBody } from "reactstrap";
 import AddRemoveDetails from "./AddRemoveDetails";
 var he = require("he");
 
-const getTestCasesOfSelectedTestSuiteTestPlan = async (selectedTestSuite, selectTestPlan) => {
+const getTestCasesOfSelectedTestSuiteTestPlan = async (selectedTestSuite, selectedTestPlan) => {
   const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteHelper(selectedTestSuite);
-  const testCasesOfTestPlan = await getTestCasesForCurrentTestPlanApi(selectTestPlan);
+  const testCasesOfTestPlan = await getTestCasesForCurrentTestPlanApi(selectedTestPlan);
 
   // here we determine if test cases in selected test suite are linked to test plan?
   let getIdsOfAllTestCasesOfTestPlan = testCasesOfTestPlan.map(testcase => testcase.tcase_id);
@@ -21,7 +21,7 @@ const getTestCasesOfSelectedTestSuiteTestPlan = async (selectedTestSuite, select
   return testCasesOfTestSuite;
 };
 
-function AddRemoveContainer({ selectedProject, selectedTestSuite, selectTestPlan }) {
+function AddRemoveContainer({ selectedProject, selectedTestSuite, selectedTestPlan }) {
   const [listOfTestCases, setListOfTestCases] = useState([""]);
 
   useEffect(() => {
@@ -31,19 +31,19 @@ function AddRemoveContainer({ selectedProject, selectedTestSuite, selectTestPlan
         Object.keys(selectedTestSuite).length > 0 &&
         selectedProject.id !== selectedTestSuite.id
       ) {
-        const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteTestPlan(selectedTestSuite, selectTestPlan);
+        const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteTestPlan(selectedTestSuite, selectedTestPlan);
         setListOfTestCases([...testCasesOfTestSuite]);
       }
     };
     setListOfTestCases([]);
     getData();
-  }, [selectedProject, selectedTestSuite, selectTestPlan]);
+  }, [selectedProject, selectedTestSuite, selectedTestPlan]);
 
   if (listOfTestCases && Object.keys(listOfTestCases).length > 0) {
     return (
       <AddRemoveDetails
         selectedProject={selectedProject}
-        selectTestPlan={selectTestPlan}
+        selectedTestPlan={selectedTestPlan}
         listItems={listOfTestCases}
         selectedTestSuite={selectedTestSuite}
       />
@@ -54,11 +54,11 @@ function AddRemoveContainer({ selectedProject, selectedTestSuite, selectTestPlan
         <h1>{"Test Plan"}</h1>
         <Card className="section h-100">
           <CardBody>
-            {selectTestPlan && <div className="panel-header">{`Test plan: ${selectTestPlan.name} `}</div>}
-            {selectTestPlan && (
+            {selectedTestPlan && <div className="panel-header">{`Test plan: ${selectedTestPlan.name} `}</div>}
+            {selectedTestPlan && (
               <div
                 className="panel-content"
-                dangerouslySetInnerHTML={{ __html: he.decode(selectTestPlan.notes) }}
+                dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}
               ></div>
             )}
           </CardBody>

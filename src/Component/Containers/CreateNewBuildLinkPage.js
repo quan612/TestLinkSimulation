@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Card, Container, Row, Col, Label } from "reactstrap";
-const CreateNewBuildLinkPage = ({ selectTestPlan }) => {
+const CreateNewBuildLinkPage = ({ selectedTestPlan }) => {
   return (
     <Container>
       <Row>
@@ -9,8 +9,8 @@ const CreateNewBuildLinkPage = ({ selectTestPlan }) => {
           <Card className="card-register">
             <Label>Execute Tests</Label>
             <Label>
-              {selectTestPlan && (
-                <b> {`At least one Build (Active) is needed for this Test Plan: ${selectTestPlan.name}`}</b>
+              {selectedTestPlan && (
+                <b> {`At least one Build (Active) is needed for this Test Plan: ${selectedTestPlan.name}`}</b>
               )}
             </Label>
             <div>

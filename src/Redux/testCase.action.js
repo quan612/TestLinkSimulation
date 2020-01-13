@@ -1,8 +1,8 @@
 import { addTestCaseToTestPlanApi } from "./apiHelpers";
 
-export const addTestCaseToTestPlanAction = (selectedProject, selectTestPlan, tcExternalId, tc_version) => {
+export const addTestCaseToTestPlanAction = (selectedProject, selectedTestPlan, tcExternalId, tc_version) => {
   return async dispatch => {
-    return addTestCaseToTestPlanApi(selectedProject, selectTestPlan, tcExternalId, tc_version)
+    return addTestCaseToTestPlanApi(selectedProject, selectedTestPlan, tcExternalId, tc_version)
       .then(message => {
         return Promise.resolve(message);
       })

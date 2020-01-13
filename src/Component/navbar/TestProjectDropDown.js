@@ -10,7 +10,7 @@ const TestProjectDropDown = ({ isLoading, testProjects }) => {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    if (testProjects) {
+    if (testProjects.length > 0) {
       console.log("testProjects", testProjects);
       setSelectedItem(testProjects[0]);
       dispatch(selectTestProjectAction(testProjects[0]));

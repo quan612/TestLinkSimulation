@@ -25,7 +25,7 @@ const TestPlansContainer = () => {
     <TestPlanManagement
       selectedProject={selectedProject}
       isTestPlanLoading={isTestPlanLoading}
-      testPlans={testPlans}
+      listOfItems={testPlans}
       handleOnAdd={() => setCreateTestPlan(true)}
       handleOnDelete={testPlan => handleDeleteSubmit(testPlan)}
     />

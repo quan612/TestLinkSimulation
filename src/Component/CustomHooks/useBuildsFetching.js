@@ -11,12 +11,12 @@ const useBuildsFetching = selectedTestPlan => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchBuilds = async () => {
-      if (selectedTestPlan) {
+    if (selectedTestPlan) {
+      const fetchBuilds = async () => {
         await dispatch(loadBuildsAsyncAction(selectedTestPlan));
-      }
-    };
-    fetchBuilds();
+      };
+      fetchBuilds();
+    }
   }, [selectedTestPlan]);
 
   return { isLoading, buildsOfCurrentTestPlan };

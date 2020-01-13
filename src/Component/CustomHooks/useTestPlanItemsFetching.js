@@ -10,9 +10,9 @@ import {
 } from "../../Redux/apiHelpers";
 
 const useTestPlanItemsFetching = selectedBuild => {
-  const { selectedProject, selectTestPlan } = useSelector(state => ({
+  const { selectedProject, selectedTestPlan } = useSelector(state => ({
     selectedProject: state.selectedProject,
-    selectTestPlan: state.selectTestPlan
+    selectedTestPlan: state.selectedTestPlan
   }));
 
   const [dataItems, setDataItems] = useState(null);
@@ -25,9 +25,9 @@ const useTestPlanItemsFetching = selectedBuild => {
       if (selectedProject && selectedProject && selectedBuild) {
         try {
           setIsLoading(true);
-          const testSuites = await getTestSuitesForCurrentTestPlanApi(selectTestPlan);
+          const testSuites = await getTestSuitesForCurrentTestPlanApi(selectedTestPlan);
           const testCasesFromSuites = await getTestCasesOfTestSuitesHelper(testSuites);
-          const testCasesForTestPlan = await getTestCasesForCurrentTestPlanApi(selectTestPlan);
+          const testCasesForTestPlan = await getTestCasesForCurrentTestPlanApi(selectedTestPlan);
 
           //append the parentId of that test case in testSuite object into testPlan object
           let arrayOfTestCases = testCasesForTestPlan.map(casePlan => {
@@ -46,7 +46,7 @@ const useTestPlanItemsFetching = selectedBuild => {
           for (let testcase of arrayOfTestCases) {
             // console.log("trying to get result for build ", selectedBuild.name + " " + selectedBuild.id);
             let executionResult = await getLastExecutionResultApi(
-              selectTestPlan,
+              selectedTestPlan,
               testcase,
               selectedBuild
             ).catch(error => console.log("Catch error at get execution result", error));

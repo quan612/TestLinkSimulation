@@ -4,7 +4,7 @@ import { Card, CardBody, Container, Row, Col } from "reactstrap";
 import { getTestCaseHelper } from "../../Redux/apiHelpers";
 var he = require("he");
 
-function ExecutionContainer({ selectedBuild, selectTestPlan, selectedTestItem }) {
+function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem }) {
   const [testCaseDetails, setTestCaseDetails] = useState(null);
 
   useEffect(() => {
@@ -35,8 +35,11 @@ function ExecutionContainer({ selectedBuild, selectTestPlan, selectedTestItem })
         <h1>{"Execute Test"}</h1>
         <Card className="section h-100">
           <CardBody>
-            <div className="panel-header">{`Test plan: ${selectTestPlan.name} `}</div>
-            <div className="panel-content" dangerouslySetInnerHTML={{ __html: he.decode(selectTestPlan.notes) }}></div>
+            <div className="panel-header">{`Test plan: ${selectedTestPlan.name} `}</div>
+            <div
+              className="panel-content"
+              dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}
+            ></div>
             <div className="panel-header">{`Build info: ${selectedBuild.name} `}</div>
             <div className="panel-content" dangerouslySetInnerHTML={{ __html: he.decode(selectedBuild.notes) }}></div>
           </CardBody>

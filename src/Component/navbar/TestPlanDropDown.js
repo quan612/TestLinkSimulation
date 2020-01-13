@@ -10,7 +10,7 @@ const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    if (testPlans) {
+    if (testPlans.length > 0) {
       setSelectedItem(testPlans[0]);
       dispatch(selectTestPlanAction(testPlans[0]));
     } else {
@@ -31,7 +31,7 @@ const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
       {
         <DropdownStyles>
           <DropDown
-            title={isTestPlanLoading ? "Fetching Test Plan..." : selectedItem.name}
+            title={isTestPlanLoading || testPlans === [] ? "Fetching Test Plan..." : selectedItem.name}
             items={testPlans}
             onSelect={handleOnChangeTestPlan}
           />

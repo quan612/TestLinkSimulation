@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addTestCaseToTestPlanAction } from "../../Redux/testCase.action";
 import { Button, Card, CardBody, Container, Col, CustomInput } from "reactstrap";
 
-function AddRemoveDetails({ selectedProject, selectTestPlan, listItems, selectedTestSuite }) {
+function AddRemoveDetails({ selectedProject, selectedTestPlan, listItems, selectedTestSuite }) {
   const [listSubmit, setListSubmit] = useState([...listItems]);
 
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function AddRemoveDetails({ selectedProject, selectTestPlan, listItems, selected
           testCase.chilrenOfThisTestPlan = true;
 
           await dispatch(
-            addTestCaseToTestPlanAction(selectedProject, selectTestPlan, testCase.tc_external_id, testCase.version)
+            addTestCaseToTestPlanAction(selectedProject, selectedTestPlan, testCase.tc_external_id, testCase.version)
           ).catch(error => console.log("error at submit case to plan", error));
         }
       })

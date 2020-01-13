@@ -1,5 +1,11 @@
-import React from "react";
-import { TableWithSearchWithLoading } from "../Containers/TableWithSearchContainer";
+import React, { useState, useEffect } from "react";
+import { TableWithModal } from "../Containers/TableWithModal";
+import withPagination from "../HOC/withPagination";
+import WithLoading from "../HOC/withLoading";
+import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col } from "reactstrap";
+
+const TestPlansWithPaginated = withPagination(TableWithModal);
+const TestPlansWithLoadingWithPaginated = WithLoading(TestPlansWithPaginated);
 
 const COLUMNS = {
   name: {
@@ -33,16 +39,50 @@ const COLUMNS = {
   }
 };
 
-const TestPlanManagement = ({ selectedProject, isTestPlanLoading, testPlans, handleOnAdd, handleOnDelete }) => {
+const TestPlanManagement = ({ selectedProject, isTestPlanLoading, listOfItems, handleOnAdd, handleOnDelete }) => {
+  const [searchItems, setSearchItems] = useState([]);
+
+  useEffect(() => {
+    if (listOfItems instanceof Array && listOfItems.length > 0) {
+      setSearchItems(listOfItems);
+    } else setSearchItems([]);
+  }, [listOfItems]);
+
+  const handleOnSearch = e => {
+    let items = listOfItems.filter(value => value.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
+    setSearchItems([...items]);
+  };
+
   return (
-    <TableWithSearchWithLoading
-      isLoading={isTestPlanLoading}
-      title={selectedProject && `Test Plans Management - Test Project: ${selectedProject.name}`}
-      tableItems={testPlans}
-      handleOnAdd={handleOnAdd}
-      handleOnDelete={handleOnDelete}
-      columns={COLUMNS}
-    />
+    <Container className="h-75">
+      <Row className="h-100">
+        <Col className="offset-lg-0 offset-md-3">
+          <Card className="card-management h-100">
+            <CardHeader>
+              {selectedProject && <h4>Test Plans Management - Project {selectedProject.name}</h4>}
+              <br />
+              {/* search and create section  */}
+              <div className="form-group d-flex">
+                <InputGroup className="w-50">
+                  <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
+                </InputGroup>
+                <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnAdd()}>
+                  Create
+                </Button>
+              </div>
+              {/* end create section  */}
+            </CardHeader>
+
+            <TestPlansWithLoadingWithPaginated
+              isLoading={isTestPlanLoading}
+              listOfItems={searchItems}
+              handleOnDelete={handleOnDelete}
+              columns={COLUMNS}
+            />
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

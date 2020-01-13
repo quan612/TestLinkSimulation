@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadTestProjectsAction, deleteTestProjectAction } from "../../Redux/testProject.action";
 import AddTestProjectContainer from "./AddTestProjectContainer";
-import TestProjectsManagement from "./TestProjectsManagement";
+import { TestProjectsManagement } from "./TestProjectsManagement";
 
 const TestProjectContainer = () => {
   const { isProjectLoading, testProjects } = useSelector(state => ({
@@ -24,7 +24,7 @@ const TestProjectContainer = () => {
     <>
       <TestProjectsManagement
         isProjectLoading={isProjectLoading}
-        testProjects={testProjects}
+        listOfItems={testProjects}
         handleOnAdd={() => setAddProject(true)}
         handleOnDelete={project => handleDeleteSubmit(project)}
       />

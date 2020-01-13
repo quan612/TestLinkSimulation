@@ -7,18 +7,18 @@ import { Button } from "reactstrap";
  * getRangeOfItemsBasedOnPageIndex([1,2,3,4,5,6,7,8,9,10], 5, 2) => [6,7,8,9,10]
  */
 
-const getRangeOfItemsBasedOnPageIndex = (arrayOfItem = [], pageLimit, currentPage) => {
-  return arrayOfItem.filter((item, index) => {
-    let startIndex = pageLimit * currentPage - 1;
+const getRangeOfItemsBasedOnPageIndex = (arrayOfItems = [], pageLimit, currentPage) => {
+  return arrayOfItems.filter((item, index) => {
+    let startIndex = pageLimit * currentPage - pageLimit;
     if (index >= startIndex && index <= startIndex + pageLimit - 1) return item;
   });
 };
 
-const Pagination = ({ items, totalRecords = null, pageLimit = 4, pageNeighbours = 0, render }) => {
+const Pagination = ({ items, pageLimit = 4, pageNeighbours = 0, render }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
-  let totalPages = Math.ceil(totalRecords / pageLimit);
-
+  let totalRecords = items ? items.length : [].length;
+  let totalPages = totalRecords === 0 ? 1 : Math.ceil(totalRecords / pageLimit);
+  // console.log("test items", items);
   //showing the first pagination
   let numOfItem = getRangeOfItemsBasedOnPageIndex(items, pageLimit, currentPage);
 

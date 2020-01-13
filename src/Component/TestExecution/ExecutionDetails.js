@@ -46,7 +46,7 @@ function ExecutionDetails(props) {
   const handleOnResultSubmit = () => {
     const result = {
       testcase: props.testItemDetails,
-      testPlan: props.selectTestPlan,
+      testPlan: props.selectedTestPlan,
       status: executeStatus.value,
       build: props.selectedBuild,
       notes: ""
@@ -114,7 +114,7 @@ const mapStateToProps = state => {
   return {
     selectedTestItem: state.selectedTestItem,
     selectedBuild: state.selectedBuild,
-    selectTestPlan: state.selectTestPlan,
+    selectedTestPlan: state.selectedTestPlan,
     buildsOfCurrentTestPlan: state.buildsOfCurrentTestPlan
   };
 };

@@ -12,7 +12,10 @@ import {
 const initialState = {
   authorLogin: "Quan.Huynh",
   error: null,
-  isTestPlanLoading: false
+  isTestPlanLoading: false,
+  testProjects: [],
+  testPlans: [],
+  buildsOfCurrentTestPlan: []
 };
 
 const asyncReducer = (state = initialState, action) => {
@@ -35,7 +38,7 @@ const asyncReducer = (state = initialState, action) => {
       return { ...state, testCasesCount: action.payload };
 
     case SELECT_PROJECT:
-      return { ...state, selectedProject: action.payload, buildsOfCurrentTestPlan: {} };
+      return { ...state, selectedProject: action.payload, buildsOfCurrentTestPlan: [] };
 
     case LOAD_PROJECTS:
       return { ...state, isProjectLoading: true };
@@ -57,7 +60,7 @@ const asyncReducer = (state = initialState, action) => {
     case SELECT_TEST_PLAN:
       return {
         ...state,
-        selectTestPlan: action.payload
+        selectedTestPlan: action.payload
       };
 
     case LOAD_TEST_PLANS:

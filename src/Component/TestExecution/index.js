@@ -12,16 +12,16 @@ import { SplitPane } from "../Containers/SplitPane";
 import { Container, Row, Col } from "reactstrap";
 
 const TestExecution = () => {
-  const { selectedProject, selectTestPlan, selectedBuild, selectedTestItem } = useSelector(state => ({
+  const { selectedProject, selectedTestPlan, selectedBuild, selectedTestItem } = useSelector(state => ({
     selectedProject: state.selectedProject,
-    selectTestPlan: state.selectTestPlan,
+    selectedTestPlan: state.selectedTestPlan,
     selectedBuild: state.selectedBuild,
     selectedTestItem: state.selectedTestItem
   }));
 
   const dispatch = useDispatch();
 
-  const { isLoading, buildsOfCurrentTestPlan } = useBuildsFetching(selectTestPlan);
+  const { isLoading, buildsOfCurrentTestPlan } = useBuildsFetching(selectedTestPlan);
 
   useEffect(() => {
     if (buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length > 0) {
@@ -35,7 +35,7 @@ const TestExecution = () => {
         dispatch(clearCurrentBuildsAction());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProject, selectTestPlan, buildsOfCurrentTestPlan]);
+  }, [selectedProject, selectedTestPlan, buildsOfCurrentTestPlan]);
 
   if (isLoading) {
     return <LoadingContainer label={"Fetching Builds"} />;
@@ -44,7 +44,7 @@ const TestExecution = () => {
     (!isLoading && buildsOfCurrentTestPlan && Object.keys(buildsOfCurrentTestPlan).length < 1) ||
     buildsOfCurrentTestPlan === ""
   ) {
-    return <CreateNewBuildContainer selectTestPlan={selectTestPlan} />;
+    return <CreateNewBuildContainer selectedTestPlan={selectedTestPlan} />;
   }
 
   if (!isLoading && selectedBuild && Object.keys(selectedBuild).length > 0) {
@@ -63,7 +63,7 @@ const TestExecution = () => {
               <Col className="offset-lg-0 offset-md-3">
                 <ExecutionContainer
                   selectedBuild={selectedBuild}
-                  selectTestPlan={selectTestPlan}
+                  selectedTestPlan={selectedTestPlan}
                   selectedTestItem={selectedTestItem}
                 />
               </Col>

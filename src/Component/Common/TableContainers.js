@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WithLoading from "../HOC/withLoading";
 var he = require("he");
 
-export const TableContainer = ({ searchValue, tableItems, columns, handleDeleteItem }) => {
+export const TableContainer = ({ tableItems, columns, handleDeleteItem }) => {
   const handleRenderTableItems = (item, key) => {
     switch (key) {
       case "Utils":
@@ -63,15 +63,13 @@ export const TableContainer = ({ searchValue, tableItems, columns, handleDeleteI
       </thead>
       <tbody>
         {tableItems && Object.keys(tableItems).length > 0
-          ? tableItems
-              .filter(value => value.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
-              .map(item => {
-                return (
-                  <tr className="d-flex" key={item.id}>
-                    {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-                  </tr>
-                );
-              })
+          ? tableItems.map(item => {
+              return (
+                <tr className="d-flex" key={item.id}>
+                  {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
+                </tr>
+              );
+            })
           : null}
       </tbody>
     </Table>

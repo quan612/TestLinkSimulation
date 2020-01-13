@@ -8,9 +8,9 @@ import { SplitPane } from "../Containers/SplitPane";
 import { Container, Row, Col } from "reactstrap";
 
 const AddTestCaseToTestPlanContainer = () => {
-  const { selectedProject, selectTestPlan, selectedTestItem } = useSelector(state => ({
+  const { selectedProject, selectedTestPlan, selectedTestItem } = useSelector(state => ({
     selectedProject: state.selectedProject,
-    selectTestPlan: state.selectTestPlan,
+    selectedTestPlan: state.selectedTestPlan,
     selectedTestItem: state.selectedTestItem
   }));
 
@@ -20,7 +20,7 @@ const AddTestCaseToTestPlanContainer = () => {
       dispatch(selectTestItemAction({}));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectTestPlan]);
+  }, [selectedTestPlan]);
 
   return (
     <SplitPane
@@ -38,7 +38,7 @@ const AddTestCaseToTestPlanContainer = () => {
               <AddRemoveContainer
                 selectedProject={selectedProject}
                 selectedTestSuite={selectedTestItem}
-                selectTestPlan={selectTestPlan}
+                selectedTestPlan={selectedTestPlan}
               />
             </Col>
           </Row>

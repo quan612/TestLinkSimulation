@@ -6,17 +6,19 @@ export const StyledTestDetailContainer = styled.div`
   margin-left: 15px;
   background: #1f2251;
 
-  @media (min-width: 1200px) .container {
-    max-width: 1140px;
-  }
-  @media (min-width: 992px) .container {
-    max-width: 960px;
-  }
-  @media (min-width: 768px) .container {
-    max-width: 720px;
-  }
-  @media (min-width: 576px) .container {
-    max-width: 540px;
+  .container {
+    @media (min-width: 1200px) {
+      max-width: 1140px;
+    }
+    @media (min-width: 992px) {
+      max-width: 960px;
+    }
+    @media (min-width: 768px) {
+      max-width: 720px;
+    }
+    @media (min-width: 576px) {
+      max-width: 540px;
+    }
   }
 `;
 

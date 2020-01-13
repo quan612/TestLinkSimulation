@@ -6,13 +6,13 @@ import AddBuildContainer from "./AddBuildContainer";
 import CreateNewTestPlanLinkPage from "../Containers/CreateNewTestPlanLinkPage";
 
 const BuildsContainer = () => {
-  const { selectedProject, testPlans, selectTestPlan } = useSelector(state => ({
+  const { selectedProject, testPlans, selectedTestPlan } = useSelector(state => ({
     selectedProject: state.selectedProject,
     testPlans: state.testPlans,
-    selectTestPlan: state.selectTestPlan
+    selectedTestPlan: state.selectedTestPlan
   }));
 
-  const { isLoading, buildsOfCurrentTestPlan } = useBuildsFetching(selectTestPlan);
+  const { isLoading, buildsOfCurrentTestPlan } = useBuildsFetching(selectedTestPlan);
   const [isAddBuild, setAddBuild] = useState(false);
 
   const handleDeleteSubmit = async itemToDelete => {};
@@ -26,8 +26,8 @@ const BuildsContainer = () => {
   ) : (
     <BuildsManagement
       isLoading={isLoading}
-      selectTestPlan={selectTestPlan}
-      builds={buildsOfCurrentTestPlan}
+      selectedTestPlan={selectedTestPlan}
+      listOfItems={buildsOfCurrentTestPlan}
       handleOnAdd={() => setAddBuild(true)}
       handleOnDelete={build => handleDeleteSubmit(build)}
     />
