@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import ExecutionContainer from "./ExecutionContainer";
 import ListExecutionItems from "./ListExecutionItems";
 import ListFilterSetting from "./ListFilterSetting";
-import useBuildsFetching from "../CustomHooks/useBuildsFetching";
+import useBuildsFetching from "../../Component/CustomHooks/useBuildsFetching";
 import { selectBuildAction, clearCurrentBuildsAction } from "../../Redux/build.action";
 import { selectTestItemAction } from "../../Redux/actions";
-import CreateNewBuildContainer from "../Containers/CreateNewBuildLinkPage";
-import LoadingContainer from "../Containers/LoadingContainer";
-import { SplitPane } from "../Containers/SplitPane";
+import CreateNewBuildContainer from "../../Component/Containers/CreateNewBuildLinkPage";
+import LoadingContainer from "../../Component/Containers/LoadingContainer";
+import { SplitPane } from "../../Component/Containers/SplitPane";
 import { Container, Row, Col } from "reactstrap";
 
 const TestExecution = () => {

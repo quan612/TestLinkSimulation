@@ -5,8 +5,8 @@ import { selectTestItemAction } from "../../Redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createTestCaseStepsApi } from "../../Redux/apiHelpers";
 import { Button, Card, CardBody, CardText } from "reactstrap";
-import TableSimple from "../Common/TableSimple";
-import TableWithCreateItem from "../Common/TableWithCreateItem";
+import TableSimple from "../../Component/Common/TableSimple";
+import TableWithCreateItem from "../../Component/Common/TableWithCreateItem";
 import constant from "../../Library/constants";
 import EditTestCase from "./EditTestCase";
 

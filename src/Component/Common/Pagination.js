@@ -1,12 +1,12 @@
-import React, { Component, Fragment, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "reactstrap";
+
 import PaginationStyles from "../styles/PaginationStyles";
+
 /**
  * Helper method to get range of items to be rendered based on current selected page
  * getRangeOfItemsBasedOnPageIndex([1,2,3,4,5,6,7,8,9,10], 5, 2) => [6,7,8,9,10]
  */
-
 const getRangeOfItemsBasedOnPageIndex = (arrayOfItems = [], pageLimit, currentPage) => {
   return arrayOfItems.filter((item, index) => {
     let startIndex = pageLimit * currentPage - pageLimit;
@@ -18,7 +18,7 @@ const Pagination = ({ items, pageLimit = 4, pageNeighbours = 0, render }) => {
   const [currentPage, setCurrentPage] = useState(1);
   let totalRecords = items ? items.length : [].length;
   let totalPages = totalRecords === 0 ? 1 : Math.ceil(totalRecords / pageLimit);
-  // console.log("test items", items);
+
   //showing the first pagination
   let numOfItem = getRangeOfItemsBasedOnPageIndex(items, pageLimit, currentPage);
 

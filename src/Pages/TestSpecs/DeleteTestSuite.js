@@ -1,6 +1,6 @@
 import React from "react";
-import { StyledTestDetails } from "../styles/StyledTestDetails";
-import FormStyles from "../styles/FormStyles";
+import { StyledTestDetails } from "../../Component/styles/StyledTestDetails";
+import FormStyles from "../../Component/styles/FormStyles";
 
 const DeleteTestSuite = ({ selectedTestItem, onClose }) => {
   const handleSubmit = e => {

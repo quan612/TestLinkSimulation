@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Input } from "reactstrap";
 import { selectTestItemAction } from "../../Redux/actions";
 import { updateTestCaseWithoutStepsUpdateHelper, getTestCaseHelper } from "../../Redux/apiHelpers";
-import { StyledTestDetails } from "../styles/StyledTestDetails";
-import FormStyles from "../styles/FormStyles";
+import { StyledTestDetails } from "../../Component/styles/StyledTestDetails";
+import FormStyles from "../../Component/styles/FormStyles";
 
 const status = constant.TestCaseStatus;
 const execution_type = constant.ExecutionType;

@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import useTestSuitesFetching from "../CustomHooks/useTestSuitesFetching";
+import useTestSuitesFetching from "../../Component/CustomHooks/useTestSuitesFetching";
 import { selectTestItemAction } from "../../Redux/actions";
-import { TreeLeaf } from "../Common/TreeLeaf";
+import { TreeLeaf } from "../../Component/Common/TreeLeaf";
 import { Card } from "react-bootstrap";
 
 const TestSuiteList = () => {

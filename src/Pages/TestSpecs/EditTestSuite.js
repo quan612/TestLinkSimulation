@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardBody } from "reactstrap";
 import React, { useState } from "react";
 import { updateTestSuiteHelper } from "../../Redux/apiHelpers";
-import { StyledTestDetails } from "../styles/StyledTestDetails";
-import FormStyles from "../styles/FormStyles";
+import { StyledTestDetails } from "../../Component/styles/StyledTestDetails";
+import FormStyles from "../../Component/styles/FormStyles";
 
 const EditTestSuite = ({ selectedProject, selectedTestSuite, onClose }) => {
   const [data, setData] = useState({

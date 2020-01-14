@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { TableWithModal } from "../Containers/TableWithModal";
-import withPagination from "../HOC/withPagination";
-import WithLoading from "../HOC/withLoading";
-import { TableManagementStyles } from "../styles/TableManagementStyles";
+import { TableWithModal } from "../../Component/Containers/TableWithModal";
+import withPagination from "../../Component/HOC/withPagination";
+import WithLoading from "../../Component/HOC/withLoading";
+import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
 import { Button, Input, InputGroup } from "reactstrap";
 
-const BuildsWithPaginated = withPagination(TableWithModal);
-const BuildsWithLoadingWithPaginated = WithLoading(BuildsWithPaginated);
+const TestProjectsWithPaginated = withPagination(TableWithModal);
+const TestProjectsWithLoadingWithPaginated = WithLoading(TestProjectsWithPaginated);
 
 const COLUMNS = {
   name: {
@@ -15,18 +15,26 @@ const COLUMNS = {
   },
   notes: {
     label: "Description",
-    width: "45%"
+    width: "40%"
   },
-  release_date: {
-    label: "Release Date",
-    width: "10%"
+  prefix: {
+    label: "Prefix",
+    width: "7%"
+  },
+  issue_tracker_enabled: {
+    label: "Issue Tracker",
+    width: "9%"
+  },
+  requirementsEnabled: {
+    label: "Requirement",
+    width: "8%"
   },
   active: {
     label: "Active",
     width: "5%"
   },
-  is_open: {
-    label: "Open",
+  is_public: {
+    label: "Public",
     width: "5%"
   },
   Utils: {
@@ -35,13 +43,11 @@ const COLUMNS = {
   }
 };
 
-const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAdd, handleOnDelete }) => {
+export const TestProjectsManagement = ({ isProjectLoading, listOfItems, handleOnAdd, handleOnDelete }) => {
   const [searchItems, setSearchItems] = useState([]);
 
   useEffect(() => {
-    if (listOfItems instanceof Array && listOfItems.length > 0) {
-      setSearchItems(listOfItems);
-    } else setSearchItems([]);
+    setSearchItems(listOfItems);
   }, [listOfItems]);
 
   const handleOnSearch = e => {
@@ -52,7 +58,7 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
   return (
     <TableManagementStyles>
       <div className="body">
-        {selectedTestPlan && <h4>Builds Management - Plan: {selectedTestPlan.name}</h4>}
+        <h4>Test Projects Management</h4>
         <br />
         {/* search and create section  */}
         <div className="form-group d-flex">
@@ -65,8 +71,8 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
         </div>
         {/* end create section  */}
 
-        <BuildsWithLoadingWithPaginated
-          isLoading={isLoading}
+        <TestProjectsWithLoadingWithPaginated
+          isLoading={isProjectLoading}
           listOfItems={searchItems}
           handleOnDelete={handleOnDelete}
           columns={COLUMNS}
@@ -75,5 +81,3 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
     </TableManagementStyles>
   );
 };
-
-export default BuildsManagement;

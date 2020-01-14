@@ -1,10 +1,10 @@
 import React from "react";
-import { TreeLeaf } from "../Common/TreeLeaf";
-import { selectTestItemAction } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
-import useTestPlanItemsFetching from "../CustomHooks/useTestPlanItemsFetching";
+import useTestPlanItemsFetching from "../../Component/CustomHooks/useTestPlanItemsFetching";
+import { selectTestItemAction } from "../../Redux/actions";
+import { TreeLeaf } from "../../Component/Common/TreeLeaf";
 import { Card } from "react-bootstrap";
-import LoadingContainer from "../Containers/LoadingContainer";
+import LoadingContainer from "../../Component/Containers/LoadingContainer";
 
 const ListExecutionItems = ({ selectedBuild }) => {
   const dispatch = useDispatch();

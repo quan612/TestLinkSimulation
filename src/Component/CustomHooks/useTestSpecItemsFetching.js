@@ -13,38 +13,34 @@ the useEffect is run again in case:
 */
 
 const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCount, selectedTestItem) => {
-  const [data, setData] = useState(null);
+  const [testItems, setTestItems] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchTestSpecItems = async () => {
       if (selectedProject) {
         try {
-          const testSuites = await getTestSuitesOfTestProjectApi(selectedProject).catch(error =>
-            console.log("Catch error at get test suite for project ", error)
-          );
-          //console.log("testSuites", testSuites);
-
-          const testCasesFromTestSuites = await getTestCasesOfTestSuitesHelper(testSuites).catch(error =>
-            console.log("Catch error at get test case for test suite ", error)
-          );
-          console.log("testCasesFromSuites", testCasesFromTestSuites);
+          setIsLoading(true);
+          console.log("isLoading", isLoading);
+          const testSuites = await getTestSuitesOfTestProjectApi(selectedProject);
+          const testCasesFromTestSuites = await getTestCasesOfTestSuitesHelper(testSuites);
 
           //put all test suites, and test cases into the list, in order to make a tree structure
           let listOfItems = [...testSuites, ...testCasesFromTestSuites];
-          //console.log("listOfItems", listOfItems);
-
           const itemInTreeStructure = handleItemsInTestSpecsInTreeStructure(listOfItems, selectedProject);
-          console.log("itemInTreeStructure", itemInTreeStructure);
-          setData(itemInTreeStructure);
+
+          setTestItems(itemInTreeStructure);
+          setIsLoading(false);
+          console.log("isLoading", isLoading);
         } catch (error) {
-          console.log("error", error);
+          console.log("Catch error at fetchTestSpecItems method: ", error);
         }
       }
     };
     fetchTestSpecItems();
-  }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem]);
-
-  return data;
+    // }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem]);
+  }, [selectedProject, testSuitesCount, testCasesCount]);
+  return { isLoading, testItems };
 };
 
 export default useTestSpecItemsFetching;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { TableWithModal } from "../Containers/TableWithModal";
-import withPagination from "../HOC/withPagination";
-import WithLoading from "../HOC/withLoading";
+import { TableWithModal } from "../../Component/Containers/TableWithModal";
+import withPagination from "../../Component/HOC/withPagination";
+import WithLoading from "../../Component/HOC/withLoading";
 import { Button, Input, InputGroup } from "reactstrap";
-import { TableManagementStyles } from "../styles/TableManagementStyles";
+import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
 const TestPlansWithPaginated = withPagination(TableWithModal);
 const TestPlansWithLoadingWithPaginated = WithLoading(TestPlansWithPaginated);
 

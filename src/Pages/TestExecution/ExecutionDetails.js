@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import DropDown from "../Common/DropDown";
+import DropDown from "../../Component/Common/DropDown";
 import { connect } from "react-redux";
 import { reportResultApi } from "../../Redux/apiHelpers";
 
 import { Button, Card, CardBody } from "reactstrap";
-import TableSimple from "../Common/TableSimple";
+import TableSimple from "../../Component/Common/TableSimple";
 
 //TODO update list tree after submit test result
 

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteTestPlanAction, loadTestPlansAction } from "../../Redux/testPlan.action";
 import AddTestPlanContainer from "./AddTestPlanContainer";
 import TestPlanManagement from "./TestPlanManagement";
-import useTestPlansFetching from "../CustomHooks/useTestPlansFetching";
+import useTestPlansFetching from "../../Component/CustomHooks/useTestPlansFetching";
 
 const TestPlansContainer = () => {
   const { selectedProject } = useSelector(state => ({

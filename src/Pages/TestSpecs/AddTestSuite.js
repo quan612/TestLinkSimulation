@@ -5,8 +5,8 @@ import { getTestSuitesOfTestProjectApi, addTestSuiteHelper } from "../../Redux/a
 import { postNumberOfTestSuitesAction } from "../../Redux/testProject.action";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
-import { StyledTestDetails } from "../styles/StyledTestDetails";
-import FormStyles from "../styles/FormStyles";
+import { StyledTestDetails } from "../../Component/styles/StyledTestDetails";
+import FormStyles from "../../Component/styles/FormStyles";
 
 const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
   const [testSuiteObject, setTestSuiteObject] = useState({

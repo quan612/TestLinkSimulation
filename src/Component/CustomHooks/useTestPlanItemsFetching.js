@@ -20,9 +20,7 @@ const useTestPlanItemsFetching = selectedBuild => {
 
   useEffect(() => {
     const fetchTestPlanItems = async () => {
-      console.log("current selected build", selectedBuild.name);
-
-      if (selectedProject && selectedProject && selectedBuild) {
+      if (selectedProject && selectedTestPlan && selectedBuild) {
         try {
           setIsLoading(true);
           const testSuites = await getTestSuitesForCurrentTestPlanApi(selectedTestPlan);
@@ -62,13 +60,12 @@ const useTestPlanItemsFetching = selectedBuild => {
             }
           }
 
-          console.log("array of case", arrayOfTestCases);
           //put all test suites, and test cases into the list, in order to make a tree structure
           let listOfItems = [...testSuites];
           arrayOfTestCases.map(testCase => (listOfItems = [...listOfItems, testCase]));
 
           const itemInTreeStructure = handleItemsInTestPlansInTreeStructure(listOfItems, selectedProject);
-          console.log("itemInTreeStructure", itemInTreeStructure);
+
           setDataItems(itemInTreeStructure);
           setIsLoading(false);
         } catch (error) {
@@ -80,7 +77,6 @@ const useTestPlanItemsFetching = selectedBuild => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBuild]);
   return { isLoading, dataItems };
-  //return data;
 };
 
 export default useTestPlanItemsFetching;

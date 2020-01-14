@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import useTestSpecItemsFetching from "../../Component/CustomHooks/useTestSpecItemsFetching";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Label, Input } from "reactstrap";
-import { TreeLeaf } from "../Common/TreeLeaf";
+import { TreeLeaf } from "../../Component/Common/TreeLeaf";
 import { selectTestItemAction } from "../../Redux/actions";
-import { useSelector, useDispatch } from "react-redux";
-import useTestSpecItemsFetching from "../CustomHooks/useTestSpecItemsFetching";
+import LoadingContainer from "../../Component/Containers/LoadingContainer";
 import { Card } from "react-bootstrap";
 
 const ListItemsFilter = () => {
@@ -52,7 +53,12 @@ const ListItems = () => {
   }));
 
   const dispatch = useDispatch();
-  const dataItems = useTestSpecItemsFetching(selectedProject, testSuitesCount, testCasesCount, selectedTestItem);
+  const { isLoading, testItems } = useTestSpecItemsFetching(
+    selectedProject,
+    testSuitesCount,
+    testCasesCount,
+    selectedTestItem
+  );
 
   const handleOnClick = async item => {
     dispatch(selectTestItemAction(item));
@@ -60,16 +66,17 @@ const ListItems = () => {
 
   return (
     <div className="h_100 d-flex flex-column">
-      {dataItems && (
-        <Card className="list-tree-items">
+      <Card className="list-tree-items">
+        {testItems && (
           <TreeLeaf
-            child={dataItems}
-            key={dataItems.data.id}
-            node={dataItems.data.node}
+            child={testItems}
+            key={testItems.data.id}
+            node={testItems.data.node}
             onClick={item => handleOnClick(item)}
           />
-        </Card>
-      )}
+        )}
+        {isLoading === true ? <LoadingContainer /> : null}
+      </Card>
     </div>
   );
 };

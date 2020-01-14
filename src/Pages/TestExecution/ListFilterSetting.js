@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DropDown from "../Common/DropDown";
+import DropDown from "../../Component/Common/DropDown";
 import { selectBuildAction } from "../../Redux/build.action";
 
 const ListFilterSetting = ({ selectedBuild, builds }) => {

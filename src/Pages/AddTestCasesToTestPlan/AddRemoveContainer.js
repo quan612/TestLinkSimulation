@@ -1,7 +1,7 @@
 import React from "react";
-import useTestCasesOfTestSuiteTestPlanFetching from "../CustomHooks/useTestCasesOfTestSuiteTestPlanFetching";
+import useTestCasesOfTestSuiteTestPlanFetching from "../../Component/CustomHooks/useTestCasesOfTestSuiteTestPlanFetching";
 import AddRemoveDetails from "./AddRemoveDetails";
-import LoadingContainer from "../Containers/LoadingContainer";
+import LoadingContainer from "../../Component/Containers/LoadingContainer";
 var he = require("he");
 
 function AddRemoveContainer({ selectedProject, selectedTestSuite, selectedTestPlan }) {
@@ -13,7 +13,7 @@ function AddRemoveContainer({ selectedProject, selectedTestSuite, selectedTestPl
 
   if (isLoading) return <LoadingContainer label={"Fetching test cases..."} />;
 
-  if (testCases && Object.keys(testCases).length > 0) {
+  if (selectedTestSuite && testCases && Object.keys(testCases).length > 0) {
     return (
       <AddRemoveDetails
         selectedProject={selectedProject}

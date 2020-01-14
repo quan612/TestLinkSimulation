@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import useBuildsFetching from "../CustomHooks/useBuildsFetching";
+import useBuildsFetching from "../../Component/CustomHooks/useBuildsFetching";
 import BuildsManagement from "./BuildsManagement";
 import AddBuildContainer from "./AddBuildContainer";
-import CreateNewTestPlanLinkPage from "../Containers/CreateNewTestPlanLinkPage";
+import CreateNewTestPlanLinkPage from "../../Component/Containers/CreateNewTestPlanLinkPage";
 
 const BuildsContainer = () => {
   const { selectedProject, testPlans, selectedTestPlan } = useSelector(state => ({

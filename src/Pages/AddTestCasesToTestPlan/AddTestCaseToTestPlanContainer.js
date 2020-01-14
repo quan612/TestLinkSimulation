@@ -4,8 +4,8 @@ import { selectTestItemAction } from "../../Redux/actions";
 import AddRemoveContainer from "./AddRemoveContainer";
 import TestSuiteList from "./TestSuiteList";
 import ListFilterSetting from "./ListFilter";
-import { SplitPane } from "../Containers/SplitPane";
-import { StyledTestDetailContainer } from "../styles/StyledTestDetails";
+import { SplitPane } from "../../Component/Containers/SplitPane";
+import { StyledTestDetailContainer } from "../../Component/styles/StyledTestDetails";
 
 const AddTestCaseToTestPlanContainer = () => {
   const { selectedProject, selectedTestPlan, selectedTestItem } = useSelector(state => ({
