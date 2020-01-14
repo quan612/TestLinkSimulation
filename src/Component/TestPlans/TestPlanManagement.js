@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { TableWithModal } from "../Containers/TableWithModal";
 import withPagination from "../HOC/withPagination";
 import WithLoading from "../HOC/withLoading";
-import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col } from "reactstrap";
-
+import { Button, Input, InputGroup } from "reactstrap";
+import { TableManagementStyles } from "../styles/TableManagementStyles";
 const TestPlansWithPaginated = withPagination(TableWithModal);
 const TestPlansWithLoadingWithPaginated = WithLoading(TestPlansWithPaginated);
 
@@ -54,35 +54,29 @@ const TestPlanManagement = ({ selectedProject, isTestPlanLoading, listOfItems, h
   };
 
   return (
-    <Container className="h-75">
-      <Row className="h-100">
-        <Col className="offset-lg-0 offset-md-3">
-          <Card className="card-management h-100">
-            <CardHeader>
-              {selectedProject && <h4>Test Plans Management - Project {selectedProject.name}</h4>}
-              <br />
-              {/* search and create section  */}
-              <div className="form-group d-flex">
-                <InputGroup className="w-50">
-                  <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
-                </InputGroup>
-                <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnAdd()}>
-                  Create
-                </Button>
-              </div>
-              {/* end create section  */}
-            </CardHeader>
+    <TableManagementStyles>
+      <div className="body">
+        {selectedProject && <h4>Test Plans Management - Project {selectedProject.name}</h4>}
+        <br />
+        {/* search and create section  */}
+        <div className="form-group d-flex">
+          <InputGroup className="w-50">
+            <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
+          </InputGroup>
+          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnAdd()}>
+            Create
+          </Button>
+        </div>
+        {/* end create section  */}
 
-            <TestPlansWithLoadingWithPaginated
-              isLoading={isTestPlanLoading}
-              listOfItems={searchItems}
-              handleOnDelete={handleOnDelete}
-              columns={COLUMNS}
-            />
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+        <TestPlansWithLoadingWithPaginated
+          isLoading={isTestPlanLoading}
+          listOfItems={searchItems}
+          handleOnDelete={handleOnDelete}
+          columns={COLUMNS}
+        />
+      </div>
+    </TableManagementStyles>
   );
 };
 

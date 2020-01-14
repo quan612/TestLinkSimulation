@@ -7,7 +7,7 @@ const withPagination = Component => {
       <Pagination
         items={listOfItems}
         render={paginatedItems => <Component listOfItems={paginatedItems} {...props} />}
-      ></Pagination>
+      />
     );
   };
 };

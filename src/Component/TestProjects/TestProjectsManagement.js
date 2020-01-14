@@ -3,7 +3,7 @@ import { TableWithModal } from "../Containers/TableWithModal";
 import withPagination from "../HOC/withPagination";
 import WithLoading from "../HOC/withLoading";
 import { TableManagementStyles } from "../styles/TableManagementStyles";
-import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col } from "reactstrap";
+import { Button, Input, InputGroup } from "reactstrap";
 
 const TestProjectsWithPaginated = withPagination(TableWithModal);
 const TestProjectsWithLoadingWithPaginated = WithLoading(TestProjectsWithPaginated);

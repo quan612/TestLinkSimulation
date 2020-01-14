@@ -332,7 +332,7 @@ div > img {
 
 /* execution detail*/
 
-.panel-header {
+/* .panel-header {
   color: #f4f4f4;
   font-weight: bold;
   font-size: 1em;
@@ -360,7 +360,7 @@ div > img {
   border-style: groove;
   border-width: thin;
   border-radius: 5px;
-}
+} */
 
 .filter-builds {
   padding: 10px 5px;

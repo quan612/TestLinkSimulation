@@ -1,7 +1,7 @@
 import React, { Component, Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
-
+import PaginationStyles from "../styles/PaginationStyles";
 /**
  * Helper method to get range of items to be rendered based on current selected page
  * getRangeOfItemsBasedOnPageIndex([1,2,3,4,5,6,7,8,9,10], 5, 2) => [6,7,8,9,10]
@@ -28,18 +28,22 @@ const Pagination = ({ items, pageLimit = 4, pageNeighbours = 0, render }) => {
   };
 
   return (
-    <>
-      <Button disabled={currentPage === 1} onClick={() => handlePageChange(-1)}>
-        Previous
-      </Button>
-      <Button>
-        Page {currentPage} of {totalPages}
-      </Button>
-      <Button disabled={currentPage === totalPages} onClick={() => handlePageChange(1)}>
-        Next
-      </Button>
-      {render(numOfItem)}
-    </>
+    <PaginationStyles>
+      <div className="pagination">
+        <button disabled={currentPage === 1} onClick={() => handlePageChange(-1)}>
+          Previous
+        </button>
+
+        <p>
+          Page {currentPage} of {totalPages}
+        </p>
+
+        <button disabled={currentPage === totalPages} onClick={() => handlePageChange(1)}>
+          Next
+        </button>
+      </div>
+      <div className="children">{render(numOfItem)}</div>
+    </PaginationStyles>
   );
 };
 

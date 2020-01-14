@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectTestItemAction } from "../../Redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createTestCaseStepsApi } from "../../Redux/apiHelpers";
-import { Button, Card, CardBody, CardText, Container, Row, Col } from "reactstrap";
+import { Button, Card, CardBody, CardText } from "reactstrap";
 import TableSimple from "../Common/TableSimple";
 import TableWithCreateItem from "../Common/TableWithCreateItem";
 import constant from "../../Library/constants";

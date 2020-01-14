@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import ModalYesNo from "../Common/ModalYesNo";
-import { Button, Card, CardHeader, CardBody, Input, InputGroup, Container, Row, Col } from "reactstrap";
 
-import { TableContainerWithLoading, TableContainer } from "../Common/TableContainers";
+import { TableContainer } from "../Common/TableContainers";
 
 export const TableWithModal = ({ listOfItems, columns, handleOnDelete }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -25,14 +24,7 @@ export const TableWithModal = ({ listOfItems, columns, handleOnDelete }) => {
 
   return (
     <>
-      {/* <CardBody>
-        <Row> */}
-      {/* <Col className="mt-3 col-12"> */}
-
       <TableContainer tableItems={listOfItems} columns={columns} handleDeleteItem={handleDeleteItem} />
-      {/* </Col> */}
-      {/* </Row>
-      </CardBody> */}
       <ModalYesNo
         title="Confirm to delete item"
         message={`Would you like to delete item: "${itemToDelete.name}"?`}

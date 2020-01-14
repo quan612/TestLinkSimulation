@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const StyledTestDetailContainer = styled.div`
-  min-width: 99%;
+  min-width: 99% !important;
   height: 100%;
   margin-right: 15px;
   margin-left: 15px;

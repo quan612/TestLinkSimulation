@@ -5,7 +5,7 @@ import AddRemoveContainer from "./AddRemoveContainer";
 import TestSuiteList from "./TestSuiteList";
 import ListFilterSetting from "./ListFilter";
 import { SplitPane } from "../Containers/SplitPane";
-import { Container, Row, Col } from "reactstrap";
+import { StyledTestDetailContainer } from "../styles/StyledTestDetails";
 
 const AddTestCaseToTestPlanContainer = () => {
   const { selectedProject, selectedTestPlan, selectedTestItem } = useSelector(state => ({
@@ -26,23 +26,19 @@ const AddTestCaseToTestPlanContainer = () => {
     <SplitPane
       left={
         <>
-          <h1>{"Add/Remove Test Cases From Test Plan"}</h1>
+          <h1>{"Add / Remove Test Cases From Test Plan"}</h1>
           <ListFilterSetting />
           <TestSuiteList />
         </>
       }
       right={
-        <Container className="h_100 mw-99">
-          <Row className="h-100">
-            <Col className="offset-lg-0 offset-md-3">
-              <AddRemoveContainer
-                selectedProject={selectedProject}
-                selectedTestSuite={selectedTestItem}
-                selectedTestPlan={selectedTestPlan}
-              />
-            </Col>
-          </Row>
-        </Container>
+        <StyledTestDetailContainer>
+          <AddRemoveContainer
+            selectedProject={selectedProject}
+            selectedTestSuite={selectedTestItem}
+            selectedTestPlan={selectedTestPlan}
+          />
+        </StyledTestDetailContainer>
       }
     />
   );

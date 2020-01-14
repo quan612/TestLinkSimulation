@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 const StyledHeader = styled.header`
   .head {
-    border-bottom: 10px solid ${props => props.theme.black};
+    border-bottom: 12px solid ${props => props.theme.black};
     display: grid;
     grid-template-columns: auto 1fr;
     justify-content: space-between;
