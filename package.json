@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "npm": "6.13.0",
+    "npm": "6.4.1",
     "node": "10.15.3"
   },
   "dependencies": {
@@ -13,10 +13,13 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
     "formik": "^2.0.3",
     "he": "^1.2.0",
     "logrocket": "^1.0.3",
     "moment": "^2.24.0",
+    "path": "^0.12.7",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-datepicker": "^2.9.6",
@@ -24,7 +27,7 @@
     "react-redux": "^7.1.1",
     "react-responsive-modal": "^4.0.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
+    "react-scripts": "^3.3.0",
     "react-spinners": "^0.6.1",
     "react-spring": "^8.0.27",
     "reactstrap": "^8.0.1",
@@ -35,7 +38,7 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

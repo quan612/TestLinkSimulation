@@ -9,7 +9,7 @@ the useEffect is run again in case:
 + the project is changed
 + the number of test suite is changed - when a new test suite is added
 + the number of test case is changed - when a new test case is added
-+ a test case is updated - when user changes the name of the test case
++ a test case name is updated - when user changes the name of the test case
 */
 
 const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCount, selectedTestItem) => {
@@ -18,28 +18,32 @@ const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCou
 
   useEffect(() => {
     const fetchTestSpecItems = async () => {
-      if (selectedProject) {
+      if (selectedProject && Object.keys(selectedProject).length > 0) {
         try {
           setIsLoading(true);
-          console.log("isLoading", isLoading);
+
           const testSuites = await getTestSuitesOfTestProjectApi(selectedProject);
-          const testCasesFromTestSuites = await getTestCasesOfTestSuitesHelper(testSuites);
+          if (testSuites === []) {
+            setTestItems([]);
+            setIsLoading(false);
+          } else {
+            const testCasesFromTestSuites = await getTestCasesOfTestSuitesHelper(testSuites);
 
-          //put all test suites, and test cases into the list, in order to make a tree structure
-          let listOfItems = [...testSuites, ...testCasesFromTestSuites];
-          const itemInTreeStructure = handleItemsInTestSpecsInTreeStructure(listOfItems, selectedProject);
+            //put all test suites, and test cases into the list, in order to make a tree structure
+            let listOfItems = [...testSuites, ...testCasesFromTestSuites];
+            const itemInTreeStructure = handleItemsInTestSpecsInTreeStructure(listOfItems, selectedProject);
 
-          setTestItems(itemInTreeStructure);
-          setIsLoading(false);
-          console.log("isLoading", isLoading);
+            setTestItems(itemInTreeStructure);
+            setIsLoading(false);
+          }
         } catch (error) {
           console.log("Catch error at fetchTestSpecItems method: ", error);
         }
       }
     };
     fetchTestSpecItems();
-    // }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem]);
-  }, [selectedProject, testSuitesCount, testCasesCount]);
+  }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem ? selectedTestItem.name : selectedTestItem]);
+
   return { isLoading, testItems };
 };
 

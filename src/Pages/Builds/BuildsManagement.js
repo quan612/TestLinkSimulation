@@ -67,6 +67,7 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
 
         <BuildsWithLoadingWithPaginated
           isLoading={isLoading}
+          loadingLabel={"Fetching Builds"}
           listOfItems={searchItems}
           handleOnDelete={handleOnDelete}
           columns={COLUMNS}

@@ -108,7 +108,6 @@ const TestSuiteDetails = ({
         <div className="panel-content">
           {selectedSuite.details && <div dangerouslySetInnerHTML={{ __html: he.decode(selectedSuite.details) }} />}
         </div>
-        )
       </>
     );
 };

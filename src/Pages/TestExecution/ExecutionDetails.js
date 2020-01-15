@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DropDown from "../../Component/Common/DropDown";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { reportResultApi } from "../../Redux/apiHelpers";
-
+import { selectTestItemAction } from "../../Redux/actions";
 import { Button, Card, CardBody } from "reactstrap";
 import TableSimple from "../../Component/Common/TableSimple";
 
@@ -10,7 +10,14 @@ import TableSimple from "../../Component/Common/TableSimple";
 
 function ExecutionDetails(props) {
   const [executeStatus, setExecutionStatus] = useState({});
-  console.log(props.testItemDetails);
+
+  const { selectedTestPlan, selectedBuild } = useSelector(state => ({
+    selectedTestPlan: state.selectedTestPlan,
+    selectedBuild: state.selectedBuild
+  }));
+
+  const dispatch = useDispatch();
+
   const tableColumns = {
     steps: {
       label: "#",
@@ -39,21 +46,26 @@ function ExecutionDetails(props) {
 
   const handleOnChangeStatus = eventKey => {
     const temp = executionStatus[eventKey];
-    console.log(temp);
+
     setExecutionStatus(temp);
   };
 
   const handleOnResultSubmit = () => {
     const result = {
       testcase: props.testItemDetails,
-      testPlan: props.selectedTestPlan,
+      testPlan: selectedTestPlan,
       status: executeStatus.value,
-      build: props.selectedBuild,
+      build: selectedBuild,
       notes: ""
     };
-    console.log(result);
+
     reportResultApi(result)
-      .then(message => console.log(message))
+      .then(async message => {
+        // here we submit the new result to store, to refetch the result on left navigation
+        let currentTestCaseWithNewResult = { ...props.testItemDetails };
+        currentTestCaseWithNewResult.exec_status = executeStatus.value;
+        dispatch(selectTestItemAction(currentTestCaseWithNewResult));
+      })
       .catch(error => console.log(error));
   };
 
@@ -110,13 +122,4 @@ function ExecutionDetails(props) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    selectedTestItem: state.selectedTestItem,
-    selectedBuild: state.selectedBuild,
-    selectedTestPlan: state.selectedTestPlan,
-    buildsOfCurrentTestPlan: state.buildsOfCurrentTestPlan
-  };
-};
-
-export default connect(mapStateToProps)(ExecutionDetails);
+export default ExecutionDetails;

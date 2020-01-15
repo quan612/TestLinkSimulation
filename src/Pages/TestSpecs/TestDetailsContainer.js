@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TestCaseDetails from "./TestCaseDetails";
 import TestSuiteContainer from "./TestSuiteContainer";
-import { Card, CardBody } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AddTestSuite from "./AddTestSuite";
 import { getTestCaseHelper } from "../../Redux/apiHelpers";
-var he = require("he");
 
 function TestDetailsContainer() {
   const { isLoading, selectedTestItem, selectedProject } = useSelector(state => ({
@@ -50,7 +46,8 @@ function TestDetailsContainer() {
   // when user selected a test suite from the left navigator
   if (
     (testItem && testItem.node === "Folder") ||
-    !selectedTestItem ||
+    selectedTestItem === [] ||
+    selectedTestItem ||
     (selectedTestItem && selectedTestItem.hasOwnProperty("prefix"))
   ) {
     return <TestSuiteContainer selectedTestItem={testItem} />;

@@ -71,6 +71,7 @@ const TestPlanManagement = ({ selectedProject, isTestPlanLoading, listOfItems, h
 
         <TestPlansWithLoadingWithPaginated
           isLoading={isTestPlanLoading}
+          loadingLabel={"Fetching Test Plans"}
           listOfItems={searchItems}
           handleOnDelete={handleOnDelete}
           columns={COLUMNS}

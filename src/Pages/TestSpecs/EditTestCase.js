@@ -43,7 +43,7 @@ const EditTestCase = ({ selectedTestItem, onClose }) => {
     updateTestCaseWithoutStepsUpdateHelper(selectedProject, testCaseObject)
       .then(async message => {
         const testcase = await getTestCaseHelper(selectedTestItem.testcase_id);
-        console.log("testcase testing", testcase); // test this
+
         testcase.forEach(async data => {
           data.node = "File";
           await dispatch(selectTestItemAction(data));

@@ -75,7 +75,7 @@ const ListItems = () => {
             onClick={item => handleOnClick(item)}
           />
         )}
-        {isLoading === true ? <LoadingContainer /> : null}
+        {isLoading === true ? <LoadingContainer label={"Fetching test specs"} /> : null}
       </Card>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useTestPlanItemsFetching from "../../Component/CustomHooks/useTestPlanItemsFetching";
 import { selectTestItemAction } from "../../Redux/actions";
 import { TreeLeaf } from "../../Component/Common/TreeLeaf";
@@ -8,7 +8,19 @@ import LoadingContainer from "../../Component/Containers/LoadingContainer";
 
 const ListExecutionItems = ({ selectedBuild }) => {
   const dispatch = useDispatch();
-  const { isLoading, dataItems } = useTestPlanItemsFetching(selectedBuild);
+
+  const { selectedProject, selectedTestPlan, selectedTestItem } = useSelector(state => ({
+    selectedProject: state.selectedProject,
+    selectedTestItem: state.selectedTestItem,
+    selectedTestPlan: state.selectedTestPlan
+  }));
+
+  const { isLoading, dataItems } = useTestPlanItemsFetching(
+    selectedProject,
+    selectedTestPlan,
+    selectedBuild,
+    selectedTestItem
+  );
 
   const handleOnClick = async item => {
     dispatch(selectTestItemAction(item));
@@ -30,7 +42,6 @@ const ListExecutionItems = ({ selectedBuild }) => {
         )}
         {isLoading === true ? <LoadingContainer /> : null}
       </Card>
-      }
     </div>
   );
 };

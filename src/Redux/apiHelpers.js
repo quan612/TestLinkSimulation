@@ -1,9 +1,9 @@
 import TestLink from "../Library/testlink";
 
 const testLink = new TestLink({
-  host: "172.16.77.17", // 192.168.56.101   172.16.77.17  34.67.118.19
+  host: "34.67.118.19", // 192.168.56.101   172.16.77.17  34.67.118.19
   secure: false,
-  apiKey: "b87127af250124be10f6f245a03d0473"
+  apiKey: "2a64c27adb81157b9a5ed576a58c032e"
   // global b87127af250124be10f6f245a03d0473
   // home   86fd2b13976b8ba4a35d6829a17b592b
   // cloud  2a64c27adb81157b9a5ed576a58c032e
@@ -69,9 +69,14 @@ export const addTestSuiteHelper = async (selectedProject, parentSuiteId, data) =
  */
 export const getTestSuitesOfTestProjectApi = async selectedProject => {
   let result = [];
-  const firstLevelSuites = await testLink.getFirstLevelTestSuitesForTestProject({
-    testprojectid: selectedProject.id
-  });
+  const firstLevelSuites = await testLink
+    .getFirstLevelTestSuitesForTestProject({
+      testprojectid: selectedProject.id
+    })
+    .catch(error => {
+      // handle in case the project has no test suite - when setting up a new project
+      return [];
+    });
 
   firstLevelSuites.forEach(suite => {
     suite.node = "Folder";
@@ -294,7 +299,6 @@ export const getTestCasesOfSelectedTestSuiteHelper = async selectedTestSuite => 
  * @returns {object}  result Test Case object.
  */
 export const getTestCaseHelper = async testCaseId => {
-  console.log("testCaseId", testCaseId);
   return await testLink
     .getTestCase({
       testcaseid: testCaseId
@@ -360,7 +364,8 @@ export const loadBuildsApi = async selectedTestPlan => {
   return await testLink.getBuildsForTestPlan({ testplanid: selectedTestPlan.id });
 };
 
-export const addBuildApi = async (testLink, data) => {
+export const addBuildApi = async data => {
+  console.log(data);
   return await testLink.createBuild({
     testplanid: data.testPlanId,
     buildname: data.name,

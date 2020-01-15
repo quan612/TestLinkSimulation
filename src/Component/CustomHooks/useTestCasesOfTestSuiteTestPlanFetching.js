@@ -37,7 +37,6 @@ const useTestCasesOfTestSuiteTestPlanFetching = (selectedProject, selectedTestSu
         Object.keys(selectedTestSuite).length > 0 &&
         selectedProject.id !== selectedTestSuite.id
       ) {
-        setIsLoading(true);
         const testCasesOfTestSuite = await getTestCasesOfSelectedTestSuiteTestPlan(selectedTestSuite, selectedTestPlan);
         setTestCases([...testCasesOfTestSuite]);
         setIsLoading(false);

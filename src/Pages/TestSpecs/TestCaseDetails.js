@@ -37,15 +37,11 @@ export default function TestCaseDetails({ selectedTestCase }) {
   const [isEditTestCase, setEditTestCase] = useState(false);
 
   const dispatch = useDispatch();
-  const { testLink } = useSelector(state => ({
-    testLink: state.testLink
-  }));
 
   const handleOnSaveSteps = async data => {
     let newSteps = [...selectedTestCase.steps, data];
-    createTestCaseStepsApi(testLink, selectedTestCase, newSteps)
+    createTestCaseStepsApi(selectedTestCase, newSteps)
       .then(async message => {
-        console.log("message", message);
         selectedTestCase.node = "File";
         await dispatch(selectTestItemAction(selectedTestCase));
         await setIsCreateStep(false);
@@ -76,7 +72,6 @@ export default function TestCaseDetails({ selectedTestCase }) {
             />
             <div className="collapse" id="testSuiteUtilities">
               <form>
-                {/* <div> */}
                 <label>Test Case Operations:</label>
                 <FontAwesomeIcon
                   className="ml-1"
@@ -86,7 +81,6 @@ export default function TestCaseDetails({ selectedTestCase }) {
                   title="Edit Test Case"
                   onClick={() => setEditTestCase(true)}
                 />
-                {/* </div> */}
               </form>
             </div>
           </CardBody>
@@ -94,16 +88,16 @@ export default function TestCaseDetails({ selectedTestCase }) {
 
         <Card>
           <CardBody>
-            <div className="panel-header">Version</div>{" "}
+            <div className="panel-header">Version</div>
             <FontAwesomeIcon icon="info-circle" color={"white"}></FontAwesomeIcon>
             <div className="panel-content">
               <CardText>
-                Created on {selectedTestCase.creation_ts} by{" "}
+                Created on {selectedTestCase.creation_ts} by
                 {selectedTestCase.author_first_name + " " + selectedTestCase.author_last_name}
               </CardText>
               {selectedTestCase.updater_first_name && (
                 <CardText>
-                  Last Modified on {selectedTestCase.modification_ts} by{" "}
+                  Last Modified on {selectedTestCase.modification_ts} by
                   {selectedTestCase.updater_first_name + " " + selectedTestCase.updater_last_name}
                 </CardText>
               )}

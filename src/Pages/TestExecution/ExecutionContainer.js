@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ExecutionDetails from "./ExecutionDetails";
-import { Card, CardBody, Container, Row, Col } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { getTestCaseHelper } from "../../Redux/apiHelpers";
 var he = require("he");
 
@@ -12,13 +12,9 @@ function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem 
       if (selectedTestItem) {
         getTestCaseHelper(selectedTestItem.tc_id).then(data => {
           data.forEach(tcase => {
-            console.log("Test", tcase);
             setTestCaseDetails(tcase);
           });
         });
-
-        // const data = await getTestCaseHelper(selectedTestItem.tc_id);
-        // console.log("Test", await data);
       }
     };
 

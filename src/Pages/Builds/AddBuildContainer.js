@@ -42,6 +42,7 @@ const AddBuildContainer = ({ onClose }) => {
   });
 
   const handleSubmit = async (values, { setErrors }) => {
+    // console.log("values", values);
     dispatch(addBuildAction(values))
       .then(message => {
         message.forEach(data => {
@@ -115,7 +116,7 @@ const BuildForm = ({ formikProps, onClose }) => {
                         placeholder="Name"
                         type="text"
                         name="name"
-                        value={formikProps.values.testPlanName}
+                        value={formikProps.values.name}
                         onChange={formikProps.handleChange}
                       />
                     </InputGroup>

@@ -15,7 +15,8 @@ const initialState = {
   isTestPlanLoading: false,
   testProjects: [],
   testPlans: [],
-  buildsOfCurrentTestPlan: []
+  buildsOfCurrentTestPlan: [],
+  selectedTestItem: []
 };
 
 const asyncReducer = (state = initialState, action) => {

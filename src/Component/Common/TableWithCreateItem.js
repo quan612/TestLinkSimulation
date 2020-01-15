@@ -55,14 +55,17 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
           </tr>
         </thead>
         <tbody>
-          {tableItems &&
+          {tableItems ? (
             tableItems.map(item => {
               return (
                 <tr className="d-flex" key={item.id}>
                   {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
                 </tr>
               );
-            })}
+            })
+          ) : (
+            <tr></tr>
+          )}
           <tr className="d-flex">
             <td style={{ width: "3%" }}>{index + 1}</td>
             <td style={{ width: "44%" }}>

@@ -73,6 +73,7 @@ export const TestProjectsManagement = ({ isProjectLoading, listOfItems, handleOn
 
         <TestProjectsWithLoadingWithPaginated
           isLoading={isProjectLoading}
+          loadingLabel={"Fetching Test Projects"}
           listOfItems={searchItems}
           handleOnDelete={handleOnDelete}
           columns={COLUMNS}
