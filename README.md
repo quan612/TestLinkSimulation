@@ -8,7 +8,9 @@ If you have a local set up TestLink server then:
 + Clone this project
 + Go to src\Redux\ApiHelpers.cs
 + Enter your host and your api key
-+ Then on console: npm run start
++ Then on console:
+npm install
+npm run start
 
 ### `My to do list`
 + Adding test with cypress or jest / mocha / enzyme.
