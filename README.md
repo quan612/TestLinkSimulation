@@ -7,7 +7,8 @@ Demo is at: http://testlink-clone.herokuapp.com
 If you have a local set up TestLink server then:
 + Clone this project
 + Go to src\Redux\ApiHelpers.cs
-+ Enter your host and your api key
++ Enter your host ~ TestLink endpoint address 
++ Enter your api key ~ Your TestLink api key associates with your user
 + Then on console:
 
 ```bash
