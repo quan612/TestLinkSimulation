@@ -38,6 +38,7 @@
     "yup": "^0.27.0"
   },
   "scripts": {
+    "dev": "set PORT=8888 && react-scripts start",
     "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
