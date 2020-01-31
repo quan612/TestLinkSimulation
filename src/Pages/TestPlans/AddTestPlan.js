@@ -1,9 +1,11 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 
 import { loadTestPlansAction, addTestPlanAction } from "../../Redux/testPlan.action";
-import { useSelector, useDispatch } from "react-redux";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -32,10 +34,12 @@ const styles = {
   }
 };
 
-const AddTestPlanContainer = ({ onCancel }) => {
+const AddTestPlan = () => {
   const { selectedProject } = useSelector(state => ({
     selectedProject: state.selectedProject
   }));
+
+  let history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -49,7 +53,7 @@ const AddTestPlanContainer = ({ onCancel }) => {
       .then(result => {
         console.log("add test plan success ", result);
         dispatch(loadTestPlansAction(selectedProject));
-        onCancel();
+        history.push("/plans");
       })
       .catch(error => setErrors({ name: "Validation: " + error }));
   };
@@ -68,15 +72,17 @@ const AddTestPlanContainer = ({ onCancel }) => {
         validateOnChange={false}
         validateOnBlur={false}
       >
-        {formikProps => <TestPlanForm formikProps={formikProps} onCancel={onCancel} />}
+        {formikProps => <AddForm formikProps={formikProps} />}
       </Formik>
     </div>
   );
 };
 
-export default AddTestPlanContainer;
+export default AddTestPlan;
 
-const TestPlanForm = ({ formikProps, onCancel }) => {
+const AddForm = ({ formikProps }) => {
+  let history = useHistory();
+
   return (
     <form onSubmit={formikProps.handleSubmit}>
       <Container>
@@ -153,7 +159,7 @@ const TestPlanForm = ({ formikProps, onCancel }) => {
                 <Button className="mr-2" color="success" type="submit" label="Submit">
                   Submit
                 </Button>
-                <Button color="secondary" onClick={onCancel} label="Cancel">
+                <Button color="secondary" onClick={() => history.push("/plans")} label="Cancel">
                   Cancel
                 </Button>
               </CardFooter>

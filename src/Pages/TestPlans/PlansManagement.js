@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { TableWithModal } from "../../Component/Containers/TableWithModal";
+import { useHistory } from "react-router-dom";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
+import { TableWithModal } from "../../Component/Containers/TableWithModal";
 import { Button, Input, InputGroup } from "reactstrap";
 import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
-const TestPlansWithPaginated = withPagination(TableWithModal);
-const TestPlansWithLoadingWithPaginated = WithLoading(TestPlansWithPaginated);
+
+const TableWithPagination = withPagination(TableWithModal);
+const TableWithLoadingWithPagination = WithLoading(TableWithPagination);
 
 const COLUMNS = {
   name: {
@@ -39,8 +41,10 @@ const COLUMNS = {
   }
 };
 
-const TestPlanManagement = ({ selectedProject, isTestPlanLoading, listOfItems, handleOnAdd, handleOnDelete }) => {
+const PlansManagement = ({ selectedProject, isTestPlanLoading, listOfItems, handleOnAdd, handleOnDelete }) => {
   const [searchItems, setSearchItems] = useState([]);
+
+  let history = useHistory();
 
   useEffect(() => {
     if (listOfItems instanceof Array && listOfItems.length > 0) {
@@ -63,13 +67,13 @@ const TestPlanManagement = ({ selectedProject, isTestPlanLoading, listOfItems, h
           <InputGroup className="w-50">
             <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
           </InputGroup>
-          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnAdd()}>
+          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addPlan")}>
             Create
           </Button>
         </div>
         {/* end create section  */}
 
-        <TestPlansWithLoadingWithPaginated
+        <TableWithLoadingWithPagination
           isLoading={isTestPlanLoading}
           loadingLabel={"Fetching Test Plans"}
           listOfItems={searchItems}
@@ -81,4 +85,4 @@ const TestPlanManagement = ({ selectedProject, isTestPlanLoading, listOfItems, h
   );
 };
 
-export default TestPlanManagement;
+export default PlansManagement;

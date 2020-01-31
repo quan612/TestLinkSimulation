@@ -26,14 +26,17 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyles />
         <Header />
-        {/* <hr /> */}
+
         <Switch>
           <Route exact path={ROUTES.HOME} component={PAGES.Home} />
-          <Route exact path={ROUTES.PROJECTS} render={() => <PAGES.TestProjectContainer />} />
-          <Route exact path={ROUTES.PLANS} render={() => <PAGES.TestPlansContainer />} />
+          <Route exact path={ROUTES.PROJECTS} render={() => <PAGES.PROJECTS />} />
+          <Route exact path={ROUTES.ADD_PROJECT} render={() => <PAGES.ADD_PROJECT />} />
           <Route exact path={ROUTES.SPECIFICATIONS} render={() => <PAGES.TestSpecsContainer />} />
+
+          <Route exact path={ROUTES.PLANS} render={() => <PAGES.PLANS />} />
+          <Route exact path={ROUTES.ADD_PLAN} render={() => <PAGES.ADD_PLAN />} />
           <Route exact path={ROUTES.BUILDS} render={() => <PAGES.BuildsContainer />} />
-          <Route exact path={ROUTES.ADD_PROJECT} render={() => <PAGES.AddProject />} />
+
           <Route
             exact
             path={ROUTES.ADD_TESTCASES_TO_TESTPLAN}

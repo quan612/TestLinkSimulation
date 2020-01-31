@@ -1,18 +1,20 @@
 import Home from "./Pages/Home/Home";
 import TestSpecsContainer from "./Pages/TestSpecs/index";
-import TestProjectContainer from "./Pages/TestProjects/TestProjectContainer";
-import AddProject from "./Pages/TestProjects/AddTestProjectContainer";
-import TestPlansContainer from "./Pages/TestPlans/AddTestPlanContainer";
+import PROJECTS from "./Pages/TestProjects/";
+import ADD_PROJECT from "./Pages/TestProjects/AddProject";
+import PLANS from "./Pages/TestPlans/";
+import ADD_PLAN from "./Pages/TestPlans/AddTestPlan";
 import BuildsContainer from "./Pages/Builds/BuildsContainer";
 import TestExecution from "./Pages/TestExecution/";
 import AddTestCaseToTestPlanContainer from "./Pages/AddTestCasesToTestPlan/AddTestCaseToTestPlanContainer";
 
 export {
   Home,
-  TestProjectContainer,
-  AddProject,
+  PROJECTS,
+  ADD_PROJECT,
   TestSpecsContainer,
-  TestPlansContainer,
+  PLANS,
+  ADD_PLAN,
   BuildsContainer,
   TestExecution,
   AddTestCaseToTestPlanContainer

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { TableWithModal } from "../../Component/Containers/TableWithModal";
+import { useHistory } from "react-router-dom";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
+import { TableWithModal } from "../../Component/Containers/TableWithModal";
 import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
 import { Button, Input, InputGroup } from "reactstrap";
 
-const TestProjectsWithPaginated = withPagination(TableWithModal);
-const TestProjectsWithLoadingWithPaginated = WithLoading(TestProjectsWithPaginated);
+const TableWithPagination = withPagination(TableWithModal);
+const TableWithLoadingWithPagination = WithLoading(TableWithPagination);
 
 const COLUMNS = {
   name: {
@@ -43,9 +44,9 @@ const COLUMNS = {
   }
 };
 
-export const TestProjectsManagement = ({ isProjectLoading, listOfItems, handleOnAdd, handleOnDelete }) => {
+export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDelete }) => {
   const [searchItems, setSearchItems] = useState([]);
-
+  let history = useHistory();
   useEffect(() => {
     setSearchItems(listOfItems);
   }, [listOfItems]);
@@ -58,20 +59,20 @@ export const TestProjectsManagement = ({ isProjectLoading, listOfItems, handleOn
   return (
     <TableManagementStyles>
       <div className="body">
-        <h4>Test Projects Management</h4>
+        <h4>Projects Management</h4>
         <br />
         {/* search and create section  */}
         <div className="form-group d-flex">
           <InputGroup className="w-50">
             <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
           </InputGroup>
-          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnAdd()}>
+          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addProject")}>
             Create
           </Button>
         </div>
         {/* end create section  */}
 
-        <TestProjectsWithLoadingWithPaginated
+        <TableWithLoadingWithPagination
           isLoading={isProjectLoading}
           loadingLabel={"Fetching Test Projects"}
           listOfItems={searchItems}

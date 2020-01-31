@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import * as ROUTES from "../../routes";
 import TestProjectDropDownWithFetching from "./TestProjectDropDown";
 import TestPlanDropDownWithFetching from "./TestPlanDropDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as ROUTES from "../../routes";
 import { Ul, LiParent } from "../styles/NavStyles";
 import styled from "styled-components";
 
@@ -84,8 +84,8 @@ const Nav = () => {
             </Link>
           </li>
           <li>
-            <Link to={ROUTES.TEST_EXECUTION} exact>
-              Create Plans
+            <Link to={ROUTES.ADD_PLAN} exact>
+              Create Plan
             </Link>
           </li>
           <li>
@@ -122,21 +122,20 @@ const Nav = () => {
   );
 };
 
-const Header = ({ selectedProject }) => (
-  <Wrapper>
-    <StyledHeader>
-      <Nav />
-      <DropDownContainer>
-        <TestProjectDropDownWithFetching />
-      </DropDownContainer>
-    </StyledHeader>
-  </Wrapper>
-);
-
-const mapStateToProps = state => {
-  return {
+const Header = () => {
+  const { selectedProject } = useSelector(state => ({
     selectedProject: state.selectedProject
-  };
+  }));
+  return (
+    <Wrapper>
+      <StyledHeader>
+        <Nav />
+        <DropDownContainer>
+          <TestProjectDropDownWithFetching />
+          <TestPlanDropDownWithFetching selectedProject={selectedProject} />
+        </DropDownContainer>
+      </StyledHeader>
+    </Wrapper>
+  );
 };
-
-export default connect(mapStateToProps)(Header);
+export default Header;

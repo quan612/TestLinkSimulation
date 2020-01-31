@@ -25,7 +25,7 @@ import {
   Button
 } from "reactstrap";
 
-const AddTestProjectContainer = () => {
+const AddProject = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -78,7 +78,7 @@ const AddTestProjectContainer = () => {
   );
 };
 
-export default AddTestProjectContainer;
+export default AddProject;
 
 const AddProjectForm = ({ formikProps }) => {
   let history = useHistory();

@@ -33,7 +33,7 @@ const TestProjectDropDown = ({ isLoading, testProjects }) => {
 
   return (
     <React.Fragment>
-      <Label>Test Project: </Label>
+      <Label>Project: </Label>
       {
         <DropdownStyles>
           <DropDown
