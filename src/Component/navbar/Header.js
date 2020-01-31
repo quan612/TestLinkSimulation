@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import TestProjectDropDownWithFetching from "./TestProjectDropDown";
 import TestPlanDropDownWithFetching from "./TestPlanDropDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,8 +16,8 @@ const StyledHeader = styled.header`
   display: flex;
   width: 80%;
   margin: auto;
-  background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#ccc));
-  background-image: linear-gradient(#fff, #ccc);
+  background: ${props => props.theme.nav_bg};
+  background-image: ${props => props.theme.nav_bgImg};
   border-radius: 15px;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.4);
   padding: 0 10px;
@@ -32,10 +32,8 @@ const StyledHeader = styled.header`
 const DropDownContainer = styled.div`
   display: flex;
   margin-left: auto;
-
+  margin-right: 1em;
   align-items: center;
-  font-size: 0.8rem;
-  margin: 0.3rem;
   position: relative;
 
   @media (max-width: 1300px) {
@@ -46,95 +44,77 @@ const DropDownContainer = styled.div`
 const Nav = () => {
   return (
     <Ul>
-      {/* <li>
-        <NavLink to={ROUTES.HOME} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="home" style={{ color: "white" }} size="xs" />
-          Home
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to={ROUTES.PROJECTS} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="archive" style={{ color: "white" }} />
-          Projects
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to={ROUTES.SPECIFICATIONS} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="paperclip" style={{ color: "white" }} />
-          Specs
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to={ROUTES.PLANS} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="tasks" style={{ color: "white" }} />
-          Plans
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to={ROUTES.BUILDS} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-          Builds
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to={ROUTES.ADD_TESTCASES_TO_TESTPLAN} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="list-ol" style={{ color: "white" }} />
-          Add Cases to Plan
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} />
-          Executions
-        </NavLink>
-      </li> */}
-
       <LiParent>
-        <a href="#">Test 111111111</a>
+        <Link to={ROUTES.HOME} exact>
+          <FontAwesomeIcon icon="home" size="xs" />
+          Home
+        </Link>
+      </LiParent>
+      <LiParent>
+        <a href="#">
+          <FontAwesomeIcon icon="archive" /> Projects
+        </a>
         <ul>
           <li>
-            <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-              {/* <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} /> */}
-              abcsd
-            </NavLink>
-
-            <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-              {/* <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} /> */}
-              abcsd
-            </NavLink>
-
-            <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-              {/* <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} /> */}
-              abcsd
-            </NavLink>
+            <Link to={ROUTES.PROJECTS} exact>
+              Projects Management
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.ADD_PROJECT} exact>
+              Add Project
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.SPECIFICATIONS} exact>
+              Create Test Case
+            </Link>
           </li>
         </ul>
       </LiParent>
 
       <LiParent>
-        <a href="#">Test 111111111</a>
-        <ul c>
+        <a href="#">
+          <FontAwesomeIcon icon="tasks" /> Plans
+        </a>
+        <ul>
           <li>
-            <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-              {/* <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} /> */}
-              abcsd
-            </NavLink>
+            <Link to={ROUTES.PLANS} exact>
+              Plans Management
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.TEST_EXECUTION} exact>
+              Create Plans
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.ADD_TESTCASES_TO_TESTPLAN} exact>
+              Add Cases to Plan
+            </Link>
+          </li>
+        </ul>
+      </LiParent>
 
-            <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-              {/* <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} /> */}
-              abcsd
-            </NavLink>
-
-            <NavLink to={ROUTES.TEST_EXECUTION} activeClassName="active-link" exact>
-              {/* <FontAwesomeIcon className="d-inline-block mx-1" icon="running" style={{ color: "white" }} /> */}
-              abcsd
-            </NavLink>
+      <LiParent>
+        <a href="#">
+          <FontAwesomeIcon icon="running" /> Executions
+        </a>
+        <ul>
+          <li>
+            <Link to={ROUTES.BUILDS} exact>
+              Builds
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.TEST_EXECUTION} exact>
+              Create Builds
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.ADD_TESTCASES_TO_TESTPLAN} exact>
+              Test Executions
+            </Link>
           </li>
         </ul>
       </LiParent>
@@ -148,7 +128,6 @@ const Header = ({ selectedProject }) => (
       <Nav />
       <DropDownContainer>
         <TestProjectDropDownWithFetching />
-        {/* <TestPlanDropDownWithFetching selectedProject={selectedProject} /> */}
       </DropDownContainer>
     </StyledHeader>
   </Wrapper>

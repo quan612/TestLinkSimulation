@@ -8,7 +8,7 @@ body {
   height: 100vh;
   background-color: #171941;
   overflow: hidden;
-  color: white;
+  /* color: white; */
 }
 
 *
@@ -108,6 +108,15 @@ dt {
 
 /* .dd_container .dropdown-item {
   color: white;
+} */
+
+/* .show > .btn-primary.dropdown-toggle:focus,
+.show > .btn-primary.dropdown-toggle,
+.btn-primary,
+.btn-primary:focus {
+  background-color: transparent;
+  border-color: black;
+  box-shadow: none;
 } */
 
 /*select*/
@@ -260,7 +269,7 @@ https://stackoverflow.com/questions/46559354/how-to-set-the-height-of-ckeditor-5
   color: white;
 }
 
-ul {
+/* ul {
   list-style-type: none;
   display: block;
   padding-left: 19px;
@@ -274,7 +283,7 @@ li > img {
 div > img {
   width: 24px;
   height: 24px;
-}
+} */
 
 /* end specs style sheet  */
 

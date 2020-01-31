@@ -1,5 +1,6 @@
 export const HOME = "/";
 export const PROJECTS = "/projects";
+export const ADD_PROJECT = "/addProject";
 export const PLANS = "/plans";
 export const BUILDS = "/BUILDS";
 export const SPECIFICATIONS = "/specfications";

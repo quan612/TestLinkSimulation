@@ -4,6 +4,14 @@ import { useDispatch } from "react-redux";
 import { selectTestProjectAction } from "../../Redux/testProject.action";
 import DropDown from "../Common/DropDown";
 import DropdownStyles from "../styles/DropdownStyles";
+import styled from "styled-components";
+
+const Label = styled.label`
+  color: ${props => props.theme.grey};
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-right: 1px;
+`;
 
 const TestProjectDropDown = ({ isLoading, testProjects }) => {
   const [selectedItem, setSelectedItem] = useState({ name: "" });
@@ -25,7 +33,7 @@ const TestProjectDropDown = ({ isLoading, testProjects }) => {
 
   return (
     <React.Fragment>
-      <label className="mr-1 text-light">Test Project: </label>{" "}
+      <Label>Test Project: </Label>
       {
         <DropdownStyles>
           <DropDown

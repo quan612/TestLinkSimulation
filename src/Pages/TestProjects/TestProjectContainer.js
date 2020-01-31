@@ -11,24 +11,18 @@ const TestProjectContainer = () => {
   }));
 
   const dispatch = useDispatch();
-  const [isAddProject, setAddProject] = useState(false);
 
   const handleDeleteSubmit = async project => {
     await dispatch(deleteTestProjectAction(project));
     await dispatch(loadTestProjectsAction());
   };
 
-  return isAddProject ? (
-    <AddTestProjectContainer onClose={() => setAddProject(false)} />
-  ) : (
-    <>
-      <TestProjectsManagement
-        isProjectLoading={isProjectLoading}
-        listOfItems={testProjects}
-        handleOnAdd={() => setAddProject(true)}
-        handleOnDelete={project => handleDeleteSubmit(project)}
-      />
-    </>
+  return (
+    <TestProjectsManagement
+      isProjectLoading={isProjectLoading}
+      listOfItems={testProjects}
+      handleOnDelete={project => handleDeleteSubmit(project)}
+    />
   );
 };
 

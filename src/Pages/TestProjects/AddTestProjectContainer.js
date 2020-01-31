@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { addTestProjectAction, loadTestProjectsAction } from "../../Redux/testProject.action";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -24,8 +25,9 @@ import {
   Button
 } from "reactstrap";
 
-const AddTestProjectContainer = ({ onClose }) => {
+const AddTestProjectContainer = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(" Name is required!"),
@@ -38,7 +40,7 @@ const AddTestProjectContainer = ({ onClose }) => {
         .then(message => {
           console.log("Add project successfully", message);
           dispatch(loadTestProjectsAction());
-          onClose();
+          history.push("/projects");
         })
         .catch(error => {
           if (error.indexOf(`There's already Test Project named`)) {
@@ -70,7 +72,7 @@ const AddTestProjectContainer = ({ onClose }) => {
         validateOnChange={false}
         validateOnBlur={false}
       >
-        {formikProps => <AddProjectForm formikProps={formikProps} onClose={onClose} />}
+        {formikProps => <AddProjectForm formikProps={formikProps} />}
       </Formik>
     </div>
   );
@@ -78,7 +80,8 @@ const AddTestProjectContainer = ({ onClose }) => {
 
 export default AddTestProjectContainer;
 
-const AddProjectForm = ({ formikProps, onClose }) => {
+const AddProjectForm = ({ formikProps }) => {
+  let history = useHistory();
   const styles = {
     errorText: {
       color: "red",
@@ -191,7 +194,10 @@ const AddProjectForm = ({ formikProps, onClose }) => {
                   <Button className="mr-2" color="success" type="submit" label="Submit">
                     Submit
                   </Button>
-                  <Button color="secondary" onClick={onClose} label="Cancel">
+                  {/* <Button color="secondary" onClick={onClose} label="Cancel">
+                    Cancel
+                  </Button> */}
+                  <Button color="secondary" onClick={() => history.push("/projects")} label="Cancel">
                     Cancel
                   </Button>
                 </CardFooter>

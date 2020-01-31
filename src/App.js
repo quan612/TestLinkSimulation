@@ -14,7 +14,10 @@ const theme = {
   lightgrey: "#E1E1E1",
   offWhite: "#EDEDED",
   maxWidth: "1000px",
-  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)"
+  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)",
+  grayscale: "#444",
+  nav_bg: "-webkit-gradient(linear, center top, center bottom, from(#fff), to(#ccc))",
+  nav_bgImg: "linear-gradient(#fff, #ccc)"
 };
 
 const App = () => {
@@ -30,6 +33,7 @@ const App = () => {
           <Route exact path={ROUTES.PLANS} render={() => <PAGES.TestPlansContainer />} />
           <Route exact path={ROUTES.SPECIFICATIONS} render={() => <PAGES.TestSpecsContainer />} />
           <Route exact path={ROUTES.BUILDS} render={() => <PAGES.BuildsContainer />} />
+          <Route exact path={ROUTES.ADD_PROJECT} render={() => <PAGES.AddProject />} />
           <Route
             exact
             path={ROUTES.ADD_TESTCASES_TO_TESTPLAN}
