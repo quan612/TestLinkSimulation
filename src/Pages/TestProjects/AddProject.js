@@ -7,23 +7,9 @@ import * as Yup from "yup";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Label,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-  CustomInput,
-  Button
-} from "reactstrap";
+import { Container, Card } from "../../Component/styles/BodyStyles";
+
+import { Label, FormGroup, Input, InputGroupAddon, InputGroupText, InputGroup, CustomInput, Button } from "reactstrap";
 
 const AddProject = () => {
   const dispatch = useDispatch();
@@ -56,7 +42,7 @@ const AddProject = () => {
   };
 
   return (
-    <div className="w-75 m-auto">
+    <div className="w-100 m-auto">
       <Formik
         initialValues={{
           name: "",
@@ -72,7 +58,7 @@ const AddProject = () => {
         validateOnChange={false}
         validateOnBlur={false}
       >
-        {formikProps => <AddProjectForm formikProps={formikProps} />}
+        {formikProps => <AddForm formikProps={formikProps} />}
       </Formik>
     </div>
   );
@@ -80,7 +66,7 @@ const AddProject = () => {
 
 export default AddProject;
 
-const AddProjectForm = ({ formikProps }) => {
+const AddForm = ({ formikProps }) => {
   let history = useHistory();
   const styles = {
     errorText: {
@@ -93,117 +79,99 @@ const AddProjectForm = ({ formikProps }) => {
     <form onSubmit={formikProps.handleSubmit}>
       <div className="form-group">
         <Container>
-          <Row>
-            <Col className="offset-lg-0 offset-md-3">
-              <Card className="card-register">
-                <CardHeader>Create a new project</CardHeader>
-                <CardBody>
-                  <InputGroup className="w-75">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="tim-icons icon-single-02" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      placeholder="Project Name"
-                      type="text"
-                      name="name"
-                      value={formikProps.values.name}
-                      onChange={formikProps.handleChange}
-                    />
-                  </InputGroup>
-                  {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
-                  <br />
+          <Card className="wrapper h-75">
+            <h2>Create a new project</h2>
 
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText></InputGroupText>
-                    </InputGroupAddon>
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={formikProps.values.description}
-                      onInit={editor => {}}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        formikProps.setFieldValue("description", data);
-                      }}
-                    />
-                  </InputGroup>
-                  <br />
+            <div className="input wrapper w-25">
+              <Input
+                placeholder="Project Name"
+                type="text"
+                name="name"
+                value={formikProps.values.name}
+                onChange={formikProps.handleChange}
+              />
+              {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+              <br />
+            </div>
 
-                  <InputGroup className="w-15">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="tim-icons icon-single-02" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      placeholder="Prefix"
-                      type="text"
-                      name="prefix"
-                      value={formikProps.values.prefix}
-                      onChange={formikProps.handleChange}
-                    />
-                  </InputGroup>
-                  {formikProps.errors.prefix && (
-                    <span style={{ ...styles.errorText }}>{formikProps.errors.prefix}</span>
-                  )}
-                  <br />
-                  <div className="d-flex w-25 justify-content-between">
-                    <FormGroup check>
-                      <Label check>
-                        <CustomInput
-                          id="exampleCustomCheckbox1"
-                          type="checkbox"
-                          name="requirement"
-                          checked={formikProps.values.requirement}
-                          onChange={e => formikProps.setFieldValue("requirement", e.target.checked)}
-                          label="Requirement"
-                        />
-                      </Label>
-                    </FormGroup>
+            <div className="input wrapper w-25">
+              <Input
+                placeholder="Prefix"
+                type="text"
+                name="prefix"
+                value={formikProps.values.prefix}
+                onChange={formikProps.handleChange}
+              />
 
-                    <FormGroup check>
-                      <Label check>
-                        <CustomInput
-                          id="exampleCustomCheckbox2"
-                          type="checkbox"
-                          name="isActive"
-                          checked={formikProps.values.isActive}
-                          onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
-                          label="Active"
-                        />
-                      </Label>
-                    </FormGroup>
+              {formikProps.errors.prefix && <span style={{ ...styles.errorText }}>{formikProps.errors.prefix}</span>}
+              <br />
+            </div>
 
-                    <FormGroup check>
-                      <Label check>
-                        <CustomInput
-                          id="exampleCustomCheckbox3"
-                          type="checkbox"
-                          name="isPublic"
-                          checked={formikProps.values.isPublic}
-                          onChange={e => formikProps.setFieldValue("isPublic", e.target.checked)}
-                          label="Public"
-                        />
-                      </Label>
-                    </FormGroup>
-                  </div>
-                </CardBody>
-                <CardFooter>
-                  <Button className="mr-2" color="success" type="submit" label="Submit">
-                    Submit
-                  </Button>
-                  {/* <Button color="secondary" onClick={onClose} label="Cancel">
+            <CKEditor
+              editor={ClassicEditor}
+              data={formikProps.values.description}
+              onInit={editor => {}}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                formikProps.setFieldValue("description", data);
+              }}
+            />
+
+            <br />
+
+            <div className="d-flex w-25 justify-content-between">
+              <FormGroup check>
+                <Label check>
+                  <CustomInput
+                    id="requirement"
+                    type="checkbox"
+                    name="requirement"
+                    checked={formikProps.values.requirement}
+                    onChange={e => formikProps.setFieldValue("requirement", e.target.checked)}
+                    label="Requirement"
+                  />
+                </Label>
+              </FormGroup>
+
+              <FormGroup check>
+                <Label check>
+                  <CustomInput
+                    id="isActive"
+                    type="checkbox"
+                    name="isActive"
+                    checked={formikProps.values.isActive}
+                    onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
+                    label="Active"
+                  />
+                </Label>
+              </FormGroup>
+
+              <FormGroup check>
+                <Label check>
+                  <CustomInput
+                    id="isPublic"
+                    type="checkbox"
+                    name="isPublic"
+                    checked={formikProps.values.isPublic}
+                    onChange={e => formikProps.setFieldValue("isPublic", e.target.checked)}
+                    label="Public"
+                  />
+                </Label>
+              </FormGroup>
+            </div>
+
+            <div className="d-flex">
+              <Button className="mr-2" color="success" type="submit" label="Submit">
+                Submit
+              </Button>
+              {/* <Button color="secondary" onClick={onClose} label="Cancel">
                     Cancel
                   </Button> */}
-                  <Button color="secondary" onClick={() => history.push("/projects")} label="Cancel">
-                    Cancel
-                  </Button>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
+              <Button color="secondary" onClick={() => history.push("/projects")} label="Cancel">
+                Cancel
+              </Button>
+            </div>
+          </Card>
         </Container>
       </div>
     </form>

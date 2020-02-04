@@ -16,13 +16,16 @@ const PaginationStyles = styled.div`
     margin: 2rem 0;
     border: 1px solid ${props => props.theme.lightgrey};
     border-radius: 10px;
+
     button {
       background-color: Transparent;
-      color: white;
+      color: ${props => props.theme.black};
+      font-weight: 500;
 
       &:disabled {
-        color: grey;
+        color: ${props => props.theme.lightgrey};
         cursor: auto;
+        font-weight: 300;
       }
     }
 

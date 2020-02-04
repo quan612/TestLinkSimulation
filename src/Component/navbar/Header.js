@@ -46,7 +46,7 @@ const Nav = () => {
     <Ul>
       <LiParent>
         <Link to={ROUTES.HOME} exact>
-          <FontAwesomeIcon icon="home" size="xs" />
+          <FontAwesomeIcon icon="home" />
           Home
         </Link>
       </LiParent>

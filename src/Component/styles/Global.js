@@ -22,6 +22,8 @@ const GlobalStyles = createGlobalStyle`
   }
   body {
     -webkit-font-smoothing: antialiased;
+    background: url('img/black_thread.png');
+    font-family: 'Droid Sans', sans-serif;
   }
   body, input, button {
     font: 14px 'Roboto', sans-serif;
@@ -48,22 +50,35 @@ const GlobalStyles = createGlobalStyle`
       border-radius: 5px;
 }
 
+dl,
+dt {
+  color: black;
+}
+
 .panel-header-icon {
       float: right;
       margin-left: 5px;  
-      color: white;
+      /* color: white; */
       font-size: 1.3em;
 }
 
 .panel-content {
     text-align: left;
-    color: black;
+    /* color: black; */
     margin: 5px 0px 10px 0px;
     background: #cde;
     padding: 7px;
     border-style: groove;
     border-width: thin;
     border-radius: 5px;
+}
+
+table {
+        border-collapse: collapse;
+    }
+
+th, td {
+  border: 0!important;
 }
 `;
 

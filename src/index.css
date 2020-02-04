@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
-  background-color: #171941;
+  /* background-color: #171941; */
   overflow: hidden;
   /* color: white; */
 }
@@ -72,10 +72,6 @@ h1 {
   padding: 0 !important;
 }
 
-dl,
-dt {
-  color: white;
-}
 /* drop down*/
 /* .dd_container {
   display: flex;
@@ -429,7 +425,7 @@ div.resultBox {
 /* end animation */
 
 /* new form*/
-.card {
+/* .card {
   background: #1f2251;
   border: 0;
   position: relative;
@@ -536,7 +532,7 @@ div.resultBox {
   background-color: transparent;
   border: none;
   padding: 0.4rem 1rem;
-}
+} */
 
 .result-box {
   display: flex;
@@ -630,38 +626,6 @@ div.resultBox {
 
 .bg-default {
   background-color: #344675 !important;
-}
-
-.table thead th,
-.table tbody td {
-  border: 0;
-}
-
-.table-container tbody {
-  display: block;
-  max-height: 40vh;
-  overflow-y: auto;
-}
-
-.table > tbody > tr > td,
-.table > tbody > tr > th,
-.table > tfoot > tr > td,
-.table > tfoot > tr > th,
-.table > thead > tr > td,
-.table > thead > tr > th {
-  padding: 12px 5px;
-  vertical-align: middle !important;
-  color: #fff !important;
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-tr.tableitem:hover {
-  background-color: #c2cfb5;
-}
-
-.table td {
-  border-bottom: 1px solid #dee2e6 !important;
 }
 
 .btn-info {

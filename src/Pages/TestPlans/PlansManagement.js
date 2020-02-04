@@ -4,7 +4,7 @@ import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
 import { TableWithModal } from "../../Component/Containers/TableWithModal";
 import { Button, Input, InputGroup } from "reactstrap";
-import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
+import { TableStyles } from "../../Component/styles/TableStyles";
 
 const TableWithPagination = withPagination(TableWithModal);
 const TableWithLoadingWithPagination = WithLoading(TableWithPagination);
@@ -58,7 +58,7 @@ const PlansManagement = ({ selectedProject, isTestPlanLoading, listOfItems, hand
   };
 
   return (
-    <TableManagementStyles>
+    <TableStyles>
       <div className="body">
         {selectedProject && <h4>Test Plans Management - Project {selectedProject.name}</h4>}
         <br />
@@ -81,7 +81,7 @@ const PlansManagement = ({ selectedProject, isTestPlanLoading, listOfItems, hand
           columns={COLUMNS}
         />
       </div>
-    </TableManagementStyles>
+    </TableStyles>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TableWithModal } from "../../Component/Containers/TableWithModal";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
-import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
+import { TableStyles } from "../../Component/styles/TableStyles";
 import { Button, Input, InputGroup } from "reactstrap";
 
 const BuildsWithPaginated = withPagination(TableWithModal);
@@ -50,7 +50,7 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
   };
 
   return (
-    <TableManagementStyles>
+    <TableStyles>
       <div className="body">
         {selectedTestPlan && <h4>Builds Management - Plan: {selectedTestPlan.name}</h4>}
         <br />
@@ -73,7 +73,7 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
           columns={COLUMNS}
         />
       </div>
-    </TableManagementStyles>
+    </TableStyles>
   );
 };
 

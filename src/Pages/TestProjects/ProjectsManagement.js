@@ -3,8 +3,9 @@ import { useHistory } from "react-router-dom";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
 import { TableWithModal } from "../../Component/Containers/TableWithModal";
-import { TableManagementStyles } from "../../Component/styles/TableManagementStyles";
-import { Button, Input, InputGroup } from "reactstrap";
+import { TableStyles } from "../../Component/styles/TableStyles";
+import { Container, Card } from "../../Component/styles/BodyStyles";
+import { Button, Input } from "reactstrap";
 
 const TableWithPagination = withPagination(TableWithModal);
 const TableWithLoadingWithPagination = WithLoading(TableWithPagination);
@@ -16,28 +17,28 @@ const COLUMNS = {
   },
   notes: {
     label: "Description",
-    width: "40%"
+    width: "35%"
   },
   prefix: {
     label: "Prefix",
-    width: "7%"
+    width: "6%"
   },
-  issue_tracker_enabled: {
-    label: "Issue Tracker",
-    width: "9%"
-  },
+
   requirementsEnabled: {
     label: "Requirement",
-    width: "8%"
+    width: "10%"
   },
+
   active: {
     label: "Active",
     width: "5%"
   },
+
   is_public: {
     label: "Public",
     width: "5%"
   },
+
   Utils: {
     label: "Utils",
     width: "5%"
@@ -57,29 +58,28 @@ export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDele
   };
 
   return (
-    <TableManagementStyles>
-      <div className="body">
+    <Container className="wrapper h-75">
+      <Card>
         <h4>Projects Management</h4>
-        <br />
-        {/* search and create section  */}
         <div className="form-group d-flex">
-          <InputGroup className="w-50">
+          <div className="w-25">
             <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
-          </InputGroup>
+          </div>
           <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addProject")}>
-            Create
+            Add Project
           </Button>
         </div>
-        {/* end create section  */}
 
-        <TableWithLoadingWithPagination
-          isLoading={isProjectLoading}
-          loadingLabel={"Fetching Test Projects"}
-          listOfItems={searchItems}
-          handleOnDelete={handleOnDelete}
-          columns={COLUMNS}
-        />
-      </div>
-    </TableManagementStyles>
+        <TableStyles>
+          <TableWithLoadingWithPagination
+            isLoading={isProjectLoading}
+            loadingLabel={"Fetching Test Projects"}
+            listOfItems={searchItems}
+            handleOnDelete={handleOnDelete}
+            columns={COLUMNS}
+          />
+        </TableStyles>
+      </Card>
+    </Container>
   );
 };

@@ -14,7 +14,7 @@ const getRangeOfItemsBasedOnPageIndex = (arrayOfItems = [], pageLimit, currentPa
   });
 };
 
-const Pagination = ({ items, pageLimit = 4, pageNeighbours = 0, render }) => {
+const Pagination = ({ items, pageLimit = 5, pageNeighbours = 0, render }) => {
   const [currentPage, setCurrentPage] = useState(1);
   let totalRecords = items ? items.length : [].length;
   let totalPages = totalRecords === 0 ? 1 : Math.ceil(totalRecords / pageLimit);

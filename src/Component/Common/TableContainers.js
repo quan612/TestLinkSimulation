@@ -52,7 +52,7 @@ export const TableContainer = ({ tableItems, columns, handleDeleteItem }) => {
   };
   return (
     <Table>
-      <thead className="bg-default">
+      <thead>
         <tr className="d-flex">
           {Object.keys(columns).map(key => (
             <th key={key} style={{ width: columns[key].width }}>
