@@ -2,6 +2,8 @@ import React from "react";
 import { Table } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WithLoading from "../HOC/withLoading";
+import { TableStyles } from "../../Component/styles/TableStyles";
+
 var he = require("he");
 
 export const TableContainer = ({ tableItems, columns, handleDeleteItem }) => {
@@ -51,28 +53,30 @@ export const TableContainer = ({ tableItems, columns, handleDeleteItem }) => {
     }
   };
   return (
-    <Table>
-      <thead>
-        <tr className="d-flex">
-          {Object.keys(columns).map(key => (
-            <th key={key} style={{ width: columns[key].width }}>
-              {columns[key].label}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {tableItems && Object.keys(tableItems).length > 0
-          ? tableItems.map(item => {
-              return (
-                <tr className="d-flex" key={item.id}>
-                  {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
-                </tr>
-              );
-            })
-          : null}
-      </tbody>
-    </Table>
+    <TableStyles>
+      <Table>
+        <thead>
+          <tr className="d-flex">
+            {Object.keys(columns).map(key => (
+              <th key={key} style={{ width: columns[key].width }}>
+                {columns[key].label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {tableItems && Object.keys(tableItems).length > 0
+            ? tableItems.map(item => {
+                return (
+                  <tr className="d-flex" key={item.id}>
+                    {Object.keys(columns).map(key => handleRenderTableItems(item, key))}
+                  </tr>
+                );
+              })
+            : null}
+        </tbody>
+      </Table>
+    </TableStyles>
   );
 };
 

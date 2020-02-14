@@ -15,7 +15,9 @@ const initialState = {
   isTestPlanLoading: false,
   testProjects: [],
   testPlans: [],
+  selectedTestPlan: [],
   buildsOfCurrentTestPlan: [],
+  selectedBuild: [],
   selectedTestItem: []
 };
 
@@ -39,7 +41,14 @@ const asyncReducer = (state = initialState, action) => {
       return { ...state, testCasesCount: action.payload };
 
     case SELECT_PROJECT:
-      return { ...state, selectedProject: action.payload, buildsOfCurrentTestPlan: [] };
+      return {
+        ...state,
+        selectedProject: action.payload,
+        testPlans: [],
+        selectedTestPlan: {},
+        buildsOfCurrentTestPlan: [],
+        selectedBuild: {}
+      };
 
     case LOAD_PROJECTS:
       return { ...state, isProjectLoading: true };
@@ -110,7 +119,7 @@ const asyncReducer = (state = initialState, action) => {
     case CLEAR_BUILD:
       return {
         ...state,
-        buildsOfCurrentTestPlan: {}
+        buildsOfCurrentTestPlan: []
       };
 
     default:

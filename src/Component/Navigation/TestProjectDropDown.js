@@ -19,7 +19,6 @@ const TestProjectDropDown = ({ isLoading, testProjects }) => {
 
   useEffect(() => {
     if (testProjects.length > 0) {
-      console.log("testProjects", testProjects);
       setSelectedItem(testProjects[0]);
       dispatch(selectTestProjectAction(testProjects[0]));
     }

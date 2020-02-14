@@ -20,7 +20,8 @@ import {
   faRunning,
   faListOl,
   faHome,
-  faCheckCircle
+  faCheckCircle,
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -43,5 +44,6 @@ library.add(
   faRunning,
   faListOl,
   faHome,
-  faCheckCircle
+  faCheckCircle,
+  faBars
 );

@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
 import { TableWithModal } from "../../Component/Containers/TableWithModal";
-import { Button, Input, InputGroup } from "reactstrap";
-import { TableStyles } from "../../Component/styles/TableStyles";
+import { Container, Card } from "../../Component/styles/BodyStyles";
+import { Button, Input } from "reactstrap";
 
 const TableWithPagination = withPagination(TableWithModal);
 const TableWithLoadingWithPagination = WithLoading(TableWithPagination);
@@ -14,14 +14,17 @@ const COLUMNS = {
     label: "Name",
     width: "30%"
   },
+
   notes: {
     label: "Description",
-    width: "40%"
+    width: "35%"
   },
+
   testcases: {
     label: "TestCase#",
     width: "7%"
   },
+
   builds: {
     label: "Build#",
     width: "9%"
@@ -31,13 +34,15 @@ const COLUMNS = {
     label: "Active",
     width: "5%"
   },
+
   is_public: {
     label: "Public",
-    width: "5%"
+    width: "4%"
   },
+
   Utils: {
     label: "Utils",
-    width: "5%"
+    width: "4%"
   }
 };
 
@@ -58,20 +63,17 @@ const PlansManagement = ({ selectedProject, isTestPlanLoading, listOfItems, hand
   };
 
   return (
-    <TableStyles>
-      <div className="body">
+    <Container className="wrapper h-75">
+      <Card>
         {selectedProject && <h4>Test Plans Management - Project {selectedProject.name}</h4>}
-        <br />
-        {/* search and create section  */}
         <div className="form-group d-flex">
-          <InputGroup className="w-50">
+          <div className="w-50">
             <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
-          </InputGroup>
+          </div>
           <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addPlan")}>
-            Create
+            Add Plan
           </Button>
         </div>
-        {/* end create section  */}
 
         <TableWithLoadingWithPagination
           isLoading={isTestPlanLoading}
@@ -80,8 +82,8 @@ const PlansManagement = ({ selectedProject, isTestPlanLoading, listOfItems, hand
           handleOnDelete={handleOnDelete}
           columns={COLUMNS}
         />
-      </div>
-    </TableStyles>
+      </Card>
+    </Container>
   );
 };
 

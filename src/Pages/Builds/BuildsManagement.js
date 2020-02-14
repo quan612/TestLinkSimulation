@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { TableWithModal } from "../../Component/Containers/TableWithModal";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
-import { TableStyles } from "../../Component/styles/TableStyles";
-import { Button, Input, InputGroup } from "reactstrap";
+import { Button, Input } from "reactstrap";
 
 const BuildsWithPaginated = withPagination(TableWithModal);
 const BuildsWithLoadingWithPaginated = WithLoading(BuildsWithPaginated);
@@ -15,11 +15,11 @@ const COLUMNS = {
   },
   notes: {
     label: "Description",
-    width: "45%"
+    width: "35%"
   },
   release_date: {
     label: "Release Date",
-    width: "10%"
+    width: "13%"
   },
   active: {
     label: "Active",
@@ -35,8 +35,9 @@ const COLUMNS = {
   }
 };
 
-const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAdd, handleOnDelete }) => {
+const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnDelete }) => {
   const [searchItems, setSearchItems] = useState([]);
+  let history = useHistory();
 
   useEffect(() => {
     if (listOfItems instanceof Array && listOfItems.length > 0) {
@@ -50,30 +51,27 @@ const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnAd
   };
 
   return (
-    <TableStyles>
-      <div className="body">
-        {selectedTestPlan && <h4>Builds Management - Plan: {selectedTestPlan.name}</h4>}
-        <br />
-        {/* search and create section  */}
-        <div className="form-group d-flex">
-          <InputGroup className="w-50">
-            <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
-          </InputGroup>
-          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnAdd()}>
-            Create
-          </Button>
-        </div>
-        {/* end create section  */}
+    <div className="body">
+      {selectedTestPlan && <h4>Builds Management - Plan: {selectedTestPlan.name}</h4>}
+      <br />
 
-        <BuildsWithLoadingWithPaginated
-          isLoading={isLoading}
-          loadingLabel={"Fetching Builds"}
-          listOfItems={searchItems}
-          handleOnDelete={handleOnDelete}
-          columns={COLUMNS}
-        />
+      <div className="form-group d-flex">
+        <div className="w-50">
+          <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Builds" />
+        </div>
+        <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addBuild")}>
+          Create Build
+        </Button>
       </div>
-    </TableStyles>
+
+      <BuildsWithLoadingWithPaginated
+        isLoading={isLoading}
+        loadingLabel={"Fetching Builds"}
+        listOfItems={searchItems}
+        handleOnDelete={handleOnDelete}
+        columns={COLUMNS}
+      />
+    </div>
   );
 };
 

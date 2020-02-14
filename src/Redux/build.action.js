@@ -24,10 +24,10 @@ export const addBuildAction = data => {
   };
 };
 
-export const loadBuildsAsyncAction = testPlan => {
+export const loadBuildsAsyncAction = testPlanId => {
   return async dispatch => {
     dispatch(loadingBuilds());
-    return loadBuildsApi(testPlan)
+    return loadBuildsApi(testPlanId)
       .then(builds => {
         setTimeout(() => dispatch(loadBuildsSuccess(builds)), 1000);
       })

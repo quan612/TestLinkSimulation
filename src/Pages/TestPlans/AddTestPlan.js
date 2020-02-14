@@ -8,24 +8,9 @@ import { loadTestPlansAction, addTestPlanAction } from "../../Redux/testPlan.act
 
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Label,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-  CustomInput,
-  Button
-} from "reactstrap";
+import { Container, Card } from "../../Component/styles/BodyStyles";
+import { FormGroup, Input, CustomInput, Button } from "reactstrap";
+import FormStyles from "../../Component/styles/FormStyles";
 
 const styles = {
   errorText: {
@@ -53,6 +38,10 @@ const AddTestPlan = () => {
       .then(result => {
         console.log("add test plan success ", result);
         dispatch(loadTestPlansAction(selectedProject));
+        if (history) {
+          console.log("history", history);
+          history.goBack();
+        }
         history.push("/plans");
       })
       .catch(error => setErrors({ name: "Validation: " + error }));
@@ -84,89 +73,81 @@ const AddForm = ({ formikProps }) => {
   let history = useHistory();
 
   return (
-    <form onSubmit={formikProps.handleSubmit}>
-      <Container>
-        <Row>
-          <Col className="offset-lg-0 offset-md-3">
-            <Card className="card-register">
-              <CardHeader>
-                <CardTitle>Create New Test Plan</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <div></div>
-                <InputGroup className="w-75">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="tim-icons icon-single-02" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="Name"
-                    type="text"
-                    name="name"
-                    value={formikProps.values.name}
-                    onChange={formikProps.handleChange}
-                  />
-                </InputGroup>
-                {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
-                <br />
+    <FormStyles>
+      <form onSubmit={formikProps.handleSubmit}>
+        <Container>
+          <Card className="wrapper h-75">
+            <h2>Add New Plan</h2>
 
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText></InputGroupText>
-                  </InputGroupAddon>
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data={formikProps.values.description}
-                    onInit={editor => {}}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      formikProps.setFieldValue("description", data);
-                    }}
-                  />
-                </InputGroup>
-                <br />
+            <div className="input wrapper w-25">
+              <Input
+                placeholder="Name"
+                type="text"
+                name="name"
+                value={formikProps.values.name}
+                onChange={formikProps.handleChange}
+              />
 
-                <div className="d-flex w-25 justify-content-between">
-                  <FormGroup check>
-                    <Label check>
-                      <CustomInput
-                        id="exampleCustomCheckbox1"
-                        type="checkbox"
-                        name="isActive"
-                        checked={formikProps.values.isActive}
-                        onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
-                        label="Active"
-                      />
-                    </Label>
-                  </FormGroup>
+              {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+              <br />
+            </div>
 
-                  <FormGroup check>
-                    <Label check>
-                      <CustomInput
-                        id="exampleCustomCheckbox2"
-                        type="checkbox"
-                        name="isPublic"
-                        checked={formikProps.values.isPublic}
-                        onChange={e => formikProps.setFieldValue("isPublic", e.target.checked)}
-                        label="Public"
-                      />
-                    </Label>
-                  </FormGroup>
-                </div>
-              </CardBody>
-              <CardFooter>
-                <Button className="mr-2" color="success" type="submit" label="Submit">
-                  Submit
-                </Button>
-                <Button color="secondary" onClick={() => history.push("/plans")} label="Cancel">
-                  Cancel
-                </Button>
-              </CardFooter>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </form>
+            <div>
+              <CKEditor
+                editor={ClassicEditor}
+                data={formikProps.values.description}
+                onInit={editor => {}}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  formikProps.setFieldValue("description", data);
+                }}
+              />
+              <br />
+            </div>
+
+            <div className="d-flex justify-content-star">
+              <FormGroup check>
+                <CustomInput
+                  id="isActive"
+                  type="checkbox"
+                  name="isActive"
+                  checked={formikProps.values.isActive}
+                  onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
+                  label="Active"
+                />
+              </FormGroup>
+
+              <FormGroup check>
+                <CustomInput
+                  id="isPublic"
+                  type="checkbox"
+                  name="isPublic"
+                  checked={formikProps.values.isPublic}
+                  onChange={e => formikProps.setFieldValue("isPublic", e.target.checked)}
+                  label="Public"
+                />
+              </FormGroup>
+            </div>
+
+            <Button className="mr-2" color="primary" type="submit" label="Submit">
+              Submit
+            </Button>
+            <Button
+              color="secondary"
+              onClick={() => {
+                if (history) {
+                  console.log("history", history);
+                  history.goBack();
+                }
+                history.push("/plans");
+              }}
+              label="Cancel"
+            >
+              Cancel
+            </Button>
+          </Card>
+        </Container>
+      </form>
+    </FormStyles>
   );
 };

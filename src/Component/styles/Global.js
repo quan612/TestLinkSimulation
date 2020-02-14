@@ -34,44 +34,61 @@ const GlobalStyles = createGlobalStyle`
   ul {
     list-style: none;
   }
-  button {
+
+  button, a,  svg {
     cursor: pointer;
   }
 
-  .panel-header {
+  .custom-control-label::before {
+    top: 0 !important;
+  }
+
+  .custom-control-label::after {
+    top: 0.1rem !important;
+  }
+
+  /* .panel-title{
+    color: black;
+      font-weight: bold;
+      font-size: 1.2em;
+      font-family: tahoma, arial, verdana, sans-serif;
+      padding: 7px;
+      margin: 2px;
+  } */
+
+
+  /* .panel-header {
       color: #f4f4f4;
       font-weight: bold;
       font-size: 1em;
       font-family: tahoma, arial, verdana, sans-serif;
       border-color: #99bbe8;
       padding: 7px;
-      background-color: #252e37;
-      margin: 5px 0 0 0;
+      margin: 2px;
+      background-color: #252e37;      
       border-radius: 5px;
-}
+  }  */
+  
+  /* .panel-header-icon {
+       
+  }
+   */
+  /* .panel-content {
+      text-align: left;
+      /* color: black; */
+      /* padding: 7px;
+      margin: 2px; */
+      /* background: transparent;       */
+      /* background-image: linear-gradient(to right, #d3d3d3 , #9e9e9e);
+      border-style: groove;
+      border-width: thin;
+      border-radius: 5px; }*/
+  
 
-dl,
-dt {
-  color: black;
-}
-
-.panel-header-icon {
-      float: right;
-      margin-left: 5px;  
-      /* color: white; */
-      font-size: 1.3em;
-}
-
-.panel-content {
-    text-align: left;
-    /* color: black; */
-    margin: 5px 0px 10px 0px;
-    background: #cde;
-    padding: 7px;
-    border-style: groove;
-    border-width: thin;
-    border-radius: 5px;
-}
+  dl,
+  dt {
+    color: black;
+  }
 
 table {
         border-collapse: collapse;
@@ -79,6 +96,42 @@ table {
 
 th, td {
   border: 0!important;
+}
+
+label {
+  margin: 0 !important;
+}
+
+@keyframes spin720 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+select {
+  color: white!important;
+  max-width: 200px;
+  max-height: 20vh;
+  text-align: left;
+  overflow-y: auto;
+}
+
+select:focus {
+  border-color:white!important;
+}
+
+select option {
+  color: white;
+  background-color: #252e37;
+  border-color:white;
+}
+
+hr{
+  margin-top:4px;
+  margin-bottom:4px;
 }
 `;
 

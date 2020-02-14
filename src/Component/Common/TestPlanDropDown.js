@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import withTestPlansFetching from "../HOC/withTestPlansFetching";
 import { selectTestPlanAction } from "../../Redux/testPlan.action";
-import DropDown from "../Common/DropDown";
+import DropDown from "./DropDown";
 import DropdownStyles from "../styles/DropdownStyles";
 import styled from "styled-components";
 
@@ -10,11 +10,11 @@ const Label = styled.label`
   color: ${props => props.theme.grey};
   font-weight: 600;
   font-size: 0.8rem;
-  padding-left: 3px;
-  margin-right: 1px;
+  margin: 0 !important;
+  margin-right: 2px;
 `;
 
-const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
+export const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
   const [selectedItem, setSelectedItem] = useState({ name: "" });
   let dispatch = useDispatch();
 
@@ -35,8 +35,8 @@ const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
   };
 
   return (
-    <React.Fragment>
-      <Label>Plan: </Label>
+    <div className="d-flex align-items-center justify-content-between ">
+      <Label>Test Plan: </Label>
       {
         <DropdownStyles>
           <DropDown
@@ -46,7 +46,7 @@ const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
           />
         </DropdownStyles>
       }
-    </React.Fragment>
+    </div>
   );
 };
 

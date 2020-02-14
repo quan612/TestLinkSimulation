@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { loadTestPlansAction } from "../../Redux/testPlan.action";
 import { useSelector, useDispatch } from "react-redux";
+import { loadTestPlansAction } from "../../Redux/testPlan.action";
+import { selectTestPlanAction } from "../../Redux/testPlan.action";
 
-const useTestPlanFetching = selectedProject => {
-  const { isTestPlanLoading, testPlans } = useSelector(state => ({
+const useTestPlansFetching = selectedProject => {
+  const { isTestPlanLoading, testPlans, selectedTestPlan } = useSelector(state => ({
     testPlans: state.testPlans,
-    isTestPlanLoading: state.isTestPlanLoading
+    isTestPlanLoading: state.isTestPlanLoading,
+    selectedTestPlan: state.selectedTestPlan
   }));
 
   const dispatch = useDispatch();
@@ -14,12 +16,13 @@ const useTestPlanFetching = selectedProject => {
     if (selectedProject) {
       const fetchTestPlans = async () => {
         await dispatch(loadTestPlansAction(selectedProject));
+        await dispatch(selectTestPlanAction(testPlans[0]));
       };
       fetchTestPlans();
     }
   }, [selectedProject]);
 
-  return { isTestPlanLoading, testPlans };
+  return { isTestPlanLoading, testPlans, selectedTestPlan };
 };
 
-export default useTestPlanFetching;
+export default useTestPlansFetching;

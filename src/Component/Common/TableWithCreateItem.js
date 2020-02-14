@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, Table } from "reactstrap";
+import { TableStyles } from "../../Component/styles/TableStyles";
+
 var he = require("he");
 
 const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
@@ -7,7 +9,7 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
     step_number: (tableItems.length + 1).toString(),
     actions: "",
     expected_results: "",
-    execution_type: 1
+    execution_type: 1 //manual
   });
 
   const handleOnChange = e => {
@@ -43,7 +45,7 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
     }
   };
   return (
-    <React.Fragment>
+    <TableStyles>
       <Table>
         <thead className="bg-default">
           <tr className="d-flex">
@@ -68,13 +70,12 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
           )}
           <tr className="d-flex">
             <td style={{ width: "3%" }}>{index + 1}</td>
-            <td style={{ width: "44%" }}>
+            <td style={{ width: "47%" }}>
               <Input type="textarea" name="actions" id="example1" onChange={handleOnChange} />
             </td>
-            <td style={{ width: "45%" }}>
+            <td style={{ width: "50%" }}>
               <Input type="textarea" name="expected_results" id="example1" onChange={handleOnChange} />
             </td>
-            <td style={{ width: "8%" }}>{"Execution Type"}</td>
           </tr>
         </tbody>
       </Table>
@@ -84,7 +85,7 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
       <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={onCancel}>
         Cancel
       </Button>
-    </React.Fragment>
+    </TableStyles>
   );
 };
 

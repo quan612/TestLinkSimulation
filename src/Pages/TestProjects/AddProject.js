@@ -8,8 +8,8 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 
 import { Container, Card } from "../../Component/styles/BodyStyles";
-
-import { Label, FormGroup, Input, InputGroupAddon, InputGroupText, InputGroup, CustomInput, Button } from "reactstrap";
+import { FormGroup, Input, CustomInput, Button } from "reactstrap";
+import FormStyles from "../../Component/styles/FormStyles";
 
 const AddProject = () => {
   const dispatch = useDispatch();
@@ -76,52 +76,52 @@ const AddForm = ({ formikProps }) => {
   };
 
   return (
-    <form onSubmit={formikProps.handleSubmit}>
-      <div className="form-group">
-        <Container>
-          <Card className="wrapper h-75">
-            <h2>Create a new project</h2>
+    <FormStyles>
+      <form onSubmit={formikProps.handleSubmit}>
+        <div className="form-group">
+          <Container>
+            <Card className="wrapper h-75">
+              <h2>Create a new project</h2>
 
-            <div className="input wrapper w-25">
-              <Input
-                placeholder="Project Name"
-                type="text"
-                name="name"
-                value={formikProps.values.name}
-                onChange={formikProps.handleChange}
+              <div className="input wrapper w-25">
+                <Input
+                  placeholder="Project Name"
+                  type="text"
+                  name="name"
+                  value={formikProps.values.name}
+                  onChange={formikProps.handleChange}
+                />
+                {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+                <br />
+              </div>
+
+              <div className="input wrapper w-25">
+                <Input
+                  placeholder="Prefix"
+                  type="text"
+                  name="prefix"
+                  value={formikProps.values.prefix}
+                  onChange={formikProps.handleChange}
+                />
+
+                {formikProps.errors.prefix && <span style={{ ...styles.errorText }}>{formikProps.errors.prefix}</span>}
+                <br />
+              </div>
+
+              <CKEditor
+                editor={ClassicEditor}
+                data={formikProps.values.description}
+                onInit={editor => {}}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  formikProps.setFieldValue("description", data);
+                }}
               />
-              {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+
               <br />
-            </div>
 
-            <div className="input wrapper w-25">
-              <Input
-                placeholder="Prefix"
-                type="text"
-                name="prefix"
-                value={formikProps.values.prefix}
-                onChange={formikProps.handleChange}
-              />
-
-              {formikProps.errors.prefix && <span style={{ ...styles.errorText }}>{formikProps.errors.prefix}</span>}
-              <br />
-            </div>
-
-            <CKEditor
-              editor={ClassicEditor}
-              data={formikProps.values.description}
-              onInit={editor => {}}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                formikProps.setFieldValue("description", data);
-              }}
-            />
-
-            <br />
-
-            <div className="d-flex w-25 justify-content-between">
-              <FormGroup check>
-                <Label check>
+              <div className="d-flex justify-content-start">
+                <FormGroup check className="mr-2">
                   <CustomInput
                     id="requirement"
                     type="checkbox"
@@ -130,11 +130,9 @@ const AddForm = ({ formikProps }) => {
                     onChange={e => formikProps.setFieldValue("requirement", e.target.checked)}
                     label="Requirement"
                   />
-                </Label>
-              </FormGroup>
+                </FormGroup>
 
-              <FormGroup check>
-                <Label check>
+                <FormGroup check>
                   <CustomInput
                     id="isActive"
                     type="checkbox"
@@ -143,11 +141,9 @@ const AddForm = ({ formikProps }) => {
                     onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
                     label="Active"
                   />
-                </Label>
-              </FormGroup>
+                </FormGroup>
 
-              <FormGroup check>
-                <Label check>
+                <FormGroup check>
                   <CustomInput
                     id="isPublic"
                     type="checkbox"
@@ -156,24 +152,21 @@ const AddForm = ({ formikProps }) => {
                     onChange={e => formikProps.setFieldValue("isPublic", e.target.checked)}
                     label="Public"
                   />
-                </Label>
-              </FormGroup>
-            </div>
+                </FormGroup>
+              </div>
 
-            <div className="d-flex">
-              <Button className="mr-2" color="success" type="submit" label="Submit">
-                Submit
-              </Button>
-              {/* <Button color="secondary" onClick={onClose} label="Cancel">
-                    Cancel
-                  </Button> */}
-              <Button color="secondary" onClick={() => history.push("/projects")} label="Cancel">
-                Cancel
-              </Button>
-            </div>
-          </Card>
-        </Container>
-      </div>
-    </form>
+              <div className="d-flex">
+                <Button className="mr-2" color="primary" type="submit">
+                  Submit
+                </Button>
+                <Button color="secondary" onClick={() => history.push("/projects")}>
+                  Cancel
+                </Button>
+              </div>
+            </Card>
+          </Container>
+        </div>
+      </form>
+    </FormStyles>
   );
 };

@@ -360,8 +360,8 @@ const getTestCasesForCurrentTestSuiteApi = async (testLink, testSuite) => {
 
 /********************************************************* BUILD API ******************************************/
 
-export const loadBuildsApi = async selectedTestPlan => {
-  return await testLink.getBuildsForTestPlan({ testplanid: selectedTestPlan.id });
+export const loadBuildsApi = async testPlanId => {
+  return await testLink.getBuildsForTestPlan({ testplanid: testPlanId });
 };
 
 export const addBuildApi = async data => {

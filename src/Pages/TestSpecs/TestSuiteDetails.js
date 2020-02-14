@@ -1,28 +1,49 @@
 import React from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Header, CardContent } from "../../Component/styles/BodyStyles";
+
 var he = require("he");
 
 const TestSuiteDetails = ({
   selectedProject,
-  selectedSuite,
+  testSuite,
   onAddTestSuite,
   onEditTestSuite,
   onDeleteTestSuite,
   onAddTestCase
 }) => {
-  if (
-    !selectedSuite ||
-    Object.keys(selectedSuite).length < 1 ||
-    (selectedSuite && selectedSuite.hasOwnProperty("prefix"))
-  )
+  if (!testSuite || Object.keys(testSuite).length < 1 || (testSuite && testSuite.hasOwnProperty("prefix")))
+    return <TestProjectDetail selectedProject={selectedProject} onAddTestSuite={onAddTestSuite} />;
+  else
     return (
-      <>
-        <h1>{"Test Project"}</h1>
+      <TestSuiteDetail
+        testSuite={testSuite}
+        onAddTestSuite={onAddTestSuite}
+        onEditTestSuite={onEditTestSuite}
+        onDeleteTestSuite={onDeleteTestSuite}
+        onAddTestCase={onAddTestCase}
+      />
+    );
+};
+
+export default TestSuiteDetails;
+
+const TestProjectDetail = ({ selectedProject, onAddTestSuite }) => {
+  return (
+    <>
+      {selectedProject && (
+        <>
+          <Header>{`Test project: ${selectedProject.name} `}</Header>
+          {selectedProject.notes && (
+            <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedProject.notes) }} />
+          )}
+        </>
+      )}
+      <div className="icon-wrapper m-2">
         <FontAwesomeIcon
           icon="tools"
           size={"2x"}
-          color={"white"}
+          color={"black"}
           style={{ animation: `spin720 1s ease`, animationDelay: `0.3s` }}
           data-toggle="collapse"
           href="#testSuiteUtilities"
@@ -36,63 +57,60 @@ const TestSuiteDetails = ({
               style={{ color: "#00e676" }}
               data-toggle="tooltip"
               title="Create Test Suite"
-              onClick={() => onAddTestSuite()}
+              onClick={onAddTestSuite}
             />
           </form>
         </div>
-        {selectedProject && (
-          <>
-            <div className="panel-header">{`Test project: ${selectedProject.name} `}</div>
-            <div className="panel-content" dangerouslySetInnerHTML={{ __html: he.decode(selectedProject.notes) }}></div>
-          </>
-        )}
-      </>
-    );
-  else
-    return (
-      <>
-        <h1>{"Test Suite Details"}</h1>
+      </div>
+    </>
+  );
+};
+
+const TestSuiteDetail = ({ testSuite, onAddTestSuite, onEditTestSuite, onDeleteTestSuite, onAddTestCase }) => {
+  return (
+    <>
+      <Header>Test Suite: {`${testSuite.name}`}</Header>
+      {testSuite.details && <CardContent dangerouslySetInnerHTML={{ __html: he.decode(testSuite.details) }} />}
+
+      <div className="icon-wrapper m-2">
         <FontAwesomeIcon
           icon="tools"
           size={"2x"}
-          color={"white"}
+          color={"black"}
           style={{ animation: `spin720 1s ease`, animationDelay: `0.3s` }}
           data-toggle="collapse"
           href="#testSuiteUtilities"
         />
         <div className="collapse" id="testSuiteUtilities">
-          <form>
+          <div className="testsuite-section">
             <label>Test Suite Operations:</label>
             <FontAwesomeIcon
               className="ml-2"
               icon="plus-circle"
               size={"lg"}
               style={{ color: "#00e676" }}
-              data-toggle="tooltip"
               title="Create Test Suite"
-              onClick={() => onAddTestSuite()}
+              onClick={onAddTestSuite}
             />
             <FontAwesomeIcon
               className="ml-2"
               icon="pencil-alt"
               size={"lg"}
               style={{ color: "#ffab00" }}
-              data-toggle="tooltip"
               title="Edit Test Suite"
-              onClick={() => onEditTestSuite()}
+              onClick={onEditTestSuite}
             />
             <FontAwesomeIcon
               className="ml-2"
               icon="trash-alt"
               size={"lg"}
               style={{ color: "red" }}
-              data-toggle="tooltip"
               title="Delete test suite with all children"
-              onClick={() => onDeleteTestSuite()}
+              onClick={onDeleteTestSuite}
             />
-          </form>
+          </div>
 
-          <form>
+          <div className="mt-1 testcase-section">
             <label>Test Case Operations:</label>
             <FontAwesomeIcon
               className="ml-2"
@@ -100,16 +118,11 @@ const TestSuiteDetails = ({
               size={"lg"}
               style={{ color: "#00e676" }}
               title="Create Test Case"
-              onClick={() => onAddTestCase()}
+              onClick={onAddTestCase}
             />
-          </form>
+          </div>
         </div>
-        <div className="panel-header">Test Suite: {`${selectedSuite.name}`}</div>
-        <div className="panel-content">
-          {selectedSuite.details && <div dangerouslySetInnerHTML={{ __html: he.decode(selectedSuite.details) }} />}
-        </div>
-      </>
-    );
+      </div>
+    </>
+  );
 };
-
-export default TestSuiteDetails;

@@ -1,54 +1,60 @@
 import styled from "styled-components";
 
-export const Ul = styled.ul`
+export const NavContainer = styled.div`
+  display: block;
+  position: relative;
+  width: 100%;
+  font-size: 16px;
+  margin: 0.5rem auto;
+  padding: 0.2rem 0;
+  background: ${props => props.theme.nav_bg};
+  background-image: ${props => props.theme.nav_bgImg};
+  border-radius: 15px;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.4);
+
+  /* the container for navigation, on desktop its flex and justify item space between, 
+     on mobile it is block */
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+export const DropDownContainer = styled.div`
   display: flex;
+  position: relative;
+  padding: 0 20px;
+  margin-right: 1em;
   align-items: center;
+
+  /* the container of the dropdown always stay as flex to align children within */
+`;
+
+export const Ul = styled.ul`
+  display: none;
+  list-style-type: none;
   margin: 0;
-  padding: 0 10px;
+  padding: 0 5px;
   font-size: 1rem;
 
   svg {
-    /* font-size: 0.5em; */
     align-self: center;
     color: ${props => props.theme.grey};
   }
-  /* a,
-  button {
-    
-    position: relative;
+
+  /* the UL menu: when on mobile we don't show it, and it is toggle as block by the hamburger icon
+  on desktop it is flex
+  */
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    font-weight: 800;
-    font-size: 0.8rem;
-    padding: 0.3rem;
-    border: 0;
-    color: white;
-    cursor: pointer;
-    @media (max-width: 700px) {
-      font-size: 10px;
-      padding: 0 10px;
-    } */
-
-  /* &.active-link {
-      color: #007bff;
-      path {
-        stroke-width: 18;
-        color: #007bff;
-      }
-    } */
-  /* } */
-
-  &:hover ul li a:hover {
-    background: -webkit-gradient(linear, center top, center bottom, from(#eee), to(#fff));
-    background-image: linear-gradient(#ededed, #fff);
-    border-radius: 12px;
-    box-shadow: inset 0px 0px 4px 2px rgba(0, 0, 0, 0.3);
   }
 
-  @media (max-width: 1300px) {
-    border-top: 1px solid red;
-    width: auto;
-    justify-content: center;
-    font-size: 1rem;
+  &:hover ul li a:hover {
+    background-color: black;
+    color: white;
   }
 `;
 
@@ -87,8 +93,7 @@ export const LiParent = styled.li`
     font-size: 0.8rem;
     line-height: 1rem;
     padding: 4px 6px;
-    margin: 8px 8px;
-    vertical-align: middle;
+    /* vertical-align: middle; */
     text-decoration: none;
   }
 

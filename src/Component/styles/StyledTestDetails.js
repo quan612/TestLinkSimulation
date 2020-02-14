@@ -1,10 +1,10 @@
 import styled from "styled-components";
-export const StyledTestDetailContainer = styled.div`
+
+export const StyledTestDetail = styled.div`
   min-width: 99% !important;
   height: 100%;
   margin-right: 15px;
   margin-left: 15px;
-  background: #1f2251;
 
   .container {
     @media (min-width: 1200px) {
@@ -22,7 +22,7 @@ export const StyledTestDetailContainer = styled.div`
   }
 `;
 
-export const StyledTestDetails = styled.div`
+export const FormDetailContainer = styled.div`
   .details {
     padding-left: 15px;
     padding-right: 15px;

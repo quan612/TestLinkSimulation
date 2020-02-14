@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
 import { TableWithModal } from "../../Component/Containers/TableWithModal";
-import { TableStyles } from "../../Component/styles/TableStyles";
+
 import { Container, Card } from "../../Component/styles/BodyStyles";
 import { Button, Input } from "reactstrap";
 
@@ -48,6 +48,7 @@ const COLUMNS = {
 export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDelete }) => {
   const [searchItems, setSearchItems] = useState([]);
   let history = useHistory();
+
   useEffect(() => {
     setSearchItems(listOfItems);
   }, [listOfItems]);
@@ -61,8 +62,8 @@ export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDele
     <Container className="wrapper h-75">
       <Card>
         <h4>Projects Management</h4>
-        <div className="form-group d-flex">
-          <div className="w-25">
+        <div className="form-group d-flex flex-wrap">
+          <div className="w-25 min-w-100">
             <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
           </div>
           <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addProject")}>
@@ -70,15 +71,13 @@ export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDele
           </Button>
         </div>
 
-        <TableStyles>
-          <TableWithLoadingWithPagination
-            isLoading={isProjectLoading}
-            loadingLabel={"Fetching Test Projects"}
-            listOfItems={searchItems}
-            handleOnDelete={handleOnDelete}
-            columns={COLUMNS}
-          />
-        </TableStyles>
+        <TableWithLoadingWithPagination
+          isLoading={isProjectLoading}
+          loadingLabel={"Fetching Test Projects"}
+          listOfItems={searchItems}
+          handleOnDelete={handleOnDelete}
+          columns={COLUMNS}
+        />
       </Card>
     </Container>
   );

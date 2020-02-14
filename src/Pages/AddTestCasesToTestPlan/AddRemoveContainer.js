@@ -1,42 +1,18 @@
 import React from "react";
-import useTestCasesOfTestSuiteTestPlanFetching from "../../Component/CustomHooks/useTestCasesOfTestSuiteTestPlanFetching";
+import { withTestCasesOfTestSuiteTestPlanFetching } from "../../Component/HOC/withTestCasesOfTestSuiteTestPlanFetching";
 import AddRemoveDetails from "./AddRemoveDetails";
-import LoadingContainer from "../../Component/Containers/LoadingContainer";
-var he = require("he");
 
-function AddRemoveContainer({ selectedProject, selectedTestSuite, selectedTestPlan }) {
-  const { isLoading, testCases } = useTestCasesOfTestSuiteTestPlanFetching(
-    selectedProject,
-    selectedTestSuite,
-    selectedTestPlan
-  );
-
-  if (isLoading) return <LoadingContainer label={"Fetching test cases..."} />;
-
-  if (selectedTestSuite && testCases && Object.keys(testCases).length > 0) {
+const AddRemoveContainer = ({ selectedProject, selectedTestSuite, selectedTestPlan, testCases }) => {
+  if (selectedProject !== {} && selectedTestSuite !== {} && selectedTestPlan !== {} && testCases !== {})
     return (
       <AddRemoveDetails
         selectedProject={selectedProject}
         selectedTestPlan={selectedTestPlan}
-        listItems={testCases}
+        testCases={testCases}
         selectedTestSuite={selectedTestSuite}
       />
     );
-  } else
-    return (
-      <>
-        {selectedTestPlan && <h1>{`Test Plan: ${selectedTestPlan.name}`}</h1>}
-        <div>
-          <div className="panel-header"> Details:</div>
-          {selectedTestPlan && (
-            <div
-              className="panel-content"
-              dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}
-            ></div>
-          )}
-        </div>
-      </>
-    );
-}
+  else return null;
+};
 
-export default AddRemoveContainer;
+export default withTestCasesOfTestSuiteTestPlanFetching(AddRemoveContainer);

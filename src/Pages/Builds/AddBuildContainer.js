@@ -1,8 +1,10 @@
 //todo: add validation to date that is not before today
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { addBuildAction, loadBuildsAsyncAction } from "../../Redux/build.action";
 import { Formik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,28 +12,20 @@ import moment from "moment";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Label,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-  CustomInput,
-  Button
-} from "reactstrap";
+import { Container, Card } from "../../Component/styles/BodyStyles";
+import { FormGroup, Input, CustomInput, Button } from "reactstrap";
+import FormStyles from "../../Component/styles/FormStyles";
+import TestPlanDropDownWithFetching from "../../Component/Common/TestPlanDropDown";
+import { DropDownContainer } from "../../Component/styles/DropdownStyles";
 
-const AddBuildContainer = ({ onClose }) => {
-  const { selectedTestPlan } = useSelector(state => ({
+const AddBuildContainer = () => {
+  const { selectedProject, testPlans, selectedTestPlan } = useSelector(state => ({
+    selectedProject: state.selectedProject,
+    testPlans: state.testPlans,
     selectedTestPlan: state.selectedTestPlan
   }));
+
+  let history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -42,7 +36,6 @@ const AddBuildContainer = ({ onClose }) => {
   });
 
   const handleSubmit = async (values, { setErrors }) => {
-    // console.log("values", values);
     dispatch(addBuildAction(values))
       .then(message => {
         message.forEach(data => {
@@ -51,7 +44,7 @@ const AddBuildContainer = ({ onClose }) => {
           } else {
             console.log("Add build success ", data.message);
             dispatch(loadBuildsAsyncAction(selectedTestPlan));
-            onClose();
+            history.push("/builds");
           }
         });
       })
@@ -63,29 +56,38 @@ const AddBuildContainer = ({ onClose }) => {
 
   return (
     <div className="w-75 m-auto">
-      <Formik
-        initialValues={{
-          name: "",
-          description: "",
-          isActive: true,
-          isOpen: true,
-          releaseDate: "",
-          testPlanId: selectedTestPlan.id
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        validateOnChange={false}
-        validateOnBlur={false}
-      >
-        {formikProps => <BuildForm formikProps={formikProps} onClose={onClose} />}
-      </Formik>
+      <Container>
+        <Card className="wrapper h-75">
+          <DropDownContainer>
+            <TestPlanDropDownWithFetching selectedProject={selectedProject} />
+          </DropDownContainer>
+          {selectedTestPlan && (
+            <Formik
+              initialValues={{
+                name: "",
+                description: "",
+                isActive: true,
+                isOpen: true,
+                releaseDate: "",
+                testPlanId: selectedTestPlan.id
+              }}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+              validateOnChange={false}
+              validateOnBlur={false}
+            >
+              {formikProps => <BuildForm formikProps={formikProps} />}
+            </Formik>
+          )}
+        </Card>
+      </Container>
     </div>
   );
 };
 
 export default AddBuildContainer;
 
-const BuildForm = ({ formikProps, onClose }) => {
+const BuildForm = ({ formikProps }) => {
   const styles = {
     errorText: {
       color: "red",
@@ -93,112 +95,93 @@ const BuildForm = ({ formikProps, onClose }) => {
     }
   };
 
+  let history = useHistory();
+
   return (
-    <form onSubmit={formikProps.handleSubmit} autoComplete="off">
-      <div className="form-group">
-        <div className="content">
-          <Container>
-            <Row>
-              <Col className="offset-lg-0 offset-md-3">
-                <Card className="card-register">
-                  <CardHeader>
-                    <h4>Create New Build</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <div></div>
-                    <InputGroup className="w-75">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="tim-icons icon-single-02" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        placeholder="Name"
-                        type="text"
-                        name="name"
-                        value={formikProps.values.name}
-                        onChange={formikProps.handleChange}
-                      />
-                    </InputGroup>
-                    {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+    <FormStyles>
+      <form onSubmit={formikProps.handleSubmit}>
+        <div className="form-group">
+          <h2>Create Build</h2>
 
-                    <br />
+          <div className="input wrapper w-25">
+            <Input
+              placeholder="Name"
+              type="text"
+              name="name"
+              value={formikProps.values.name}
+              onChange={formikProps.handleChange}
+            />
+            {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+            <br />
+          </div>
 
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText></InputGroupText>
-                      </InputGroupAddon>
-                      <CKEditor
-                        editor={ClassicEditor}
-                        data={formikProps.values.description}
-                        onInit={editor => {}}
-                        onChange={(event, editor) => {
-                          const data = editor.getData();
-                          formikProps.setFieldValue("description", data);
-                        }}
-                      />
-                    </InputGroup>
-                    <br />
+          <div>
+            <CKEditor
+              editor={ClassicEditor}
+              data={formikProps.values.description}
+              onInit={editor => {}}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                formikProps.setFieldValue("description", data);
+              }}
+            />
+            <br />
+          </div>
 
-                    <div className="d-flex w-25 justify-content-between">
-                      <FormGroup check>
-                        <Label check>
-                          <CustomInput
-                            id="exampleCustomCheckbox1"
-                            type="checkbox"
-                            name="isActive"
-                            checked={formikProps.values.isActive}
-                            onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
-                            label="Active"
-                          />
-                        </Label>
-                      </FormGroup>
+          <div className="d-flex justify-content-start">
+            <FormGroup check className="mr-2">
+              <CustomInput
+                id="isActive"
+                type="checkbox"
+                name="isActive"
+                checked={formikProps.values.isActive}
+                onChange={e => formikProps.setFieldValue("isActive", e.target.checked)}
+                label="Active"
+              />
+            </FormGroup>
 
-                      <FormGroup check>
-                        <Label check>
-                          <CustomInput
-                            id="exampleCustomCheckbox2"
-                            type="checkbox"
-                            name="isOpen"
-                            checked={formikProps.values.isOpen}
-                            onChange={e => formikProps.setFieldValue("isOpen", e.target.checked)}
-                            label="Open"
-                          />
-                        </Label>
-                      </FormGroup>
-                    </div>
-                    <br />
-                    <InputGroup>
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText></InputGroupText>
-                      </InputGroupAddon>
-                      <DatePicker
-                        name="releaseDate"
-                        placeholderText="Set Release Date"
-                        value={formikProps.values.releaseDate}
-                        onChange={val => formikProps.setFieldValue("releaseDate", moment(val).format("YYYY-MM-DD"))}
-                      />
-                      {formikProps.errors.releaseDate && (
-                        <span style={{ ...styles.errorText }}>{formikProps.errors.releaseDate}</span>
-                      )}
-                    </InputGroup>
-                  </CardBody>
-                  <CardFooter>
-                    <Button className="mr-2" color="success" type="submit" label="Submit">
-                      Submit
-                    </Button>
-                    <Button color="secondary" onClick={onClose} label="Cancel">
-                      Cancel
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-          <DisplayFormikState {...formikProps} />
+            <FormGroup check>
+              <CustomInput
+                id="isOpen"
+                type="checkbox"
+                name="isOpen"
+                checked={formikProps.values.isOpen}
+                onChange={e => formikProps.setFieldValue("isOpen", e.target.checked)}
+                label="Open"
+              />
+            </FormGroup>
+          </div>
+          <br />
+
+          <div>
+            <DatePicker
+              name="releaseDate"
+              placeholderText="Set Release Date"
+              value={formikProps.values.releaseDate}
+              onChange={val => formikProps.setFieldValue("releaseDate", moment(val).format("YYYY-MM-DD"))}
+            />
+            {formikProps.errors.releaseDate && (
+              <span style={{ ...styles.errorText }}>{formikProps.errors.releaseDate}</span>
+            )}
+          </div>
+          <br />
+
+          <div className="d-flex">
+            <Button className="mr-2" color="primary" type="submit">
+              Save Build
+            </Button>
+            <Button
+              color="secondary"
+              onClick={() => {
+                history.push("/builds");
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </FormStyles>
   );
 };
 

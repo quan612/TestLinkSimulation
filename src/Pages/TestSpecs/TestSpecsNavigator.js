@@ -1,46 +1,19 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useTestSpecItemsFetching from "../../Component/CustomHooks/useTestSpecItemsFetching";
+import { selectTestItemAction } from "../../Redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Label, Input } from "reactstrap";
 import { TreeLeaf } from "../../Component/Common/TreeLeaf";
-import { selectTestItemAction } from "../../Redux/actions";
 import LoadingContainer from "../../Component/Containers/LoadingContainer";
-import { Card } from "react-bootstrap";
+import { Card, Header, HeaderIcon } from "../../Component/styles/BodyStyles";
 
-const ListItemsFilter = () => {
-  const [toggle, setToggle] = useState(false);
-
-  const handleSettingCollapse = () => {
-    setToggle(!toggle);
-  };
-
+const TestSpecsNavigator = () => {
   return (
-    <div>
-      <div className="panel-header">
-        <span>Filter</span>
-        <FontAwesomeIcon className="panel-header-icon" icon={"question-circle"} />
-        <FontAwesomeIcon
-          className="panel-header-icon"
-          icon={toggle === true ? "caret-square-up" : "caret-square-down"}
-          onClick={() => handleSettingCollapse()}
-        />
-      </div>
-      {toggle && (
-        <div className="filter-testcase">
-          <div className="d-flex justify-content-between">
-            <Label style={{ color: "white" }}>Test case</Label>
-            <Input
-              className="w-75"
-              placeholder="Search"
-              type="text"
-              name="name"
-              //  onChange={handleChange}
-            ></Input>
-          </div>
-        </div>
-      )}
-    </div>
+    <>
+      {/* <ListItemsFilter /> */}
+      <ListItems />
+    </>
   );
 };
 
@@ -66,29 +39,57 @@ const ListItems = () => {
 
   return (
     <div className="h_100 d-flex flex-column">
-      <Card className="list-tree-items">
+      <Card>
         {testItems && (
-          <TreeLeaf
-            child={testItems}
-            key={testItems.data.id}
-            node={testItems.data.node}
-            onClick={item => handleOnClick(item)}
-          />
+          <div className="tree">
+            <TreeLeaf
+              child={testItems}
+              key={testItems.data.id}
+              node={testItems.data.node}
+              onClick={item => handleOnClick(item)}
+            />
+          </div>
         )}
-        {isLoading === true ? <LoadingContainer label={"Fetching test specs"} /> : null}
+        {isLoading && <LoadingContainer label={"Fetching test specs"} />}
       </Card>
     </div>
   );
 };
 
-const TestSpecsNavigator = () => {
+export default TestSpecsNavigator;
+
+const ListItemsFilter = () => {
+  const [toggle, setToggle] = useState(false);
+
+  const handleSettingCollapse = () => {
+    setToggle(!toggle);
+  };
+
   return (
-    <>
-      <h1>Test Specifications</h1>
-      <ListItemsFilter />
-      <ListItems />
-    </>
+    <div>
+      <Header>
+        <span>Filter</span>
+        <HeaderIcon>
+          <FontAwesomeIcon
+            icon={toggle === true ? "caret-square-up" : "caret-square-down"}
+            onClick={() => handleSettingCollapse()}
+          />
+        </HeaderIcon>
+      </Header>
+      {toggle && (
+        <div className="filter-testcase">
+          <div className="d-flex justify-content-between">
+            <Label style={{ color: "white" }}>Test case</Label>
+            <Input
+              className="w-75"
+              placeholder="Search"
+              type="text"
+              name="name"
+              //  onChange={handleChange}
+            ></Input>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
-
-export default TestSpecsNavigator;

@@ -12,8 +12,9 @@ const useBuildsFetching = selectedTestPlan => {
 
   useEffect(() => {
     if (selectedTestPlan) {
+      const testPlanId = selectedTestPlan.testplan_id ? selectedTestPlan.testplan_id : selectedTestPlan.id;
       const fetchBuilds = async () => {
-        await dispatch(loadBuildsAsyncAction(selectedTestPlan));
+        await dispatch(loadBuildsAsyncAction(testPlanId));
       };
       fetchBuilds();
     }

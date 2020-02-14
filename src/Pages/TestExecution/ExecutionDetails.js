@@ -1,15 +1,29 @@
 import React, { useState } from "react";
-import DropDown from "../../Component/Common/DropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { reportResultApi } from "../../Redux/apiHelpers";
 import { selectTestItemAction } from "../../Redux/actions";
-import { Button, Card, CardBody } from "reactstrap";
 import TableSimple from "../../Component/Common/TableSimple";
+import DropDown from "../../Component/Common/DropDown";
+import DropdownStyles from "../../Component/styles/DropdownStyles";
+import { CardTitle, CardContent, Header } from "../../Component/styles/BodyStyles";
 
-//TODO update list tree after submit test result
+const tableColumns = {
+  step_number: {
+    label: "#",
+    width: "3%"
+  },
+  actions: {
+    label: "Action",
+    width: "47%"
+  },
+  expected_results: {
+    label: "Expected Result",
+    width: "47%"
+  }
+};
 
 function ExecutionDetails(props) {
-  const [executeStatus, setExecutionStatus] = useState({});
+  const [executeStatus, setExecutionStatus] = useState(null);
 
   const { selectedTestPlan, selectedBuild } = useSelector(state => ({
     selectedTestPlan: state.selectedTestPlan,
@@ -17,25 +31,6 @@ function ExecutionDetails(props) {
   }));
 
   const dispatch = useDispatch();
-
-  const tableColumns = {
-    steps: {
-      label: "#",
-      width: "3%"
-    },
-    actions: {
-      label: "Action",
-      width: "44%"
-    },
-    expected_results: {
-      label: "Expected Result",
-      width: "45%"
-    },
-    execution_type: {
-      label: "Execution",
-      width: "8%"
-    }
-  };
 
   let executionStatus = [
     { name: " ", value: "n" },
@@ -45,9 +40,8 @@ function ExecutionDetails(props) {
   ];
 
   const handleOnChangeStatus = eventKey => {
-    const temp = executionStatus[eventKey];
-
-    setExecutionStatus(temp);
+    const status = executionStatus[eventKey];
+    setExecutionStatus(status);
   };
 
   const handleOnResultSubmit = () => {
@@ -71,53 +65,36 @@ function ExecutionDetails(props) {
 
   return (
     <>
-      <h1>{"Execute Test"}</h1>
-      <Card>
-        <CardBody>
-          <div className="test-detail-case-title">
-            {`Test Case ${props.testItemDetails.full_tc_external_id} :: Version : ${props.testItemDetails.version} :: ${props.testItemDetails.name}`}
-            <br />
-            {"Assign to"}
-          </div>
-        </CardBody>
-      </Card>
+      <CardTitle className=" d-flex flex-wrap">
+        <div
+          style={{ wordWrap: "break-word", whiteSpace: "pre-wrap" }}
+        >{`Test case: ${props.testItemDetails.name}`}</div>
+      </CardTitle>
 
-      <Card>
-        <CardBody>
-          <div className="panel-header">Summary</div>
-          {props.summary && <div className="panel-content">{props.testItemDetails.summary}</div>}
-        </CardBody>
-      </Card>
+      <Header>Summary</Header>
+      {props.summary && <CardContent>{props.testItemDetails.summary}</CardContent>}
 
-      <Card>
-        <CardBody>
-          <div className="panel-header">Precondition</div>
-          {props.precondition && <div className="panel-content"> {props.testItemDetails.precondition}</div>}
-        </CardBody>
-      </Card>
+      <Header>Precondition</Header>
+      {props.precondition && <CardContent> {props.testItemDetails.precondition}</CardContent>}
 
-      <Card>
-        <CardBody>
-          <div className="panel-header">Test Steps</div>
-          <div className="table-container">
-            <TableSimple tableItems={props.testItemDetails.steps} columns={tableColumns} />
-          </div>
-        </CardBody>
-      </Card>
+      <Header>Test Steps</Header>
+      <div className="table-container">
+        <TableSimple tableItems={props.testItemDetails.steps} columns={tableColumns} />
+      </div>
 
-      <Card className="execution-details-submit">
-        <div className="result-box ">
-          <span className="mr-3">Execution status:</span>
+      <div className="d-flex ">
+        <span className="mr-3">Execution status:</span>
+        <DropdownStyles>
           <DropDown
-            title={executeStatus === {} ? "Execution status" : executeStatus.name}
+            title={executeStatus === null ? "Execution status" : executeStatus.name}
             items={executionStatus}
             onSelect={handleOnChangeStatus}
           />
-          <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnResultSubmit()}>
-            Submit
-          </Button>
-        </div>
-      </Card>
+        </DropdownStyles>
+        <button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnResultSubmit()}>
+          Submit
+        </button>
+      </div>
     </>
   );
 }

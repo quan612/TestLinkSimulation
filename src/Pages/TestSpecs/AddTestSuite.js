@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Input } from "reactstrap";
 import { getTestSuitesOfTestProjectApi, addTestSuiteHelper } from "../../Redux/apiHelpers";
 import { postNumberOfTestSuitesAction } from "../../Redux/testProject.action";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
-import { StyledTestDetails } from "../../Component/styles/StyledTestDetails";
+import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
 import FormStyles from "../../Component/styles/FormStyles";
+import { Card, CardTitle, Header } from "../../Component/styles/BodyStyles";
 
-const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
+const AddTestSuite = ({ selectedProject, parentSuite, onClose }) => {
   const [testSuiteObject, setTestSuiteObject] = useState({
     name: "",
     details: ""
   });
+  const inputSuiteName = useRef(null);
 
   const [error, setError] = useState(null);
-
   const dispatch = useDispatch();
 
   const handleOnChange = e => {
     const { name, value } = e.target;
+    if (value !== "" && error !== null) setError(null);
+
     setTestSuiteObject(prevState => {
       return { ...prevState, [name]: value };
     });
@@ -28,32 +31,46 @@ const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
   const handleOnSave = async e => {
     try {
       e.preventDefault();
-      await addTestSuiteHelper(selectedProject, selectedTestItem.id, testSuiteObject)
-        .then(async result => {
-          console.log(result);
-          const testSuites = await getTestSuitesOfTestProjectApi(selectedProject);
-          dispatch(postNumberOfTestSuitesAction(testSuites.length));
-          onClose();
-        })
-        .catch(error => {
-          setError(error);
-          console.log(error);
-        });
+
+      if (inputSuiteName.current.value === "") {
+        setError("Name is required");
+      } else {
+        await addTestSuiteHelper(selectedProject, parentSuite.id, testSuiteObject)
+          .then(async result => {
+            const testSuites = await getTestSuitesOfTestProjectApi(selectedProject);
+            dispatch(postNumberOfTestSuitesAction(testSuites.length));
+            onClose();
+          })
+          .catch(error => {
+            setError(error);
+            console.log(error);
+          });
+      }
     } catch (error) {
       console.error("Catch error at handle on Save test suite function ", error);
     }
   };
 
   return (
-    <StyledTestDetails>
-      <h1>Create a new test suite under Suite: {selectedTestItem.name}</h1>
-      <div className="details">
-        <FormStyles>
+    <FormDetailContainer>
+      <Header>Create Test Suite</Header>
+      <FormStyles>
+        <Card>
           <form onSubmit={e => handleOnSave(e)}>
-            <div className="panel-header">Test Suite Name</div>
-            <Input type="text" name="name" id="name" onChange={handleOnChange} invalid={error ? true : false} />
+            <CardTitle>Test Suite Name</CardTitle>
+
+            <Input
+              innerRef={inputSuiteName}
+              type="text"
+              name="name"
+              id="name"
+              onChange={handleOnChange}
+              invalid={error ? true : false}
+              maxLength={100}
+            />
             {error && <label className="error">{error}</label>}
-            <div className="panel-header">Test Suite Details</div>
+
+            <CardTitle>Test Suite Details</CardTitle>
             <CKEditor
               editor={ClassicEditor}
               data={testSuiteObject.details}
@@ -66,7 +83,7 @@ const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
               }}
             />
 
-            <div className="buttonBar">
+            <div className="button-wrapper mt-2">
               <button className="btn btn-success" type="submit">
                 Create
               </button>
@@ -75,9 +92,9 @@ const AddTestSuite = ({ selectedProject, selectedTestItem, onClose }) => {
               </button>
             </div>
           </form>
-        </FormStyles>
-      </div>
-    </StyledTestDetails>
+        </Card>
+      </FormStyles>
+    </FormDetailContainer>
   );
 };
 

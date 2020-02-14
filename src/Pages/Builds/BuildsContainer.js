@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import useBuildsFetching from "../../Component/CustomHooks/useBuildsFetching";
 import BuildsManagement from "./BuildsManagement";
-import AddBuildContainer from "./AddBuildContainer";
 import CreateNewTestPlanLinkPage from "../../Component/Containers/CreateNewTestPlanLinkPage";
+import { Container, Card } from "../../Component/styles/BodyStyles";
+
+import TestPlanDropDownWithFetching from "../../Component/Common/TestPlanDropDown";
+import { DropDownContainer } from "../../Component/styles/DropdownStyles";
 
 const BuildsContainer = () => {
   const { selectedProject, testPlans, selectedTestPlan } = useSelector(state => ({
@@ -13,7 +16,6 @@ const BuildsContainer = () => {
   }));
 
   const { isLoading, buildsOfCurrentTestPlan } = useBuildsFetching(selectedTestPlan);
-  const [isAddBuild, setAddBuild] = useState(false);
 
   const handleDeleteSubmit = async itemToDelete => {};
 
@@ -21,16 +23,20 @@ const BuildsContainer = () => {
     return <CreateNewTestPlanLinkPage selectedProject={selectedProject} />;
   }
 
-  return isAddBuild ? (
-    <AddBuildContainer onClose={() => setAddBuild(false)} />
-  ) : (
-    <BuildsManagement
-      isLoading={isLoading}
-      selectedTestPlan={selectedTestPlan}
-      listOfItems={buildsOfCurrentTestPlan}
-      handleOnAdd={() => setAddBuild(true)}
-      handleOnDelete={build => handleDeleteSubmit(build)}
-    />
+  return (
+    <Container className="wrapper h-75">
+      <Card>
+        <DropDownContainer>
+          <TestPlanDropDownWithFetching selectedProject={selectedProject} />
+        </DropDownContainer>
+        <BuildsManagement
+          isLoading={isLoading}
+          selectedTestPlan={selectedTestPlan}
+          listOfItems={buildsOfCurrentTestPlan}
+          handleOnDelete={build => handleDeleteSubmit(build)}
+        />
+      </Card>
+    </Container>
   );
 };
 

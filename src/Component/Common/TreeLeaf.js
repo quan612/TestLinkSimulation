@@ -36,10 +36,9 @@ export const TreeLeaf = ({ child, node, onClick }) => {
 
   const handleRenderItem = () => {
     if (node === "File") {
-      //change to file
       return (
-        <div>
-          <FontAwesomeIcon className="d-inline-block mx-1" icon="file-alt" style={{ color: "white" }} />
+        <div className="tree-text">
+          <FontAwesomeIcon className="d-inline-block mx-1" icon="file-alt" style={{ color: "#99CCFF" }} />
           <Span
             text={
               child.data.full_external_id ? child.data.full_external_id + ":" + child.data.tcase_name : child.data.name
@@ -51,15 +50,15 @@ export const TreeLeaf = ({ child, node, onClick }) => {
       );
     } else {
       return (
-        <div>
+        <div className="tree-text">
           <FontAwesomeIcon icon={toggle ? "angle-double-down" : "angle-right"} onClick={() => onToggle()} />
           {toggle ? (
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder-open" style={{ color: "#d1e018" }} />
+            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder-open" style={{ color: "#CCCC00" }} />
           ) : (
-            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder" style={{ color: "#d1e018" }} />
+            <FontAwesomeIcon className="d-inline-block mx-1" icon="folder" style={{ color: "#CCCC00" }} />
           )}
-          {/* {child.data && <span onClick={() => onClick(child.data)}>{child.data.name}</span>} */}
-          <span onClick={() => onClick(child.data)}>{child.data.name}</span>
+
+          <Span text={child.data.name} onClick={() => onClick(child.data)} />
         </div>
       );
     }
@@ -70,11 +69,10 @@ export const TreeLeaf = ({ child, node, onClick }) => {
     children = children ? children : [];
 
     return (
-      <ul className="containerList">
+      <ul className="sub-suite mx-1">
         {children.map((child, key) => (
-          <li className={`cursor-pointer list-group-submenu`} key={key}>
+          <li className="ml-3" key={key}>
             <TreeLeaf child={child} key={child.data.id} node={child.data.node} onClick={item => onClick(item)} />
-            {/* )} */}
           </li>
         ))}
       </ul>

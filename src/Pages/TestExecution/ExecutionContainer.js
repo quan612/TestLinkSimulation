@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ExecutionDetails from "./ExecutionDetails";
-import { Card, CardBody } from "reactstrap";
 import { getTestCaseHelper } from "../../Redux/apiHelpers";
+import ExecutionDetails from "./ExecutionDetails";
+import { Header, CardContent } from "../../Component/styles/BodyStyles";
 var he = require("he");
 
 function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem }) {
@@ -21,27 +21,36 @@ function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem 
     getTestCaseDetails();
   }, [selectedTestItem]);
 
+  //when user selects a test case from the left navigator
   if (selectedTestItem && selectedTestItem.node === "File" && testCaseDetails) {
     return <ExecutionDetails testItemResult={selectedTestItem} testItemDetails={testCaseDetails} />;
   }
   //default page to load current test plan details
-  else
-    return (
-      <>
-        <h1>{"Execute Test"}</h1>
-        <Card className="section h-100">
-          <CardBody>
-            <div className="panel-header">{`Test plan: ${selectedTestPlan.name} `}</div>
-            <div
-              className="panel-content"
-              dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}
-            ></div>
-            <div className="panel-header">{`Build info: ${selectedBuild.name} `}</div>
-            <div className="panel-content" dangerouslySetInnerHTML={{ __html: he.decode(selectedBuild.notes) }}></div>
-          </CardBody>
-        </Card>
-      </>
-    );
+  else return <TestPlanDetails selectedTestPlan={selectedTestPlan} selectedBuild={selectedBuild} />;
 }
 
 export default ExecutionContainer;
+
+const TestPlanDetails = ({ selectedTestPlan, selectedBuild }) => {
+  return (
+    <>
+      {selectedTestPlan && (
+        <>
+          <Header>{`Test plan: ${selectedTestPlan.name} `}</Header>
+          {selectedTestPlan.notes && (
+            <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }} />
+          )}
+        </>
+      )}
+
+      {selectedBuild ? (
+        <>
+          <Header>{`Build: ${selectedBuild.name} `}</Header>
+          {selectedBuild.notes && <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedBuild.notes) }} />}
+        </>
+      ) : (
+        <span> Create build now to execute</span>
+      )}
+    </>
+  );
+};

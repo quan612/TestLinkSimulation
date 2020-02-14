@@ -31,7 +31,7 @@ code {
 h1 {
   background: #059;
   border: 1px solid black;
-  color: white;
+  /* color: white; */
   margin: 0px 0px 4px 0px;
   padding: 3px;
   text-align: left;
@@ -52,19 +52,6 @@ h1 {
 .bg-info {
   background-color: #344675 !important;
   /* background-color: #171941 !important; */
-}
-
-.center {
-  /* margin: auto; */
-  width: 50%;
-  max-width: 400px;
-  min-width: 150px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  font-size: 20px;
-  color: white;
 }
 
 .navbar {
@@ -116,15 +103,6 @@ h1 {
 } */
 
 /*select*/
-select {
-  max-width: 300px;
-  max-height: 20vh;
-  text-align: left;
-  overflow-y: auto;
-}
-select option {
-  background-color: #344675;
-}
 
 /* .btn-primary:not(:disabled):not(.disabled):active:focus {
   background-color: transparent;
@@ -221,12 +199,12 @@ a.nav-inline-text {
 
 /* common object style  */
 
-.workBody {
+/* .workBody {
   display: flex;
   height: 94%;
   background: #171941;
   padding: 5px;
-}
+} */
 
 .ck-editor__main {
   /* font-family: inherit;
@@ -257,12 +235,12 @@ https://stackoverflow.com/questions/46559354/how-to-set-the-height-of-ckeditor-5
 }
 
 .list-tree-items {
-  display: block;
+  /* display: block;
   height: 93%;
   margin-top: 5px;
   overflow: auto;
-  white-space: nowrap;
-  color: white;
+  white-space: nowrap; */
+  /* color: white; */
 }
 
 /* ul {
@@ -335,38 +313,6 @@ div > img {
 
 /* end spec detail style sheet  */
 
-/* execution detail*/
-
-/* .panel-header {
-  color: #f4f4f4;
-  font-weight: bold;
-  font-size: 1em;
-  font-family: tahoma, arial, verdana, sans-serif;
-  border-color: #99bbe8;
-  padding: 7px;
-  background-color: #252e37;
-  margin: 5px 0 0 0;
-  border-radius: 5px;
-}
-
-.panel-header-icon {
-  float: right;
-  margin-left: 5px;
-  cursor: pointer;
-  color: white;
-  font-size: 1.3em;
-}
-
-.panel-content {
-  text-align: left;
-  margin: 5px 0px 10px 0px;
-  background: #cde;
-  padding: 3px 3px 10px 3px;
-  border-style: groove;
-  border-width: thin;
-  border-radius: 5px;
-} */
-
 .filter-builds {
   padding: 10px 5px;
   background-color: #1f2251;
@@ -389,7 +335,7 @@ div > img {
 
 div.exec_tc_title {
   background: #059;
-  color: white;
+  /* color: white; */
   margin-bottom: 4px;
   padding: 3px;
   text-align: left;
@@ -398,234 +344,9 @@ div.exec_tc_title {
 div.messages {
   background-color: #059;
   font-size: 12px;
-  color: white;
+  /* color: white; */
   margin: 3px;
   padding: 3px;
-}
-
-div.resultBox {
-  background: white;
-  border: medium solid #808080;
-  color: black;
-  margin: 0px 12px 12px 12px;
-  padding: 12px;
-}
-
-/* animation */
-
-@keyframes spin720 {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* end animation */
-
-/* new form*/
-/* .card {
-  background: #1f2251;
-  border: 0;
-  position: relative;
-  width: 100%;
-  box-shadow: 0 1px 20px 0px rgba(0, 0, 0, 0.1);
-}
-.card label {
-  color: rgba(255, 255, 255, 0.6);
-}
-.card .card-title {
-  margin-bottom: 0.75rem;
-}
-.card .card-body {
-  padding: 15px;
-}
-.card .card-body.table-full-width {
-  padding-left: 0;
-  padding-right: 0;
-}
-.card .card-body .card-title {
-  color: #ffffff;
-  text-transform: inherit;
-  font-weight: 300;
-  margin-bottom: 0.75rem;
-}
-.card .card-body .card-description,
-.card .card-body .card-category {
-  color: rgba(255, 255, 255, 0.6);
-}
-.card .card-header {
-  padding: 15px 15px 0;
-  border: 0;
-  color: rgba(255, 255, 255, 0.8);
-}
-.card .card-header:not([data-background-color]) {
-  background-color: transparent;
-}
-.card .card-header .card-title {
-  color: #ffffff;
-  font-weight: 100;
-}
-.card .card-header .card-category {
-  color: #9a9a9a;
-  margin-bottom: 5px;
-  font-weight: 300;
-}
-.card .map {
-  border-radius: 0.2857rem;
-}
-.card .map.map-big {
-  height: 420px;
-}
-.card.card-plain {
-  background: transparent;
-  box-shadow: none;
-}
-.card .image {
-  overflow: hidden;
-  height: 200px;
-  position: relative;
-}
-.card .avatar {
-  width: 30px;
-  height: 30px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-.card label {
-  font-size: 0.75rem;
-  margin-bottom: 5px;
-}
-.card .card-footer {
-  background-color: transparent;
-  border: 0;
-  padding: 15px;
-}
-.card .card-footer .stats i {
-  margin-right: 5px;
-  position: relative;
-}
-.card .card-footer h6 {
-  margin-bottom: 0;
-  padding: 7px 0;
-}
-.card.card-coin {
-  border: 2px solid #344675;
-}
-.card.card-coin .card-header {
-  margin: -100px auto 20px;
-}
-.card.card-coin img {
-  width: 150px;
-}
-.card.card-coin hr {
-  width: 20%;
-  margin-left: 40%;
-}
-.card.card-coin .list-group {
-  margin: 0 auto;
-  text-align: center;
-}
-.card.card-coin .list-group .list-group-item {
-  background-color: transparent;
-  border: none;
-  padding: 0.4rem 1rem;
-} */
-
-.result-box {
-  display: flex;
-  background: #252e37;
-  color: white;
-  margin: 0px 5px 5px 5px;
-  padding: 6px;
-}
-
-.result-box .dropdown-toggle {
-  border-radius: 0.4285rem;
-}
-
-.result-box .dropdown-toggle,
-.result-box .dropdown-menu {
-  max-height: 20vh;
-  min-width: 300px;
-  text-align: left;
-  overflow-y: auto;
-  background-color: #344675;
-}
-
-.result-box .dropdown-toggle:focus,
-.result-box .dropdown-toggle.active:focus,
-.result-box .dropdown-toggle.active,
-.btn-primary:not(:disabled):not(.disabled):active,
-.result-box .dropdown-toggle:hover {
-  background-color: transparent;
-  /* border-color: transparent; */
-}
-
-.mw-99 {
-  min-width: 99% !important;
-}
-
-.w-15 {
-  width: 15%;
-}
-
-.w-30 {
-  width: 30%;
-}
-
-.w-70 {
-  width: 70%;
-}
-
-.form-check {
-  padding-left: 0;
-}
-
-.form-check-input:checked ~ .form-check-sign::before {
-  background-color: #cfcf82;
-}
-
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #e14eca;
-}
-
-.form-control {
-  display: block;
-  width: 100%;
-  /* height: $input-height; */
-  /* padding: $input-padding-y $input-padding-x; */
-  /* font-size: $font-size-base; */
-  /* line-height: $input-line-height; */
-  color: white;
-  background-color: transparent;
-  background-clip: padding-box;
-  border: 1px solid #cad1d7;
-  box-shadow: none;
-  border-color: #2b3553;
-}
-
-.form-control:focus {
-  color: white;
-  background-color: transparent;
-  background-clip: padding-box;
-  border: 1px solid #cad1d7;
-  box-shadow: none;
-  border-color: #1d8ce8;
-}
-
-/* .form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: #80bdff;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-} */
-
-.bg-default {
-  background-color: #344675 !important;
 }
 
 .btn-info {
@@ -645,26 +366,10 @@ div.resultBox {
 
 .test-detail-case-title {
   background: rgba(22, 56, 90, 0.87);
-  color: white;
+  /* color: white; */
   margin-bottom: 4px;
   padding: 5px;
   text-align: left;
   border-radius: 5px;
   font-weight: 700;
-}
-
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #e14eca;
-  color: black;
-}
-
-.custom-checkbox .custom-control-input:disabled ~ .custom-control-label {
-  background-color: rgb(84, 173, 129);
-  color: rgb(49, 49, 49);
-  font-weight: bold;
-}
-
-.custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
-  background-color: rgb(185, 185, 185);
-  font-weight: bold;
 }

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTestCaseToTestPlanAction } from "../../Redux/testCase.action";
+import { CardTitle, CardContent, Header } from "../../Component/styles/BodyStyles";
 import { Button, CustomInput } from "reactstrap";
+var he = require("he");
 
-function AddRemoveDetails({ selectedProject, selectedTestPlan, listItems, selectedTestSuite }) {
-  const [listSubmit, setListSubmit] = useState([...listItems]);
-
+function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, selectedTestSuite }) {
+  const [listSubmit, setListSubmit] = useState([...testCases]);
   const dispatch = useDispatch();
 
   const handleCheckAll = () => {
-    let temp = [...listItems];
+    let temp = [...testCases];
     temp.forEach(item => {
       if (item.chilrenOfThisTestPlan === false) item.checked = true;
     });
@@ -17,14 +18,13 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, listItems, select
   };
 
   const handleOnCheckBoxChange = (e, index) => {
-    let temp = [...listItems];
+    let temp = [...testCases];
     temp[index].checked = e.target.checked;
     setListSubmit([...temp]);
   };
 
   const handleOnSubmit = async () => {
     let data = [...listSubmit];
-
     Promise.all(
       data.map(async testCase => {
         if (testCase.chilrenOfThisTestPlan === false && testCase.checked === true) {
@@ -40,29 +40,26 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, listItems, select
     setListSubmit(data);
   };
 
-  return (
-    <>
-      <h1>{"Add or Remove Panel"}</h1>
+  if (selectedTestSuite && testCases && Object.keys(testCases).length > 0) {
+    return (
+      <>
+        {selectedTestPlan && <Header>Add Test Cases To Test Plan: {`${selectedTestPlan.name}`}</Header>}
 
-      <div className="d-flex ml-2 ">
-        <span className="mr-3">Add selected test case to selected test plan: </span>
-        <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => handleOnSubmit()}>
-          Submit
-        </Button>
-      </div>
+        <div className="d-flex ml-2 align-items-center">
+          <span>Select below test cases then submit:</span>
+          <Button className="btn btn-info my-1 ml-1" color="secondary" size="sm" onClick={handleCheckAll}>
+            Check All
+          </Button>
+          <Button className="btn btn-info my-1 ml-1" color="primary" size="sm" onClick={() => handleOnSubmit()}>
+            Submit
+          </Button>
+        </div>
 
-      <div className="h_100">
-        {selectedTestSuite && (
-          <div className="panel-header">{`Test Cases belong to Test Suite - ${selectedTestSuite.name}`}</div>
-        )}
+        {selectedTestSuite && <Header>{`Test Cases belong to Test Suite - ${selectedTestSuite.name}`}</Header>}
 
-        <Button className="btn btn-info my-2" color="secondary" size="sm" onClick={handleCheckAll}>
-          Check All
-        </Button>
-
-        <div className="list-tree-items">
-          {listItems &&
-            listItems.map((item, index) => (
+        <div className="d-flex flex-column">
+          {testCases &&
+            testCases.map((item, index) => (
               <CustomInput
                 key={index}
                 id={item.id}
@@ -75,9 +72,23 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, listItems, select
               />
             ))}
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return (
+      <>
+        {selectedTestPlan && Object.keys(selectedTestPlan).length > 0 && (
+          <CardTitle>{`Test Plan: ${selectedTestPlan.name}`}</CardTitle>
+        )}
+        <div>
+          <Header>Details</Header>
+          {selectedTestPlan && selectedTestPlan.notes && (
+            <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}></CardContent>
+          )}
+        </div>
+      </>
+    );
+  }
 }
 
 export default AddRemoveDetails;

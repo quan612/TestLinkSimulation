@@ -3,7 +3,7 @@ import styled from "styled-components";
 const DropdownStyles = styled.div`
   .dropdown-toggle {
     max-height: 20vh;
-    min-width: 250px;
+    min-width: 200px;
     text-align: left;
     overflow-y: auto;
 
@@ -48,6 +48,17 @@ const DropdownStyles = styled.div`
   .dropdown-toggle.active,
   .dropdown-toggle:hover {
     background-color: transparent;
+  }
+`;
+
+export const DropDownContainer = styled.div`
+  display: flex;
+
+  align-items: center;
+  position: relative;
+
+  @media (max-width: 1300px) {
+    margin-left: auto;
   }
 `;
 

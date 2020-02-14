@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useTestPlanItemsFetching from "../../Component/CustomHooks/useTestPlanItemsFetching";
 import { selectTestItemAction } from "../../Redux/actions";
 import { TreeLeaf } from "../../Component/Common/TreeLeaf";
-import { Card } from "react-bootstrap";
+import { Card } from "../../Component/styles/BodyStyles";
 import LoadingContainer from "../../Component/Containers/LoadingContainer";
 
 const ListExecutionItems = ({ selectedBuild }) => {
@@ -27,11 +27,8 @@ const ListExecutionItems = ({ selectedBuild }) => {
   };
 
   return (
-    <div className="h_100 d-flex flex-column">
-      <div className="panel-header">
-        <span>Navigation</span>
-      </div>
-      <Card className="list-tree-items">
+    <div className="h_100 d-flex flex-column mt-3">
+      <Card className="tree">
         {dataItems && (
           <TreeLeaf
             child={dataItems}
@@ -40,7 +37,7 @@ const ListExecutionItems = ({ selectedBuild }) => {
             onClick={item => handleOnClick(item)}
           />
         )}
-        {isLoading === true ? <LoadingContainer /> : null}
+        {isLoading && <LoadingContainer />}
       </Card>
     </div>
   );

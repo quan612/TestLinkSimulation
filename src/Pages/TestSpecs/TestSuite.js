@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import AddTestSuite from "./AddTestSuite";
 import EditTestSuite from "./EditTestSuite";
 import DeleteTestSuite from "./DeleteTestSuite";
-import TestSuiteDetails from "./TestSuiteDetails";
 import AddTestCase from "./AddTestCase";
+import TestSuiteDetails from "./TestSuiteDetails";
 
-const TestSuiteContainer = ({ selectedTestItem }) => {
+const TestSuiteContainer = ({ testSuite }) => {
   const [isEditTestSuite, setEditTestSuite] = useState(false);
   const [isAddTestSuite, setAddTestSuite] = useState(false);
   const [isDeleteTestSuite, setDeleteTestSuite] = useState(false);
@@ -16,43 +16,28 @@ const TestSuiteContainer = ({ selectedTestItem }) => {
     selectedProject: state.selectedProject
   }));
 
-  if (isAddTestSuite) {
+  if (isAddTestSuite)
     return (
-      <AddTestSuite
-        selectedProject={selectedProject}
-        selectedTestItem={selectedTestItem}
-        onClose={() => setAddTestSuite(false)}
-      />
+      <AddTestSuite selectedProject={selectedProject} parentSuite={testSuite} onClose={() => setAddTestSuite(false)} />
     );
-  }
 
-  if (isEditTestSuite) {
+  if (isEditTestSuite)
     return (
-      <EditTestSuite
-        selectedProject={selectedProject}
-        selectedTestSuite={selectedTestItem}
-        onClose={() => setEditTestSuite(false)}
-      />
+      <EditTestSuite selectedProject={selectedProject} testSuite={testSuite} onClose={() => setEditTestSuite(false)} />
     );
-  }
 
-  if (isDeleteTestSuite)
-    return <DeleteTestSuite selectedTestItem={selectedTestItem} onClose={() => setDeleteTestSuite(false)} />;
+  if (isDeleteTestSuite) return <DeleteTestSuite testSuite={testSuite} onClose={() => setDeleteTestSuite(false)} />;
 
   if (isAddTestCase) {
     return (
-      <AddTestCase
-        selectedProject={selectedProject}
-        selectedTestSuite={selectedTestItem}
-        onClose={() => setAddTestCase(false)}
-      />
+      <AddTestCase selectedProject={selectedProject} parentSuite={testSuite} onClose={() => setAddTestCase(false)} />
     );
   }
 
   return (
     <TestSuiteDetails
       selectedProject={selectedProject}
-      selectedSuite={selectedTestItem}
+      testSuite={testSuite}
       onAddTestSuite={() => setAddTestSuite(true)}
       onEditTestSuite={() => setEditTestSuite(true)}
       onDeleteTestSuite={() => setDeleteTestSuite(true)}

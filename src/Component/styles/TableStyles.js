@@ -4,6 +4,11 @@ export const TableStyles = styled.div`
   height: 100%;
   width: 100%;
   margin: 15px 0;
+  padding: 0 5px;
+
+  table {
+    table-layout: fixed;
+  }
 
   @media only screen and (min-width: 576px) {
     max-width: 540px;
@@ -44,5 +49,14 @@ export const TableStyles = styled.div`
 
   tbody > tr {
     border-bottom: 2px solid ${props => props.theme.table_row_border} !important;
+  }
+
+  p {
+    margin-bottom: 0 !important;
+  }
+
+  tbody > tr > td {
+    word-wrap: break-word;
+    white-space: pre-wrap;
   }
 `;

@@ -4,7 +4,8 @@ import { selectTestItemAction } from "../../Redux/actions";
 import { SplitPane } from "../../Component/Containers/SplitPane";
 import TestSpecsNavigator from "./TestSpecsNavigator";
 import TestDetailsContainer from "./TestDetailsContainer";
-import { StyledTestDetailContainer } from "../../Component/styles/StyledTestDetails";
+import { StyledTestDetail } from "../../Component/styles/StyledTestDetails";
+import { Container, Card } from "../../Component/styles/BodyStyles";
 
 const TestSpecsContainer = () => {
   const dispatch = useDispatch();
@@ -14,18 +15,22 @@ const TestSpecsContainer = () => {
     };
   });
   return (
-    <SplitPane
-      left={
-        <>
-          <TestSpecsNavigator />
-        </>
-      }
-      right={
-        <StyledTestDetailContainer>
-          <TestDetailsContainer />
-        </StyledTestDetailContainer>
-      }
-    />
+    <Container className="body-container">
+      <SplitPane
+        left={
+          <>
+            <TestSpecsNavigator />
+          </>
+        }
+        right={
+          <StyledTestDetail>
+            <Card>
+              <TestDetailsContainer />
+            </Card>
+          </StyledTestDetail>
+        }
+      />
+    </Container>
   );
 };
 

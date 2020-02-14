@@ -1,14 +1,14 @@
-import { Card, CardHeader, CardBody } from "reactstrap";
 import React, { useState } from "react";
 import { updateTestSuiteHelper } from "../../Redux/apiHelpers";
-import { StyledTestDetails } from "../../Component/styles/StyledTestDetails";
+import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
+import { Header, CardTitle } from "../../Component/styles/BodyStyles";
 import FormStyles from "../../Component/styles/FormStyles";
 
-const EditTestSuite = ({ selectedProject, selectedTestSuite, onClose }) => {
+const EditTestSuite = ({ selectedProject, testSuite, onClose }) => {
   const [data, setData] = useState({
-    name: selectedTestSuite.name,
-    details: selectedTestSuite.details,
-    parent_id: selectedTestSuite.parent_id
+    name: testSuite.name,
+    details: testSuite.details,
+    parent_id: testSuite.parent_id
   });
 
   const handleOnChange = e => {
@@ -23,7 +23,7 @@ const EditTestSuite = ({ selectedProject, selectedTestSuite, onClose }) => {
 
   const handleOnSave = e => {
     e.preventDefault();
-    updateTestSuiteHelper(selectedProject, selectedTestSuite.parent_id, data)
+    updateTestSuiteHelper(selectedProject, testSuite.parent_id, data)
       .then(message => {
         console.log(message);
         onClose();
@@ -34,17 +34,24 @@ const EditTestSuite = ({ selectedProject, selectedTestSuite, onClose }) => {
   };
 
   return (
-    <StyledTestDetails>
-      {selectedTestSuite && <h1>Update test suite: {selectedTestSuite.name}</h1>}
+    <FormDetailContainer>
+      <Header>Update test suite</Header>
       <b style={{ color: "red" }}>The API provided by Test Link does not work</b>
 
       <div className="details">
         <FormStyles>
           <form onSubmit={e => handleOnSave(e)}>
-            <div className="panel-header">Test Suite Name</div>
-            <input type="text" name="name" className="form-control" value={data.name} onChange={handleOnChange}></input>
+            <CardTitle>Test Suite Name</CardTitle>
+            <input
+              type="text"
+              name="name"
+              className="form-control"
+              value={data.name}
+              onChange={handleOnChange}
+              maxLength={100}
+            ></input>
 
-            <div className="panel-header">Test Suite Details</div>
+            <CardTitle>Test Suite Details</CardTitle>
             <input
               type="text"
               name="details"
@@ -64,7 +71,7 @@ const EditTestSuite = ({ selectedProject, selectedTestSuite, onClose }) => {
           </form>
         </FormStyles>
       </div>
-    </StyledTestDetails>
+    </FormDetailContainer>
   );
 };
 

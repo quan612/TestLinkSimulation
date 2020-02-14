@@ -1,4 +1,5 @@
 import React from "react";
+
 import styled from "styled-components";
 
 const LeftPane = styled.div`
@@ -14,9 +15,9 @@ const RightPane = styled.div`
 
 export const SplitPane = props => {
   return (
-    <div className="workBody">
-      <LeftPane>{props.left}</LeftPane>
-      <RightPane>{props.right}</RightPane>
-    </div>
+    <>
+      <LeftPane className="left">{props.left}</LeftPane>
+      <RightPane className="right">{props.right}</RightPane>
+    </>
   );
 };
