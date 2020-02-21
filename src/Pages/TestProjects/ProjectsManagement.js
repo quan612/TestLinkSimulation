@@ -24,11 +24,6 @@ const COLUMNS = {
     width: "6%"
   },
 
-  requirementsEnabled: {
-    label: "Requirement",
-    width: "10%"
-  },
-
   active: {
     label: "Active",
     width: "5%"
@@ -45,17 +40,17 @@ const COLUMNS = {
   }
 };
 
-export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDelete }) => {
-  const [searchItems, setSearchItems] = useState([]);
+export const ProjectsManagement = ({ isProjectLoading, projects, handleOnDelete }) => {
+  const [search, setSearch] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
-    setSearchItems(listOfItems);
-  }, [listOfItems]);
+    setSearch(projects);
+  }, [projects]);
 
   const handleOnSearch = e => {
-    let items = listOfItems.filter(value => value.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
-    setSearchItems([...items]);
+    let items = projects.filter(value => value.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
+    setSearch(items);
   };
 
   return (
@@ -74,7 +69,7 @@ export const ProjectsManagement = ({ isProjectLoading, listOfItems, handleOnDele
         <TableWithLoadingWithPagination
           isLoading={isProjectLoading}
           loadingLabel={"Fetching Test Projects"}
-          listOfItems={searchItems}
+          listOfItems={search}
           handleOnDelete={handleOnDelete}
           columns={COLUMNS}
         />

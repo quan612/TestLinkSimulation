@@ -69,11 +69,11 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
             <tr></tr>
           )}
           <tr className="d-flex">
-            <td style={{ width: "3%" }}>{index + 1}</td>
+            <td style={{ width: "8%" }}>{index + 1}</td>
             <td style={{ width: "47%" }}>
               <Input type="textarea" name="actions" id="example1" onChange={handleOnChange} />
             </td>
-            <td style={{ width: "50%" }}>
+            <td style={{ width: "45%" }}>
               <Input type="textarea" name="expected_results" id="example1" onChange={handleOnChange} />
             </td>
           </tr>

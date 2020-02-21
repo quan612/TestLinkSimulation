@@ -4,7 +4,7 @@ import asyncReducer from "./reducers";
 
 const store = createStore(asyncReducer, applyMiddleware(thunk));
 store.subscribe(() => {
-  console.log(store.getState());
+  // console.log(store.getState());
 });
 
 export default store;

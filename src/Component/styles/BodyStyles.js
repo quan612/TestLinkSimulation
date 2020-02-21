@@ -2,30 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
-  height: 92%;
-
-  /* padding-right: 15px;
-  padding-left: 15px; */
-  margin-right: auto;
-  margin-left: auto;
-
-  /* @media (min-width: 576px) {
-    max-width: 540px;
-  }
-
-  @media (min-width: 768px) {
-    max-width: 720px;
-  }
-  @media (min-width: 992px) {
-    max-width: 960px;
-  }
-  @media (min-width: 1200px) {
-    max-width: 1140px;
-  } */
+  align-items: flex-start;
 `;
 
-export const Header = styled.div`
+export const SectionHeader = styled.div`
   color: ${props => props.theme.whiteSmoke};
   font-weight: bold;
   font-size: 1em;
@@ -37,7 +19,7 @@ export const Header = styled.div`
   border-radius: 5px;
 `;
 
-export const HeaderIcon = styled.div`
+export const SectionHeaderIcon = styled.div`
   float: right;
   margin-left: 5px;
   font-size: 1.3em;
@@ -91,15 +73,11 @@ export const CardTitle = styled.div`
   font-family: tahoma, arial, verdana, sans-serif;
   padding: 7px;
   margin: 2px;
+  /* border-bottom: 1px solid; */
 `;
 
 export const CardContent = styled.div`
   text-align: left;
   padding: 7px;
   margin: 2px;
-  /* background: transparent;       */
-  background-image: linear-gradient(to right, #d3d3d3, #9e9e9e);
-  border-style: groove;
-  border-width: thin;
-  border-radius: 5px;
 `;

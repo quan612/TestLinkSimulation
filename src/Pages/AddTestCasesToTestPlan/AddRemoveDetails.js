@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTestCaseToTestPlanAction } from "../../Redux/testCase.action";
-import { CardTitle, CardContent, Header } from "../../Component/styles/BodyStyles";
+import { CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
 import { Button, CustomInput } from "reactstrap";
 var he = require("he");
 
@@ -43,7 +43,7 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, select
   if (selectedTestSuite && testCases && Object.keys(testCases).length > 0) {
     return (
       <>
-        {selectedTestPlan && <Header>Add Test Cases To Test Plan: {`${selectedTestPlan.name}`}</Header>}
+        {selectedTestPlan && <SectionHeader>Add Test Cases To Test Plan: {`${selectedTestPlan.name}`}</SectionHeader>}
 
         <div className="d-flex ml-2 align-items-center">
           <span>Select below test cases then submit:</span>
@@ -55,7 +55,9 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, select
           </Button>
         </div>
 
-        {selectedTestSuite && <Header>{`Test Cases belong to Test Suite - ${selectedTestSuite.name}`}</Header>}
+        {selectedTestSuite && (
+          <SectionHeader>{`Test Cases belong to Test Suite - ${selectedTestSuite.name}`}</SectionHeader>
+        )}
 
         <div className="d-flex flex-column">
           {testCases &&
@@ -81,7 +83,7 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, select
           <CardTitle>{`Test Plan: ${selectedTestPlan.name}`}</CardTitle>
         )}
         <div>
-          <Header>Details</Header>
+          <SectionHeader>Details</SectionHeader>
           {selectedTestPlan && selectedTestPlan.notes && (
             <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}></CardContent>
           )}

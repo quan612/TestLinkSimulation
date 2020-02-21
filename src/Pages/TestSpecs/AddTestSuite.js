@@ -7,7 +7,7 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor5-build-classic-with-font/ckeditor5-build-classic";
 import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
 import FormStyles from "../../Component/styles/FormStyles";
-import { Card, CardTitle, Header } from "../../Component/styles/BodyStyles";
+import { Card, CardTitle, SectionHeader } from "../../Component/styles/BodyStyles";
 
 const AddTestSuite = ({ selectedProject, parentSuite, onClose }) => {
   const [testSuiteObject, setTestSuiteObject] = useState({
@@ -43,7 +43,6 @@ const AddTestSuite = ({ selectedProject, parentSuite, onClose }) => {
           })
           .catch(error => {
             setError(error);
-            console.log(error);
           });
       }
     } catch (error) {
@@ -53,7 +52,7 @@ const AddTestSuite = ({ selectedProject, parentSuite, onClose }) => {
 
   return (
     <FormDetailContainer>
-      <Header>Create Test Suite</Header>
+      <SectionHeader>Create Test Suite</SectionHeader>
       <FormStyles>
         <Card>
           <form onSubmit={e => handleOnSave(e)}>

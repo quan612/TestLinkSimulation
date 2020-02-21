@@ -9,6 +9,8 @@ import {
   POST_CASES_COUNT
 } from "./testProject.action";
 
+import { SELECT_TEST_ITEM, LOAD_SPEC_ITEMS, LOAD_SPEC_ITEMS_SUCCESS } from "./testSpec.action";
+
 const initialState = {
   authorLogin: "Quan.Huynh",
   error: null,
@@ -18,16 +20,16 @@ const initialState = {
   selectedTestPlan: [],
   buildsOfCurrentTestPlan: [],
   selectedBuild: [],
-  selectedTestItem: []
+  selectedTestItem: {}
 };
 
 const asyncReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SELECT_TEST_ITEM":
+    case SELECT_TEST_ITEM:
       return { ...state, selectedTestItem: action.payload };
-    case "FETCH_SPECS_ITEMS_LOADING":
+    case LOAD_SPEC_ITEMS:
       return { ...state, isSpecsItemLoading: true };
-    case "FETCH_SPECS_ITEMS_SUCCESS":
+    case LOAD_SPEC_ITEMS_SUCCESS:
       return {
         ...state,
         testSpecsItems: action.testSpecsItems,

@@ -111,8 +111,7 @@ label {
   }
 }
 
-select {
-  color: white!important;
+select { 
   max-width: 200px;
   max-height: 20vh;
   text-align: left;
@@ -133,6 +132,36 @@ hr{
   margin-top:4px;
   margin-bottom:4px;
 }
+
+/* #style-7::-webkit-scrollbar { */
+  ::-webkit-scrollbar {
+  height: 12px;
+  width: 10px;
+  /* background-color: #f5f5f5; */
+}
+
+/** STYLE 7 */
+::-webkit-scrollbar-track { 
+  background-color: transparent; 
+  border-radius: 10px;   
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  border-radius: 10px; 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  border-radius: 10px; 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
 `;
 
 export default GlobalStyles;

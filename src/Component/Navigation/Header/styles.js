@@ -5,7 +5,7 @@ export const NavContainer = styled.div`
   position: relative;
   width: 100%;
   font-size: 16px;
-  margin: 0.5rem auto;
+  margin: 0.2rem auto;
   padding: 0.2rem 0;
   background: ${props => props.theme.nav_bg};
   background-image: ${props => props.theme.nav_bgImg};

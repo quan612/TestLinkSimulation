@@ -1,6 +1,6 @@
 import React from "react";
 import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
-import { Header } from "../../Component/styles/BodyStyles";
+import { SectionHeader } from "../../Component/styles/BodyStyles";
 import FormStyles from "../../Component/styles/FormStyles";
 
 const DeleteTestSuite = ({ testSuite, onClose }) => {
@@ -9,7 +9,7 @@ const DeleteTestSuite = ({ testSuite, onClose }) => {
   };
   return (
     <FormDetailContainer>
-      <Header>Delete Test Suite</Header>
+      <SectionHeader>Delete Test Suite</SectionHeader>
       <FormStyles>
         <form onSubmit={e => handleSubmit(e)}>
           <label className="error">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadTestProjectsAction, deleteTestProjectAction } from "../../Redux/testProject.action";
 import { ProjectsManagement } from "./ProjectsManagement";
@@ -19,7 +19,7 @@ const Projects = () => {
   return (
     <ProjectsManagement
       isProjectLoading={isProjectLoading}
-      listOfItems={testProjects}
+      projects={testProjects}
       handleOnDelete={project => handleDeleteSubmit(project)}
     />
   );

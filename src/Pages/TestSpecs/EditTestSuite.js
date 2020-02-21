@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { updateTestSuiteHelper } from "../../Redux/apiHelpers";
 import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
-import { Header, CardTitle } from "../../Component/styles/BodyStyles";
+import { SectionHeader, CardTitle } from "../../Component/styles/BodyStyles";
 import FormStyles from "../../Component/styles/FormStyles";
 
 const EditTestSuite = ({ selectedProject, testSuite, onClose }) => {
@@ -35,7 +35,7 @@ const EditTestSuite = ({ selectedProject, testSuite, onClose }) => {
 
   return (
     <FormDetailContainer>
-      <Header>Update test suite</Header>
+      <SectionHeader>Update test suite</SectionHeader>
       <b style={{ color: "red" }}>The API provided by Test Link does not work</b>
 
       <div className="details">

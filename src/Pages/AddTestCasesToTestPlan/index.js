@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useTestPlansFetching from "../../Component/CustomHooks/useTestPlansFetching";
-import { selectTestItemAction } from "../../Redux/actions";
+import { selectTestItemAction } from "../../Redux/testSpec.action";
 import AddRemoveContainer from "./AddRemoveContainer";
 import TestSuiteList from "./TestSuiteList";
 import { SplitPane } from "../../Component/Containers/SplitPane";
 import { StyledTestDetail } from "../../Component/styles/StyledTestDetails";
-import { Container, Card } from "../../Component/styles/BodyStyles";
-import CreateNewTestPlanLinkPage from "../../Component/Containers/CreateNewTestPlanLinkPage";
+import { Card } from "../../Component/styles/BodyStyles";
 import LoadingContainer from "../../Component/Containers/LoadingContainer";
 
 const AddTestCaseToTestPlanContainer = () => {
@@ -31,26 +30,24 @@ const AddTestCaseToTestPlanContainer = () => {
 
   if (testPlans)
     return (
-      <Container className="body-container">
-        <SplitPane
-          left={
-            <>
-              <TestSuiteList testPlans={testPlans} />
-            </>
-          }
-          right={
-            <StyledTestDetail>
-              <Card>
-                <AddRemoveContainer
-                  selectedProject={selectedProject}
-                  selectedTestSuite={selectedTestItem}
-                  selectedTestPlan={selectedTestPlan}
-                />
-              </Card>
-            </StyledTestDetail>
-          }
-        />
-      </Container>
+      <SplitPane
+        left={
+          <>
+            <TestSuiteList testPlans={testPlans} />
+          </>
+        }
+        right={
+          <StyledTestDetail>
+            <Card>
+              <AddRemoveContainer
+                selectedProject={selectedProject}
+                selectedTestSuite={selectedTestItem}
+                selectedTestPlan={selectedTestPlan}
+              />
+            </Card>
+          </StyledTestDetail>
+        }
+      />
     );
   else return null;
 };

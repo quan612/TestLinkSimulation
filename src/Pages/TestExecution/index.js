@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import withTestPlanFetching from "../../Component/HOC/withTestPlansFetching";
 import useBuildsFetching from "../../Component/CustomHooks/useBuildsFetching";
 import { selectBuildAction, clearCurrentBuildsAction } from "../../Redux/build.action";
-import { selectTestItemAction } from "../../Redux/actions";
+import { selectTestItemAction } from "../../Redux/testSpec.action";
 
 import LoadingContainer from "../../Component/Containers/LoadingContainer";
 import { SplitPane } from "../../Component/Containers/SplitPane";

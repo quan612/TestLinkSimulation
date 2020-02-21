@@ -14,7 +14,7 @@ const DropdownStyles = styled.div`
 
   .show > .dropdown-menu {
     max-height: 20vh;
-    min-width: 250px;
+    min-width: 180px;
     text-align: left;
     overflow-y: auto;
     border: none;

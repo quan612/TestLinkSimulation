@@ -1,7 +1,7 @@
 // todo: Add Edit Test Case function
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { selectTestItemAction } from "../../Redux/actions";
+import { selectTestItemAction } from "../../Redux/testSpec.action";
 import { createTestCaseStepsApi } from "../../Redux/apiHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "reactstrap";
@@ -9,7 +9,7 @@ import TableSimple from "../../Component/Common/TableSimple";
 import TableWithCreateItem from "../../Component/Common/TableWithCreateItem";
 import constant from "../../Library/constants";
 import EditTestCase from "./EditTestCase";
-import { Card, CardTitle, CardContent, Header } from "../../Component/styles/BodyStyles";
+import { Card, CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
 
 const TestCase = ({ testCase }) => {
   const [isEditTestCase, setEditTestCase] = useState(false);
@@ -26,7 +26,7 @@ export default TestCase;
 const tableColumns = {
   step_number: {
     label: "#",
-    width: "3%"
+    width: "8%"
   },
   actions: {
     label: "Action",
@@ -34,7 +34,7 @@ const tableColumns = {
   },
   expected_results: {
     label: "Expected Result",
-    width: "50%"
+    width: "45%"
   }
 };
 
@@ -58,7 +58,7 @@ const TestCaseDetails = ({ testCase, onEdit }) => {
 
   return (
     <>
-      {testCase && <Header>{`Test Case: ${testCase.name}`}</Header>}
+      {testCase && <SectionHeader>{`Test Case: ${testCase.name}`}</SectionHeader>}
 
       <div className="icon-wrapper m-2">
         <FontAwesomeIcon
@@ -82,68 +82,61 @@ const TestCaseDetails = ({ testCase, onEdit }) => {
         </div>
       </div>
 
-      <Card>
-        <CardTitle>
-          <span className="mr-1">Version</span>
-          <FontAwesomeIcon icon="info-circle" color={"white"} data-toggle="collapse" href="#version"></FontAwesomeIcon>
-        </CardTitle>
-
-        <div className="collapse" id="version">
-          <div>
-            {`Created on ${testCase.creation_ts} by ${testCase.author_first_name} ${testCase.author_last_name}`}
-          </div>
-          <div>
-            {testCase.updater_first_name && (
-              <>
-                {`Last Modified ${testCase.modification_ts} by ${testCase.updater_first_name} ${testCase.updater_last_name}`}
-              </>
-            )}
-          </div>
-        </div>
-
-        <CardTitle>Summary</CardTitle>
-        {testCase.summary && <CardContent>{testCase.summary}</CardContent>}
-
-        <CardTitle>Addtional Information</CardTitle>
-        {testCase.preconditions && <CardContent>{testCase.preconditions}</CardContent>}
-
-        {/* test case steps details */}
-
-        <CardTitle>Test Steps</CardTitle>
-        <div className="table-container">
-          {onCreateStep ? (
-            <TableWithCreateItem
-              tableItems={testCase.steps}
-              columns={tableColumns}
-              onSave={handleOnSaveSteps}
-              onCancel={() => setCreateStep(false)}
-            />
-          ) : (
-            <TableSimple tableItems={testCase.steps} columns={tableColumns} />
+      <CardTitle>
+        <div className="mr-1">Version</div>
+        <FontAwesomeIcon icon="info-circle" color={"black"} data-toggle="collapse" href="#version"></FontAwesomeIcon>
+      </CardTitle>
+      <div className="collapse ml-2" id="version">
+        <div>{`Created on ${testCase.creation_ts} by ${testCase.author_first_name} ${testCase.author_last_name}`}</div>
+        <div>
+          {testCase.updater_first_name && (
+            <>
+              {`Last Modified ${testCase.modification_ts} by ${testCase.updater_first_name} ${testCase.updater_last_name}`}
+            </>
           )}
         </div>
+      </div>
 
-        <div className="button-wrapper ml-2">
-          {!onCreateStep && (
-            <Button className="btn btn-info mt-2" color="primary" size="sm" onClick={() => setCreateStep(true)}>
-              Create Step
-            </Button>
-          )}
-        </div>
+      <CardTitle>Summary</CardTitle>
+      {testCase.summary && <CardContent>{testCase.summary}</CardContent>}
 
-        <div className="form-row mt-1 d-flex flex-column">
-          <div>
-            <label className="ml-2">Status: </label>
-            <label className="ml-2">{Object.keys(status).find(key => status[key] === parseInt(testCase.status))}</label>
-          </div>
-          <div>
-            <label className="ml-2">Execution Type: </label>
-            <label className="ml-2">
-              {Object.keys(execution_type).find(key => execution_type[key] === parseInt(testCase.execution_type))}
-            </label>
-          </div>
-        </div>
-      </Card>
+      <CardTitle>Addtional Information</CardTitle>
+      {testCase.preconditions && <CardContent>{testCase.preconditions}</CardContent>}
+
+      {/* test case steps details */}
+
+      <CardTitle>Test Steps</CardTitle>
+      <div className="table-container">
+        {onCreateStep ? (
+          <TableWithCreateItem
+            tableItems={testCase.steps}
+            columns={tableColumns}
+            onSave={handleOnSaveSteps}
+            onCancel={() => setCreateStep(false)}
+          />
+        ) : (
+          <TableSimple tableItems={testCase.steps} columns={tableColumns} />
+        )}
+      </div>
+
+      <div className="button-wrapper ml-2">
+        {!onCreateStep && (
+          <Button className="btn btn-info mt-2" color="primary" size="sm" onClick={() => setCreateStep(true)}>
+            Create Step
+          </Button>
+        )}
+      </div>
+
+      <div className="form-row mt-1  d-flex flex-column">
+        <CardContent>
+          <b>Status:</b>
+          {Object.keys(status).find(key => status[key] === parseInt(testCase.status))}
+        </CardContent>
+        <CardContent>
+          <b>Execution Type:</b>
+          {Object.keys(execution_type).find(key => execution_type[key] === parseInt(testCase.execution_type))}
+        </CardContent>
+      </div>
     </>
   );
 };

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { reportResultApi } from "../../Redux/apiHelpers";
-import { selectTestItemAction } from "../../Redux/actions";
+import { selectTestItemAction } from "../../Redux/testSpec.action";
 import TableSimple from "../../Component/Common/TableSimple";
 import DropDown from "../../Component/Common/DropDown";
 import DropdownStyles from "../../Component/styles/DropdownStyles";
-import { CardTitle, CardContent, Header } from "../../Component/styles/BodyStyles";
+import { CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
 
 const tableColumns = {
   step_number: {
@@ -71,13 +71,13 @@ function ExecutionDetails(props) {
         >{`Test case: ${props.testItemDetails.name}`}</div>
       </CardTitle>
 
-      <Header>Summary</Header>
+      <SectionHeader>Summary</SectionHeader>
       {props.summary && <CardContent>{props.testItemDetails.summary}</CardContent>}
 
-      <Header>Precondition</Header>
+      <SectionHeader>Precondition</SectionHeader>
       {props.precondition && <CardContent> {props.testItemDetails.precondition}</CardContent>}
 
-      <Header>Test Steps</Header>
+      <SectionHeader>Test Steps</SectionHeader>
       <div className="table-container">
         <TableSimple tableItems={props.testItemDetails.steps} columns={tableColumns} />
       </div>

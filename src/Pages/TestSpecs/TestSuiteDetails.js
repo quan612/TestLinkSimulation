@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Header, CardContent } from "../../Component/styles/BodyStyles";
+import { SectionHeader, CardContent } from "../../Component/styles/BodyStyles";
 
 var he = require("he");
 
@@ -13,10 +13,10 @@ const TestSuiteDetails = ({
   onAddTestCase
 }) => {
   if (!testSuite || Object.keys(testSuite).length < 1 || (testSuite && testSuite.hasOwnProperty("prefix")))
-    return <TestProjectDetail selectedProject={selectedProject} onAddTestSuite={onAddTestSuite} />;
+    return <TestProject selectedProject={selectedProject} onAddTestSuite={onAddTestSuite} />;
   else
     return (
-      <TestSuiteDetail
+      <TestSuite
         testSuite={testSuite}
         onAddTestSuite={onAddTestSuite}
         onEditTestSuite={onEditTestSuite}
@@ -28,12 +28,12 @@ const TestSuiteDetails = ({
 
 export default TestSuiteDetails;
 
-const TestProjectDetail = ({ selectedProject, onAddTestSuite }) => {
+const TestProject = ({ selectedProject, onAddTestSuite }) => {
   return (
     <>
       {selectedProject && (
         <>
-          <Header>{`Test project: ${selectedProject.name} `}</Header>
+          <SectionHeader>{`Test project: ${selectedProject.name} `}</SectionHeader>
           {selectedProject.notes && (
             <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedProject.notes) }} />
           )}
@@ -66,10 +66,10 @@ const TestProjectDetail = ({ selectedProject, onAddTestSuite }) => {
   );
 };
 
-const TestSuiteDetail = ({ testSuite, onAddTestSuite, onEditTestSuite, onDeleteTestSuite, onAddTestCase }) => {
+const TestSuite = ({ testSuite, onAddTestSuite, onEditTestSuite, onDeleteTestSuite, onAddTestCase }) => {
   return (
     <>
-      <Header>Test Suite: {`${testSuite.name}`}</Header>
+      <SectionHeader>Test Suite: {`${testSuite.name}`}</SectionHeader>
       {testSuite.details && <CardContent dangerouslySetInnerHTML={{ __html: he.decode(testSuite.details) }} />}
 
       <div className="icon-wrapper m-2">

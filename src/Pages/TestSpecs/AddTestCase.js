@@ -4,7 +4,7 @@ import { Input } from "reactstrap";
 import { getTestCasesOfTestProjectHelper, addTestCaseHelper } from "../../Redux/apiHelpers";
 import { postNumberOfTestCasesAction } from "../../Redux/testProject.action";
 import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
-import { Card, CardTitle, Header } from "../../Component/styles/BodyStyles";
+import { Card, CardTitle, SectionHeader } from "../../Component/styles/BodyStyles";
 import FormStyles from "../../Component/styles/FormStyles";
 import constant from "../../Library/constants";
 
@@ -52,7 +52,7 @@ const AddTestCase = ({ selectedProject, parentSuite, onClose }) => {
 
   return (
     <FormDetailContainer>
-      <Header>Create Test Case</Header>
+      <SectionHeader>Create Test Case</SectionHeader>
 
       <FormStyles>
         <Card>

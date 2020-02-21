@@ -43,6 +43,9 @@ export const reportResultApi = async result => {
 };
 
 /********************************************************* TEST SUITE HELPER and API ******************************************/
+export const getTestSuiteAsync = async (selectedSuite, selectedProject) => {
+  return await testLink.getTestSuite({ testsuitename: selectedSuite.name, prefix: selectedProject.prefix });
+};
 
 export const addTestSuiteHelper = async (selectedProject, parentSuiteId, data) => {
   if (parentSuiteId === selectedProject.id) {
@@ -200,22 +203,6 @@ export const getTestCasesForCurrentTestPlanApi = async testPlan => {
   }
 };
 
-// temporary keep in case something mess up
-// export const getTestCasesForTestPlan = async (testLink, testPlan) => {
-//   let result = [];
-//   let temp = await getTestCasesForTestPlanApi(testLink, testPlan);
-//   //convert to array of objects, instead of object of nested objects with keys and values
-//   //if (object instanceof Object) {
-//   Object.values(temp).forEach(arrayOfCases => {
-//     arrayOfCases.map(array =>
-//       // add each test case array into the end result
-//       array.length === 0 ? (result = [...result]) : (result = [...result, array])
-//     );
-//   });
-//   //}
-//   return result;
-// };
-
 export const getTestSuitesForCurrentTestPlanApi = async testPlan => {
   return await testLink.getTestSuitesForTestPlan({ testplanid: testPlan.id });
 };
@@ -298,10 +285,21 @@ export const getTestCasesOfSelectedTestSuiteHelper = async selectedTestSuite => 
  *
  * @returns {object}  result Test Case object.
  */
+// export const getTestCaseHelper = async testCaseId => {
+//   return await testLink
+//     .getTestCase({
+//       testcaseid: testCaseId
+//     })
+//     .catch(error => console.log("Catch error at get test case helper function: ", error));
+// };
+
 export const getTestCaseHelper = async testCaseId => {
-  return await testLink
+  return testLink
     .getTestCase({
       testcaseid: testCaseId
+    })
+    .then(testcase => {
+      return testcase[0];
     })
     .catch(error => console.log("Catch error at get test case helper function: ", error));
 };

@@ -4,7 +4,7 @@ import * as ROUTES from "../../../routes";
 import TestProjectDropDownWithFetching from "../TestProjectDropDown";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Wrapper, NavContainer, DropDownContainer, Ul, LiParent } from "./styles";
+import { NavContainer, DropDownContainer, Ul, LiParent } from "./styles";
 import BarIcon from "../BarIcon";
 
 const Nav = () => {

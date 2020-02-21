@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useTestPlanItemsFetching from "../../Component/CustomHooks/useTestPlanItemsFetching";
-import { selectTestItemAction } from "../../Redux/actions";
+import { selectTestItemAction } from "../../Redux/testSpec.action";
 import { TreeLeaf } from "../../Component/Common/TreeLeaf";
 import { Card } from "../../Component/styles/BodyStyles";
 import LoadingContainer from "../../Component/Containers/LoadingContainer";

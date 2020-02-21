@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useTestSuitesFetching from "../../Component/CustomHooks/useTestSuitesFetching";
-import { selectTestItemAction } from "../../Redux/actions";
+import { selectTestItemAction } from "../../Redux/testSpec.action";
 import { TreeLeaf } from "../../Component/Common/TreeLeaf";
-import { Card, Header } from "../../Component/styles/BodyStyles";
+import { Card, SectionHeader } from "../../Component/styles/BodyStyles";
 import TestPlanDropDownWithFetching, { TestPlanDropDown } from "../../Component/Common/TestPlanDropDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -58,14 +58,14 @@ const TestSuiteList = ({ testPlans }) => {
   return (
     <div className="h_100 d-flex flex-column">
       <Card className="tree">
-        <Header className="d-flex justify-content-between">
+        <SectionHeader className="d-flex justify-content-between">
           <span>Setting</span>
           <FontAwesomeIcon
             icon="info-circle"
             color={"white"}
             title={'Test case can be added in "Create Test Case" '}
           ></FontAwesomeIcon>
-        </Header>
+        </SectionHeader>
         <TestPlanDropDownWithFetching selectedProject={selectedProject} />
         <hr />
         {renderTreeItems(loading, testPlans, dataItems)}

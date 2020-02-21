@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getTestCaseHelper } from "../../Redux/apiHelpers";
 import ExecutionDetails from "./ExecutionDetails";
-import { Header, CardContent } from "../../Component/styles/BodyStyles";
+import { SectionHeader, CardContent } from "../../Component/styles/BodyStyles";
 var he = require("he");
 
 function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem }) {
@@ -10,11 +10,14 @@ function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem 
   useEffect(() => {
     const getTestCaseDetails = async () => {
       if (selectedTestItem) {
-        getTestCaseHelper(selectedTestItem.tc_id).then(data => {
-          data.forEach(tcase => {
-            setTestCaseDetails(tcase);
-          });
-        });
+        // getTestCaseHelper(selectedTestItem.tc_id).then(data => {
+        //   data.forEach(tcase => {
+        //     setTestCaseDetails(tcase);
+        //   });
+        // });
+
+        const testCase = await getTestCaseHelper(selectedTestItem.tc_id);
+        setTestCaseDetails(testCase);
       }
     };
 
@@ -36,7 +39,7 @@ const TestPlanDetails = ({ selectedTestPlan, selectedBuild }) => {
     <>
       {selectedTestPlan && (
         <>
-          <Header>{`Test plan: ${selectedTestPlan.name} `}</Header>
+          <SectionHeader>{`Test plan: ${selectedTestPlan.name} `}</SectionHeader>
           {selectedTestPlan.notes && (
             <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }} />
           )}
@@ -45,7 +48,7 @@ const TestPlanDetails = ({ selectedTestPlan, selectedBuild }) => {
 
       {selectedBuild ? (
         <>
-          <Header>{`Build: ${selectedBuild.name} `}</Header>
+          <SectionHeader>{`Build: ${selectedBuild.name} `}</SectionHeader>
           {selectedBuild.notes && <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedBuild.notes) }} />}
         </>
       ) : (

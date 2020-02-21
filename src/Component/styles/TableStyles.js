@@ -10,6 +10,18 @@ export const TableStyles = styled.div`
     table-layout: fixed;
   }
 
+  thead,
+  tbody {
+    display: block;
+  }
+
+  tbody {
+    min-height: 10px;
+    max-height: 300px;
+    overflow-y: auto; /* Trigger vertical scroll    */
+    overflow-x: hidden; /* Hide the horizontal scroll */
+  }
+
   @media only screen and (min-width: 576px) {
     max-width: 540px;
   }
