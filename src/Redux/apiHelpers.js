@@ -299,6 +299,7 @@ export const getTestCaseHelper = async testCaseId => {
       testcaseid: testCaseId
     })
     .then(testcase => {
+      console.log("testcase test", testcase);
       return testcase[0];
     })
     .catch(error => console.log("Catch error at get test case helper function: ", error));

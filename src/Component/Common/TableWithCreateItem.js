@@ -4,7 +4,7 @@ import { TableStyles } from "../../Component/styles/TableStyles";
 
 var he = require("he");
 
-const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
+const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel, maxHeight }) => {
   const [stepData, setStepData] = useState({
     step_number: (tableItems.length + 1).toString(),
     actions: "",
@@ -45,7 +45,7 @@ const TableWithCreateItem = ({ tableItems, columns, onSave, onCancel }) => {
     }
   };
   return (
-    <TableStyles>
+    <TableStyles maxHeight={maxHeight}>
       <Table>
         <thead className="bg-default">
           <tr className="d-flex">

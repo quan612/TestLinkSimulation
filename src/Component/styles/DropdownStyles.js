@@ -42,6 +42,7 @@ const DropdownStyles = styled.div`
     background-color: transparent;
     border-color: black;
     box-shadow: none;
+    color: black;
   }
   .dropdown-toggle:focus,
   .dropdown-toggle.active:focus,

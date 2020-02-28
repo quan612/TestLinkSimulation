@@ -37,7 +37,7 @@ export const TreeLeaf = ({ child, node, onClick }) => {
   const handleRenderItem = () => {
     if (node === "File") {
       return (
-        <div className="tree-text">
+        <div className="tree-text mt-1">
           <FontAwesomeIcon className="d-inline-block mx-1" icon="file-alt" style={{ color: "#99CCFF" }} />
           <Span
             text={
@@ -50,7 +50,7 @@ export const TreeLeaf = ({ child, node, onClick }) => {
       );
     } else {
       return (
-        <div className="tree-text">
+        <div className="tree-text mt-1">
           <FontAwesomeIcon icon={toggle ? "angle-double-down" : "angle-right"} onClick={() => onToggle()} />
           {toggle ? (
             <FontAwesomeIcon className="d-inline-block mx-1" icon="folder-open" style={{ color: "#CCCC00" }} />

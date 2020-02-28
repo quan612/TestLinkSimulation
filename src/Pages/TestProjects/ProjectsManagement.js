@@ -17,11 +17,11 @@ const COLUMNS = {
   },
   notes: {
     label: "Description",
-    width: "35%"
+    width: "45%"
   },
   prefix: {
     label: "Prefix",
-    width: "6%"
+    width: "10%"
   },
 
   active: {
@@ -54,7 +54,7 @@ export const ProjectsManagement = ({ isProjectLoading, projects, handleOnDelete 
   };
 
   return (
-    <Container className="wrapper h-75">
+    <Container>
       <Card>
         <h4>Projects Management</h4>
         <div className="form-group d-flex flex-wrap">

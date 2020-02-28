@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import withTestPlansFetching from "../HOC/withTestPlansFetching";
 import { selectTestPlanAction } from "../../Redux/testPlan.action";
+
 import DropDown from "./DropDown";
 import DropdownStyles from "../styles/DropdownStyles";
 import styled from "styled-components";
@@ -17,6 +20,7 @@ const Label = styled.label`
 export const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
   const [selectedItem, setSelectedItem] = useState({ name: "" });
   let dispatch = useDispatch();
+  let history = useHistory();
 
   useEffect(() => {
     if (testPlans.length > 0) {
@@ -37,15 +41,18 @@ export const TestPlanDropDown = ({ isTestPlanLoading, testPlans }) => {
   return (
     <div className="d-flex align-items-center justify-content-between ">
       <Label>Test Plan: </Label>
-      {
-        <DropdownStyles>
-          <DropDown
-            title={isTestPlanLoading || testPlans === [] ? "Fetching Test Plan..." : selectedItem.name}
-            items={testPlans}
-            onSelect={handleOnChangeTestPlan}
-          />
-        </DropdownStyles>
-      }
+      <DropdownStyles>
+        <DropDown
+          title={isTestPlanLoading || testPlans === [] ? "Fetching Test Plan..." : selectedItem.name}
+          items={testPlans}
+          onSelect={handleOnChangeTestPlan}
+        />
+      </DropdownStyles>
+      {!isTestPlanLoading && (testPlans === [] || Object.values(testPlans).length < 1) ? (
+        <a href="/#" className="ml-2 mt-1" style={{ color: "blue" }} onClick={() => history.push("/addPlan")}>
+          Add Plan
+        </a>
+      ) : null}
     </div>
   );
 };

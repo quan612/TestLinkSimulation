@@ -17,7 +17,7 @@ const Nav = () => {
         </Link>
       </LiParent>
       <LiParent>
-        <a href="#">
+        <a href="/#">
           <FontAwesomeIcon icon="archive" /> Projects
         </a>
         <ul>
@@ -34,7 +34,7 @@ const Nav = () => {
       </LiParent>
 
       <LiParent>
-        <a href="#">
+        <a href="/#">
           <FontAwesomeIcon icon="tasks" /> Plans
         </a>
         <ul>
@@ -51,7 +51,7 @@ const Nav = () => {
       </LiParent>
 
       <LiParent>
-        <a href="#">
+        <a href="/#">
           <FontAwesomeIcon icon="running" /> Executions
         </a>
         <ul>

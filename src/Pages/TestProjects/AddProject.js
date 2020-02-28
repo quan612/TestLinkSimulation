@@ -42,7 +42,7 @@ const AddProject = () => {
   };
 
   return (
-    <div className="w-100 m-auto">
+    <div className=" w-100 ml-auto mr-auto">
       <Formik
         initialValues={{
           name: "",
@@ -91,9 +91,10 @@ const AddForm = ({ formikProps }) => {
                   value={formikProps.values.name}
                   onChange={formikProps.handleChange}
                 />
-                {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
+
                 <br />
               </div>
+              {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
 
               <div className="input wrapper w-25">
                 <Input
@@ -104,9 +105,9 @@ const AddForm = ({ formikProps }) => {
                   onChange={formikProps.handleChange}
                 />
 
-                {formikProps.errors.prefix && <span style={{ ...styles.errorText }}>{formikProps.errors.prefix}</span>}
                 <br />
               </div>
+              {formikProps.errors.prefix && <span style={{ ...styles.errorText }}>{formikProps.errors.prefix}</span>}
 
               <CKEditor
                 editor={ClassicEditor}
@@ -122,17 +123,6 @@ const AddForm = ({ formikProps }) => {
 
               <div className="d-flex justify-content-start">
                 <FormGroup check className="mr-2">
-                  <CustomInput
-                    id="requirement"
-                    type="checkbox"
-                    name="requirement"
-                    checked={formikProps.values.requirement}
-                    onChange={e => formikProps.setFieldValue("requirement", e.target.checked)}
-                    label="Requirement"
-                  />
-                </FormGroup>
-
-                <FormGroup check>
                   <CustomInput
                     id="isActive"
                     type="checkbox"
@@ -155,7 +145,7 @@ const AddForm = ({ formikProps }) => {
                 </FormGroup>
               </div>
 
-              <div className="d-flex">
+              <div className="d-flex pb-2 pt-2">
                 <Button className="mr-2" color="primary" type="submit">
                   Submit
                 </Button>

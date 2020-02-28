@@ -48,8 +48,6 @@ Tree.prototype.add = function(data, toData, traversal) {
   var child = new Node(data),
     parent = null,
     callback = function(node) {
-      //   console.log("node.data", node.data);
-      //   console.log("toData", toData);
       if (node.data === toData) {
         parent = node;
       }
@@ -70,15 +68,11 @@ Tree.prototype.addObjectBasedId = function(data, toData, traversal) {
   var child = new Node(data),
     parent = null,
     callback = function(node) {
-      // console.log("node.data", node);
-      // console.log("toData.id", toData);
       if (node.data.id === toData.id) {
-        // console.log("match here");
         parent = node;
       }
     };
-  // console.log("child", child);
-  // console.log("toData", toData);
+
   this.contains(callback, traversal);
 
   if (parent) {
@@ -94,8 +88,7 @@ Tree.prototype.contains = function(callback, traversal) {
 };
 
 Tree.prototype.remove = function(data, fromData, traversal) {
-  var tree = this,
-    parent = null,
+  var parent = null,
     childToRemove = null,
     index;
 

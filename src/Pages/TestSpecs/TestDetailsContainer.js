@@ -6,16 +6,15 @@ import TestCase from "./TestCase";
 import TestSuiteContainer from "./TestSuiteContainer";
 
 import { StyledTestDetail } from "../../Component/styles/StyledTestDetails";
-import { Card } from "../../Component/styles/BodyStyles";
 
 const TestDetailsContainer = () => {
   const [itemDetails, setItemDetails] = useState({});
-  const { selectedTestItem, selectedProject } = useSelector(state => ({
+  const { selectedTestItem } = useSelector(state => ({
     selectedTestItem: state.selectedTestItem
   }));
 
   useEffect(() => {
-    fetchItemDetails(selectedTestItem, setItemDetails, selectedProject);
+    fetchItemDetails(selectedTestItem, setItemDetails);
   }, [selectedTestItem]);
 
   const renderTestDetails = (selectedTestItem, itemDetails) => {
@@ -37,11 +36,13 @@ const TestDetailsContainer = () => {
 
 const fetchItemDetails = async (selectedTestItem, setItemDetails) => {
   if (selectedTestItem && (selectedTestItem.node === "File" || selectedTestItem.hasOwnProperty("testcase_id"))) {
-    const testCase = await getTestCaseHelper(selectedTestItem.id).catch(error =>
-      console.log("catch error at getTestCase", error)
-    );
-    testCase.node = "File";
-    setItemDetails(testCase);
+    const testCase = await getTestCaseHelper(
+      selectedTestItem.id ? selectedTestItem.id : selectedTestItem.testcase_id
+    ).catch(error => console.log("catch error at getTestCase", error));
+    if (testCase) {
+      testCase.node = "File";
+      setItemDetails(testCase);
+    }
   } else {
     setItemDetails(selectedTestItem);
   }

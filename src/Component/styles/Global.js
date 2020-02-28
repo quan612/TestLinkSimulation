@@ -20,14 +20,20 @@ const GlobalStyles = createGlobalStyle`
   html, body, #root {
     height: 100%;
   }
+
   body {
     -webkit-font-smoothing: antialiased;
-    background: url('img/black_thread.png');
-    font-family: 'Droid Sans', sans-serif;
+    background: url('img/black_thread.png');    
+    font-size: 15px;
   }
-  body, input, button {
-    font: 14px 'Roboto', sans-serif;
-  }
+
+  @font-face {
+font-family: 'Alegreya';
+font-style: normal;
+font-weight: normal;
+src: local('Alegreya'), url('./font/Alegreya-Regular.woff') format('woff');
+}
+
   a {
     text-decoration: none;
   }
@@ -46,49 +52,20 @@ const GlobalStyles = createGlobalStyle`
   .custom-control-label::after {
     top: 0.1rem !important;
   }
-
-  /* .panel-title{
-    color: black;
-      font-weight: bold;
-      font-size: 1.2em;
-      font-family: tahoma, arial, verdana, sans-serif;
-      padding: 7px;
-      margin: 2px;
-  } */
-
-
-  /* .panel-header {
-      color: #f4f4f4;
-      font-weight: bold;
-      font-size: 1em;
-      font-family: tahoma, arial, verdana, sans-serif;
-      border-color: #99bbe8;
-      padding: 7px;
-      margin: 2px;
-      background-color: #252e37;      
-      border-radius: 5px;
-  }  */
-  
-  /* .panel-header-icon {
-       
-  }
-   */
-  /* .panel-content {
-      text-align: left;
-      /* color: black; */
-      /* padding: 7px;
-      margin: 2px; */
-      /* background: transparent;       */
-      /* background-image: linear-gradient(to right, #d3d3d3 , #9e9e9e);
-      border-style: groove;
-      border-width: thin;
-      border-radius: 5px; }*/
   
 
   dl,
   dt {
     color: black;
   }
+
+/* set height for editable content area, by default it is just 1 line 
+https://stackoverflow.com/questions/46559354/how-to-set-the-height-of-ckeditor-5-classic-editor
+*/
+.ck-editor__editable_inline {
+  min-height: 250px;
+}
+
 
 table {
         border-collapse: collapse;

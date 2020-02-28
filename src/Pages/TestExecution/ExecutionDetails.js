@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { reportResultApi } from "../../Redux/apiHelpers";
 import { selectTestItemAction } from "../../Redux/testSpec.action";
-import TableSimple from "../../Component/Common/TableSimple";
+import TableSteps from "../../Component/Common/TableSteps";
 import DropDown from "../../Component/Common/DropDown";
 import DropdownStyles from "../../Component/styles/DropdownStyles";
 import { CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
@@ -45,22 +45,24 @@ function ExecutionDetails(props) {
   };
 
   const handleOnResultSubmit = () => {
-    const result = {
-      testcase: props.testItemDetails,
-      testPlan: selectedTestPlan,
-      status: executeStatus.value,
-      build: selectedBuild,
-      notes: ""
-    };
+    if (executeStatus && executeStatus.value) {
+      const result = {
+        testcase: props.testItemDetails,
+        testPlan: selectedTestPlan,
+        status: executeStatus.value,
+        build: selectedBuild,
+        notes: ""
+      };
 
-    reportResultApi(result)
-      .then(async message => {
-        // here we submit the new result to store, to refetch the result on left navigation
-        let currentTestCaseWithNewResult = { ...props.testItemDetails };
-        currentTestCaseWithNewResult.exec_status = executeStatus.value;
-        dispatch(selectTestItemAction(currentTestCaseWithNewResult));
-      })
-      .catch(error => console.log(error));
+      reportResultApi(result)
+        .then(async message => {
+          // here we submit the new result to store, to refetch the result on left navigation
+          let currentTestCaseWithNewResult = { ...props.testItemDetails };
+          currentTestCaseWithNewResult.exec_status = executeStatus.value;
+          dispatch(selectTestItemAction(currentTestCaseWithNewResult));
+        })
+        .catch(error => console.log(error));
+    }
   };
 
   return (
@@ -79,7 +81,7 @@ function ExecutionDetails(props) {
 
       <SectionHeader>Test Steps</SectionHeader>
       <div className="table-container">
-        <TableSimple tableItems={props.testItemDetails.steps} columns={tableColumns} />
+        <TableSteps tableItems={props.testItemDetails.steps} columns={tableColumns} maxHeight={"300px"} />
       </div>
 
       <div className="d-flex ">

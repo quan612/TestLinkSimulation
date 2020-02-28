@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import Tree from "../../Utils/Tree";
 import {
   getTestCasesOfTestSuitesHelper,
@@ -42,7 +41,6 @@ const useTestPlanItemsFetching = (selectedProject, selectedTestPlan, selectedBui
 
             //append the last execution result into test case object
             for (let testcase of arrayOfTestCases) {
-              // console.log("trying to get result for build ", selectedBuild.name + " " + selectedBuild.id);
               let executionResult = await getLastExecutionResultApi(
                 selectedTestPlan,
                 testcase,

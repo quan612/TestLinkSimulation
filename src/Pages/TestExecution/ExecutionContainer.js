@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import { getTestCaseHelper } from "../../Redux/apiHelpers";
 import ExecutionDetails from "./ExecutionDetails";
 import { SectionHeader, CardContent } from "../../Component/styles/BodyStyles";
+import { StyledTestDetail } from "../../Component/styles/StyledTestDetails";
+
 var he = require("he");
 
-function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem }) {
+const ExecutionContainer = () => {
+  const { selectedTestPlan, selectedBuild, selectedTestItem } = useSelector(state => ({
+    selectedTestPlan: state.selectedTestPlan,
+    selectedBuild: state.selectedBuild,
+    selectedTestItem: state.selectedTestItem
+  }));
   const [testCaseDetails, setTestCaseDetails] = useState(null);
 
   useEffect(() => {
     const getTestCaseDetails = async () => {
       if (selectedTestItem) {
-        // getTestCaseHelper(selectedTestItem.tc_id).then(data => {
-        //   data.forEach(tcase => {
-        //     setTestCaseDetails(tcase);
-        //   });
-        // });
-
         const testCase = await getTestCaseHelper(selectedTestItem.tc_id);
         setTestCaseDetails(testCase);
       }
@@ -26,11 +29,20 @@ function ExecutionContainer({ selectedBuild, selectedTestPlan, selectedTestItem 
 
   //when user selects a test case from the left navigator
   if (selectedTestItem && selectedTestItem.node === "File" && testCaseDetails) {
-    return <ExecutionDetails testItemResult={selectedTestItem} testItemDetails={testCaseDetails} />;
+    return (
+      <StyledTestDetail>
+        <ExecutionDetails testItemResult={selectedTestItem} testItemDetails={testCaseDetails} />
+      </StyledTestDetail>
+    );
   }
   //default page to load current test plan details
-  else return <TestPlanDetails selectedTestPlan={selectedTestPlan} selectedBuild={selectedBuild} />;
-}
+  else
+    return (
+      <StyledTestDetail>
+        <TestPlanDetails selectedTestPlan={selectedTestPlan} selectedBuild={selectedBuild} />
+      </StyledTestDetail>
+    );
+};
 
 export default ExecutionContainer;
 

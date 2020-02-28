@@ -42,8 +42,8 @@ const useTestSpecItemsFetching = (selectedProject, testSuitesCount, testCasesCou
       }
     };
     fetchTestSpecItems();
-  }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem ? selectedTestItem.name : selectedTestItem]);
-
+    // }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem ? selectedTestItem.name : selectedTestItem]);
+  }, [selectedProject, testSuitesCount, testCasesCount, selectedTestItem, selectedTestItem.name]);
   return { isLoading, testItems };
 };
 

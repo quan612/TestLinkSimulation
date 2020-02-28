@@ -28,7 +28,6 @@ const Navigator = () => {
   };
 
   return (
-    // <div className="h_100 d-flex flex-column">
     <Card>
       {testItems && (
         <div className="tree">

@@ -1,28 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import useTestSuitesFetching from "../../Component/CustomHooks/useTestSuitesFetching";
+
 import { selectTestItemAction } from "../../Redux/testSpec.action";
 import { TreeLeaf } from "../../Component/Common/TreeLeaf";
 import { Card, SectionHeader } from "../../Component/styles/BodyStyles";
-import TestPlanDropDownWithFetching, { TestPlanDropDown } from "../../Component/Common/TestPlanDropDown";
+import TestPlanDropDownWithFetching from "../../Component/Common/TestPlanDropDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const TestSuiteList = ({ testPlans }) => {
-  const { selectedProject, isLoading, isProjectLoading, isTestPlanLoading } = useSelector(state => ({
+const TestSuiteList = () => {
+  const { selectedProject, isLoading, isProjectLoading, isTestPlanLoading, testPlans } = useSelector(state => ({
     selectedProject: state.selectedProject,
     isLoading: state.isLoading,
     isProjectLoading: state.isProjectLoading,
-    isTestPlanLoading: state.isTestPlanLoading
+    isTestPlanLoading: state.isTestPlanLoading,
+    testPlans: state.testPlans
   }));
 
-  let history = useHistory();
   let dispatch = useDispatch();
   const dataItems = useTestSuitesFetching(selectedProject);
-
-  useEffect(() => {
-    return function cleanup() {};
-  }, [testPlans]);
 
   const handleOnClick = async item => {
     dispatch(selectTestItemAction(item));
@@ -41,36 +37,22 @@ const TestSuiteList = ({ testPlans }) => {
           onClick={item => handleOnClick(item)}
         />
       );
-
-    if (!loading && testPlans.length === 0)
-      return (
-        <a
-          href="testplan"
-          onClick={e => {
-            e.preventDefault();
-            history.push("/addPlan");
-          }}
-        >
-          Create a test plan
-        </a>
-      );
   };
+
   return (
-    <div className="h_100 d-flex flex-column">
-      <Card className="tree">
-        <SectionHeader className="d-flex justify-content-between">
-          <span>Setting</span>
-          <FontAwesomeIcon
-            icon="info-circle"
-            color={"white"}
-            title={'Test case can be added in "Create Test Case" '}
-          ></FontAwesomeIcon>
-        </SectionHeader>
-        <TestPlanDropDownWithFetching selectedProject={selectedProject} />
-        <hr />
-        {renderTreeItems(loading, testPlans, dataItems)}
-      </Card>
-    </div>
+    <Card className="tree">
+      <SectionHeader className="d-flex justify-content-between">
+        <span>Setting</span>
+        <FontAwesomeIcon
+          icon="info-circle"
+          color={"white"}
+          title={'Test case can be added in "Create Test Case" '}
+        ></FontAwesomeIcon>
+      </SectionHeader>
+      <TestPlanDropDownWithFetching selectedProject={selectedProject} />
+      <hr />
+      {renderTreeItems(loading, testPlans, dataItems)}
+    </Card>
   );
 };
 

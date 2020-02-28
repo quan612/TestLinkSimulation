@@ -6,7 +6,7 @@ import { TableStyles } from "../../Component/styles/TableStyles";
 
 var he = require("he");
 
-export const TableContainer = ({ tableItems, columns, handleDeleteItem }) => {
+export const TableContainer = ({ tableItems, columns, handleDeleteItem, maxHeight }) => {
   const handleRenderTableItems = (item, key) => {
     switch (key) {
       case "Utils":
@@ -52,8 +52,9 @@ export const TableContainer = ({ tableItems, columns, handleDeleteItem }) => {
         );
     }
   };
+
   return (
-    <TableStyles>
+    <TableStyles maxHeight={"700px"}>
       <Table>
         <thead>
           <tr className="d-flex">

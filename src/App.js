@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import Header from "./Component/Navigation/Header/Header";
 import * as PAGES from "./pages";
 import * as ROUTES from "./routes";

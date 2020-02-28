@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { TableWithModal } from "../../Component/Containers/TableWithModal";
+import useBuildsFetching from "../../Component/CustomHooks/useBuildsFetching";
+
 import withPagination from "../../Component/HOC/withPagination";
 import WithLoading from "../../Component/HOC/withLoading";
+import { TableWithModal } from "../../Component/Containers/TableWithModal";
 import { Button, Input } from "reactstrap";
 
 const BuildsWithPaginated = withPagination(TableWithModal);
@@ -35,18 +37,21 @@ const COLUMNS = {
   }
 };
 
-const BuildsManagement = ({ isLoading, selectedTestPlan, listOfItems, handleOnDelete }) => {
+const BuildsManagement = ({ selectedTestPlan, handleOnDelete }) => {
+  const { isLoading, buildsOfCurrentTestPlan } = useBuildsFetching(selectedTestPlan);
   const [searchItems, setSearchItems] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
-    if (listOfItems instanceof Array && listOfItems.length > 0) {
-      setSearchItems(listOfItems);
+    if (buildsOfCurrentTestPlan instanceof Array && buildsOfCurrentTestPlan.length > 0) {
+      setSearchItems(buildsOfCurrentTestPlan);
     } else setSearchItems([]);
-  }, [listOfItems]);
+  }, [buildsOfCurrentTestPlan]);
 
   const handleOnSearch = e => {
-    let items = listOfItems.filter(value => value.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1);
+    let items = buildsOfCurrentTestPlan.filter(
+      value => value.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+    );
     setSearchItems([...items]);
   };
 

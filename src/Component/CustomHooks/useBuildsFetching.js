@@ -10,14 +10,16 @@ const useBuildsFetching = selectedTestPlan => {
 
   const dispatch = useDispatch();
 
+  const fetchBuilds = async testPlanId => {
+    await dispatch(loadBuildsAsyncAction(testPlanId));
+  };
+
   useEffect(() => {
-    if (selectedTestPlan) {
+    if (selectedTestPlan && Object.values(selectedTestPlan).length > 0) {
       const testPlanId = selectedTestPlan.testplan_id ? selectedTestPlan.testplan_id : selectedTestPlan.id;
-      const fetchBuilds = async () => {
-        await dispatch(loadBuildsAsyncAction(testPlanId));
-      };
-      fetchBuilds();
+      fetchBuilds(testPlanId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTestPlan]);
 
   return { isLoading, buildsOfCurrentTestPlan };

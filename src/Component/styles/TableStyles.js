@@ -17,7 +17,8 @@ export const TableStyles = styled.div`
 
   tbody {
     min-height: 10px;
-    max-height: 300px;
+    /* max-height: 300px; */
+    max-height: ${props => props.maxHeight};
     overflow-y: auto; /* Trigger vertical scroll    */
     overflow-x: hidden; /* Hide the horizontal scroll */
   }

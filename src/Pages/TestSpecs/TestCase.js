@@ -5,11 +5,11 @@ import { selectTestItemAction } from "../../Redux/testSpec.action";
 import { createTestCaseStepsApi } from "../../Redux/apiHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "reactstrap";
-import TableSimple from "../../Component/Common/TableSimple";
+import TableSteps from "../../Component/Common/TableSteps";
 import TableWithCreateItem from "../../Component/Common/TableWithCreateItem";
 import constant from "../../Library/constants";
 import EditTestCase from "./EditTestCase";
-import { Card, CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
+import { CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
 
 const TestCase = ({ testCase }) => {
   const [isEditTestCase, setEditTestCase] = useState(false);
@@ -113,9 +113,10 @@ const TestCaseDetails = ({ testCase, onEdit }) => {
             columns={tableColumns}
             onSave={handleOnSaveSteps}
             onCancel={() => setCreateStep(false)}
+            maxHeight={"300px"}
           />
         ) : (
-          <TableSimple tableItems={testCase.steps} columns={tableColumns} />
+          <TableSteps tableItems={testCase.steps} columns={tableColumns} maxHeight={"300px"} />
         )}
       </div>
 

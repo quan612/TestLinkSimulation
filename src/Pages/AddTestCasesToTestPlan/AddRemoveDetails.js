@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addTestCaseToTestPlanAction } from "../../Redux/testCase.action";
 import { CardTitle, CardContent, SectionHeader } from "../../Component/styles/BodyStyles";
 import { Button, CustomInput } from "reactstrap";
+import { StyledTestDetail } from "../../Component/styles/StyledTestDetails";
 var he = require("he");
 
 function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, selectedTestSuite }) {
@@ -42,7 +43,7 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, select
 
   if (selectedTestSuite && testCases && Object.keys(testCases).length > 0) {
     return (
-      <>
+      <StyledTestDetail>
         {selectedTestPlan && <SectionHeader>Add Test Cases To Test Plan: {`${selectedTestPlan.name}`}</SectionHeader>}
 
         <div className="d-flex ml-2 align-items-center">
@@ -74,11 +75,11 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, select
               />
             ))}
         </div>
-      </>
+      </StyledTestDetail>
     );
   } else {
     return (
-      <>
+      <StyledTestDetail>
         {selectedTestPlan && Object.keys(selectedTestPlan).length > 0 && (
           <CardTitle>{`Test Plan: ${selectedTestPlan.name}`}</CardTitle>
         )}
@@ -88,7 +89,7 @@ function AddRemoveDetails({ selectedProject, selectedTestPlan, testCases, select
             <CardContent dangerouslySetInnerHTML={{ __html: he.decode(selectedTestPlan.notes) }}></CardContent>
           )}
         </div>
-      </>
+      </StyledTestDetail>
     );
   }
 }

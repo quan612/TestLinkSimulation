@@ -6,14 +6,18 @@ import { TreeLeaf } from "../../Component/Common/TreeLeaf";
 import { Card } from "../../Component/styles/BodyStyles";
 import LoadingContainer from "../../Component/Containers/LoadingContainer";
 
-const ListExecutionItems = ({ selectedBuild }) => {
+const ListExecutionItems = () => {
   const dispatch = useDispatch();
 
-  const { selectedProject, selectedTestPlan, selectedTestItem } = useSelector(state => ({
-    selectedProject: state.selectedProject,
-    selectedTestItem: state.selectedTestItem,
-    selectedTestPlan: state.selectedTestPlan
-  }));
+  const { selectedProject, selectedTestPlan, selectedTestItem, selectedBuild, buildsOfCurrentTestPlan } = useSelector(
+    state => ({
+      selectedProject: state.selectedProject,
+      selectedTestItem: state.selectedTestItem,
+      selectedTestPlan: state.selectedTestPlan,
+      selectedBuild: state.selectedBuild,
+      buildsOfCurrentTestPlan: state.buildsOfCurrentTestPlan
+    })
+  );
 
   const { isLoading, dataItems } = useTestPlanItemsFetching(
     selectedProject,
@@ -27,19 +31,19 @@ const ListExecutionItems = ({ selectedBuild }) => {
   };
 
   return (
-    <div className="h_100 d-flex flex-column mt-3">
-      <Card className="tree">
-        {dataItems && (
+    <Card>
+      {buildsOfCurrentTestPlan && Object.values(buildsOfCurrentTestPlan).length > 0 && dataItems && (
+        <div className="tree">
           <TreeLeaf
             child={dataItems}
             key={dataItems.data.id}
             node={dataItems.data.node}
             onClick={item => handleOnClick(item)}
           />
-        )}
-        {isLoading && <LoadingContainer />}
-      </Card>
-    </div>
+        </div>
+      )}
+      {isLoading && <LoadingContainer />}
+    </Card>
   );
 };
 

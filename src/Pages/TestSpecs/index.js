@@ -4,7 +4,6 @@ import { selectTestItemAction } from "../../Redux/testSpec.action";
 
 import { SplitPane } from "../../Component/Containers/SplitPane";
 import Navigator from "./Navigator";
-
 import TestDetailsContainer from "./TestDetailsContainer";
 import LoadingContainer from "../../Component/Containers/LoadingContainer";
 
@@ -15,11 +14,11 @@ const TestSpecsContainer = () => {
   }));
 
   useEffect(() => {
-    console.log("running clean up test spec");
+    // clean up the field in store so that in another tab we don't see this selected item again
     return function cleanup() {
       dispatch(selectTestItemAction({}));
     };
-  }, []);
+  }, [dispatch]);
 
   if (isProjectLoading) {
     return <LoadingContainer color="white" label="Fetching Projects" />;

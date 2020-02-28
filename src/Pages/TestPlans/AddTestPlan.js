@@ -48,7 +48,7 @@ const AddTestPlan = () => {
   };
 
   return (
-    <div className="w-75 m-auto">
+    <div className=" w-100 ml-auto mr-auto">
       <Formik
         initialValues={{
           name: "",
@@ -88,9 +88,9 @@ const AddForm = ({ formikProps }) => {
                 onChange={formikProps.handleChange}
               />
 
-              {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
               <br />
             </div>
+            {formikProps.errors.name && <span style={{ ...styles.errorText }}>{formikProps.errors.name}</span>}
 
             <div>
               <CKEditor
@@ -106,7 +106,7 @@ const AddForm = ({ formikProps }) => {
             </div>
 
             <div className="d-flex justify-content-star">
-              <FormGroup check>
+              <FormGroup check className="mr-2">
                 <CustomInput
                   id="isActive"
                   type="checkbox"
@@ -129,22 +129,22 @@ const AddForm = ({ formikProps }) => {
               </FormGroup>
             </div>
 
-            <Button className="mr-2" color="primary" type="submit" label="Submit">
-              Submit
-            </Button>
-            <Button
-              color="secondary"
-              onClick={() => {
-                if (history) {
-                  console.log("history", history);
-                  history.goBack();
-                }
-                history.push("/plans");
-              }}
-              label="Cancel"
-            >
-              Cancel
-            </Button>
+            <div className="d-flex pb-2 pt-2">
+              <Button className="mr-2" color="primary" type="submit">
+                Submit
+              </Button>
+              <Button
+                color="secondary"
+                onClick={() => {
+                  if (history) {
+                    history.goBack();
+                  }
+                  history.push("/plans");
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
           </Card>
         </Container>
       </form>

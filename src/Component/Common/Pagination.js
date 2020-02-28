@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-
 import PaginationStyles from "../styles/PaginationStyles";
 
 /**
@@ -11,10 +9,11 @@ const getRangeOfItemsBasedOnPageIndex = (arrayOfItems = [], pageLimit, currentPa
   return arrayOfItems.filter((item, index) => {
     let startIndex = pageLimit * currentPage - pageLimit;
     if (index >= startIndex && index <= startIndex + pageLimit - 1) return item;
+    else return null;
   });
 };
 
-const Pagination = ({ items, pageLimit = 5, pageNeighbours = 0, render }) => {
+const Pagination = ({ items, pageLimit = 10, pageNeighbours = 0, render }) => {
   const [currentPage, setCurrentPage] = useState(1);
   let totalRecords = items ? items.length : [].length;
   let totalPages = totalRecords === 0 ? 1 : Math.ceil(totalRecords / pageLimit);
@@ -46,12 +45,5 @@ const Pagination = ({ items, pageLimit = 5, pageNeighbours = 0, render }) => {
     </PaginationStyles>
   );
 };
-
-// Pagination.propTypes = {
-//   totalRecords: PropTypes.number.isRequired,
-//   pageLimit: PropTypes.number,
-//   pageNeighbours: PropTypes.number,
-//   onPageChanged: PropTypes.func
-// };
 
 export default Pagination;

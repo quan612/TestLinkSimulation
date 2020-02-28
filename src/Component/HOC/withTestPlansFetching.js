@@ -1,6 +1,5 @@
 import React from "react";
 import useTestPlansFetching from "../CustomHooks/useTestPlansFetching";
-import { useSelector, useDispatch } from "react-redux";
 
 const withTestPlanFetching = BaseComponent => ({ selectedProject }) => {
   const { isTestPlanLoading, testPlans, selectedTestPlan } = useTestPlansFetching(selectedProject);

@@ -15,7 +15,7 @@ const useTestProjectsFetching = () => {
       dispatch(loadTestProjectsAction());
     };
     fetchProjects();
-  }, []);
+  }, [dispatch]);
 
   return { isLoading, testProjects };
 };

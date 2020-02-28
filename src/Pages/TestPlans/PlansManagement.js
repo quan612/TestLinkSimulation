@@ -22,12 +22,12 @@ const COLUMNS = {
 
   testcases: {
     label: "TestCase#",
-    width: "7%"
+    width: "10%"
   },
 
   builds: {
     label: "Build#",
-    width: "9%"
+    width: "10%"
   },
 
   active: {
@@ -37,12 +37,12 @@ const COLUMNS = {
 
   is_public: {
     label: "Public",
-    width: "4%"
+    width: "5%"
   },
 
   Utils: {
     label: "Utils",
-    width: "4%"
+    width: "5%"
   }
 };
 
@@ -67,7 +67,7 @@ const PlansManagement = ({ selectedProject, isTestPlanLoading, listOfItems, hand
       <Card>
         {selectedProject && <h4>Test Plans Management - Project {selectedProject.name}</h4>}
         <div className="form-group d-flex">
-          <div className="w-50">
+          <div className="w-25">
             <Input type="text" onChange={e => handleOnSearch(e)} placeholder="Search Item" />
           </div>
           <Button className="btn btn-info ml-3" color="primary" size="sm" onClick={() => history.push("/addPlan")}>

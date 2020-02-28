@@ -5,7 +5,7 @@ import { updateTestCaseWithoutStepsUpdateHelper, getTestCaseHelper } from "../..
 import { FormDetailContainer } from "../../Component/styles/StyledTestDetails";
 import FormStyles from "../../Component/styles/FormStyles";
 import { Input } from "reactstrap";
-import { Card, SectionHeader, CardTitle } from "../../Component/styles/BodyStyles";
+import { SectionHeader, CardTitle } from "../../Component/styles/BodyStyles";
 import constant from "../../Library/constants";
 
 const status = constant.TestCaseStatus;
@@ -46,11 +46,6 @@ const EditTestCase = ({ testCase, onClose }) => {
         const testcase = await getTestCaseHelper(testCase.testcase_id);
         dispatch(selectTestItemAction(testcase));
         onClose();
-        // testcase.forEach(async data => {
-        //   data.node = "File";
-        //   await dispatch(selectTestItemAction(data));
-        //   onClose();
-        // });
       })
       .catch(error => console.log("catch error at update test case ", error));
   };

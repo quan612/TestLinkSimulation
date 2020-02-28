@@ -1,10 +1,10 @@
 import React from "react";
 import { Table } from "reactstrap";
-import { TableStyles } from "../../Component/styles/TableStyles";
+import { TableStyles } from "../styles/TableStyles";
 
 var he = require("he");
 
-const TableSimple = ({ tableItems, columns }) => {
+const TableSteps = ({ tableItems, columns, maxHeight = "300px" }) => {
   const handleRenderTableItems = (item, key) => {
     if (key === "step_number") {
       return (
@@ -31,7 +31,7 @@ const TableSimple = ({ tableItems, columns }) => {
   };
 
   return (
-    <TableStyles>
+    <TableStyles maxHeight={maxHeight}>
       <Table>
         <thead>
           <tr className="d-flex">
@@ -58,4 +58,4 @@ const TableSimple = ({ tableItems, columns }) => {
   );
 };
 
-export default TableSimple;
+export default TableSteps;

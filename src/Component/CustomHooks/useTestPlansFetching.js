@@ -12,14 +12,16 @@ const useTestPlansFetching = selectedProject => {
 
   const dispatch = useDispatch();
 
+  const fetchTestPlans = async () => {
+    await dispatch(loadTestPlansAction(selectedProject));
+    await dispatch(selectTestPlanAction(testPlans[0]));
+  };
+
   useEffect(() => {
     if (selectedProject) {
-      const fetchTestPlans = async () => {
-        await dispatch(loadTestPlansAction(selectedProject));
-        await dispatch(selectTestPlanAction(testPlans[0]));
-      };
       fetchTestPlans();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject]);
 
   return { isTestPlanLoading, testPlans, selectedTestPlan };

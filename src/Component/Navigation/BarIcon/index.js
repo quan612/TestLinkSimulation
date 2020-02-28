@@ -7,7 +7,6 @@ const getDisplayStyle = element => {
 };
 
 const BarIcon = () => {
-  let navBarToggle = document.getElementById("js-navbar-toggle");
   const handleToggleMenu = () => {
     let mainNav = document.getElementById("menu");
     console.log(mainNav);
