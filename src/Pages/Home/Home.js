@@ -12,8 +12,8 @@ const Home = () => {
   }, []);
 
   return (
-    <Container className="h-75">
-      <Card className=" h-100">
+    <Container>
+      <Card>
         <label>{testLinkVersion && <h4>{`TestLink Clone Version ${testLinkVersion}`}</h4>}</label>
         <div>
           <div className="mt-2 col-12">

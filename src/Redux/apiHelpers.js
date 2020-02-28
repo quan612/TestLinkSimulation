@@ -1,12 +1,12 @@
 import TestLink from "../Library/testlink";
 
+console.log("test", process.env.REACT_APP_NOT_SECRET_CODE);
+console.log("test", process.env.NODE_ENV);
+
 const testLink = new TestLink({
-  host: process.env.TESTLINK_SERVER, // 192.168.56.101   172.16.77.17  34.67.118.19
+  host: "34.67.118.19",
   secure: false,
-  apiKey: process.env.TESTLINK_API_KEY
-  // global b87127af250124be10f6f245a03d0473
-  // home   86fd2b13976b8ba4a35d6829a17b592b
-  // cloud  2a64c27adb81157b9a5ed576a58c032e
+  apiKey: "2a64c27adb81157b9a5ed576a58c032e"
 });
 
 const authorLogin = "Quan.Huynh";
@@ -20,13 +20,12 @@ export const getTestSuiteByIdAsync = async item => {
 };
 
 export const reportResultApi = async result => {
-  
   if (result.testcase.steps && result.testcase.steps.length > 0)
     result.testcase.steps.forEach(step => {
       step.result = result.status;
       step.notes = "";
     });
- 
+
   return await testLink.reportTCResult({
     testcaseid: result.testcase.testcase_id,
     testplanid: result.testPlan.id,
