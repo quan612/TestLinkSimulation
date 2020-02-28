@@ -1,9 +1,9 @@
 import TestLink from "../Library/testlink";
 
 const testLink = new TestLink({
-  host: "34.67.118.19", // 192.168.56.101   172.16.77.17  34.67.118.19
+  host: process.env.TESTLINK_SERVER, // 192.168.56.101   172.16.77.17  34.67.118.19
   secure: false,
-  apiKey: "2a64c27adb81157b9a5ed576a58c032e"
+  apiKey: process.env.TESTLINK_API_KEY
   // global b87127af250124be10f6f245a03d0473
   // home   86fd2b13976b8ba4a35d6829a17b592b
   // cloud  2a64c27adb81157b9a5ed576a58c032e
@@ -20,18 +20,13 @@ export const getTestSuiteByIdAsync = async item => {
 };
 
 export const reportResultApi = async result => {
-  // console.log("testcaseid", result.testcase.id);
-  // console.log("testplanid", result.testPlan.id);
-  // console.log("status", result.status);
-  // console.log("buildId", result.build.id);
-  // console.log("buildName", result.build.name);
-  // console.log("steps", result.testcase.steps);
+  
   if (result.testcase.steps && result.testcase.steps.length > 0)
     result.testcase.steps.forEach(step => {
       step.result = result.status;
       step.notes = "";
     });
-  //console.log("stepResult", stepResult);
+ 
   return await testLink.reportTCResult({
     testcaseid: result.testcase.testcase_id,
     testplanid: result.testPlan.id,
