@@ -1,6 +1,6 @@
 Self attempt to learn React using latest React Hooks, JavaScript, Redux and Redux-thunk using a public TestLink API
 
-Demo is at: http://testlink-clone.herokuapp.com
+Demo is at:  http://test-link-react.herokuapp.com/
 
 ## How to run
 ** The project requires a public TestLink API or a local set up TestLink server inorder to work.
